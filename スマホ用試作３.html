@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>56期論文マスター商法 第10回 本田講師作成答案 第19問</title>
+    <style>
+        /* 画面全体 */
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px; /* ページ全体の余白 */
+            background-color: #ffffff;
+            color: #333333;
+            display: flex; /* Flexbox を使用 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央揃え（左右） */
+        }
+
+        /* ドキュメントタイトル */
+        .document-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* コンテナ */
+        .mindmap-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .mindmap,
+        .mindmap ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .mindmap ul {
+            padding-left: 20px;
+        }
+
+        .mindmap li {
+            margin: 5px 0;
+            position: relative;
+        }
+
+        /* ノード */
+        .node {
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 1px solid #d1ccc0;
+            display: inline-block;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color .2s, color .2s;
+            white-space: nowrap;
+            cursor: default;
+        }
+
+        /* トグル可能ノード */
+        .node.toggleable {
+            cursor: pointer;
+        }
+
+        .node.toggleable:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* トグルアイコン */
+        .toggler-icon {
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: bold;
+            width: 1em;
+            text-align: center;
+        }
+
+        /* 階層ごとの色分け */
+        .level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+        .level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+        .level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+        .level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+        .level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+        .level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+        .level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+        /* 重要事項・結論 */
+        .issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+        .conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+        /* 非表示用 */
+        .hidden { display: none !important; }
+
+        /* コネクタ線 */
+        .mindmap li::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .mindmap li:not(:last-child)::before {
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li:last-child::before {
+            height: .9em;
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li > .node-container > .node::after {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: .9em;
+            width: 9px;
+            border-top: 1px solid #b0bec5;
+        }
+
+        .mindmap > li::before {
+            display: none;
+        }
+        .mindmap > li > .node-container > .node::after {
+            display: none;
+        }
+
+        .mindmap > li > .node-container + ul > li:first-child::before {
+            top: -5px;
+        }
+
+        /* 強調用 */
+        .crime-name { font-weight: bold; }
+        .article-ref { font-size: .85em; opacity: .8; }
+
+        /* アイコン＋ノードまとめ */
+        .node-container {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- 徹底リセットCSS (ここから追加) --- */
+        html, body {
+          width: 100% !important;
+          min-width: 0 !important;
+          overflow-x: visible !important; /* Changed from auto to visible for html/body as per general best practice, auto might be too restrictive here */
+          box-sizing: border-box;
+        }
+
+        .mindmap-container, .mindmap {
+          display: block !important;       /* 横並び禁止 */
+          width: 100% !important;          /* 親に合わせる */
+          min-width: 0 !important;         /* 横はみ出し禁止 */
+          max-width: 100% !important;      /* はみ出し禁止 */
+          overflow-x: auto !important;     /* 必要なら横スクロール */
+          box-sizing: border-box !important;
+          padding: 0 6px !important;       /* 余白を少しつける */
+        }
+
+        .node {
+          font-size: 16px !important;
+          white-space: normal !important;
+          word-break: break-word !important;
+        }
+
+        @media (max-width: 600px) {
+          .node {
+            font-size: 17px !important; /* Slightly larger for better readability on small screens */
+          }
+          /* Adjust body padding for mobile if needed, original was 20px */
+          body {
+              padding: 10px;
+          }
+          .document-title {
+              font-size: 20px; /* Adjust title size for mobile */
+          }
+        }
+        /* --- 徹底リセットCSS (ここまで追加) --- */
+
+    </style>
+</head>
+<body>
+    <h1 class="document-title">56期論文マスター商法 第10回 本田講師作成答案 第19問</h1>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第1 甲社の取締役Aらに対する損害賠償責任 (<span class="article-ref">423条1項</span>) 追及</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1. 「任務を怠った」（任務懈怠）といえるか</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(1) 甲乙間の土地売買契約と利益相反取引</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">Cの行為は直接取引 (<span class="article-ref">356条1項2号</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">Cの義務: 事実開示・取締役会承認 (<span class="article-ref">356条1項柱書</span>, <span class="article-ref">365条1項</span>)、事後報告 (<span class="article-ref">365条2項</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">本件: Bによる開示・報告、取締役会による一応の承認</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">外形上、法令違反はないとも思える</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">(2) 取締役会決議の有効性</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">問題提起: 決議無効なら承認なき利益相反取引として法令違反</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">ア. 決議の形式的要件の検討</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">C (特別利害関係人 <span class="article-ref">369条2項</span>) を除くA,B,D,Eが対象</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">B,D,E (3名) 出席、B,D (2名) 賛成 → 定足数・議決数充足 (<span class="article-ref">369条1項</span>)</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">形式的には瑕疵なしとも思われる</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 issue">イ. Bの特別利害関係人性</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">BはCの配偶者で緊密、乙社救済の計画者、乙社の取締役</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">Bも忠実義務 (<span class="article-ref">355条</span>) 違反のおそれ、個人的利害関係あり</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4 conclusion">結論: Bも特別利害関係人にあたる</span>
+                            </div>
+                          </li>
+                           <li>
+                            <div class="node-container">
+                              <span class="node level-4 conclusion">帰結: Bも本件議決に参加できなかった</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">ウ. 取締役会決議の効力</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-4">Bが参加したため、決議方法に法令違反あり</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-4 conclusion">瑕疵ある取締役会決議は一般原則に従い無効</span>
+                                </div>
+                            </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">本件土地売買契約: 承認を欠く利益相反取引として法令違反</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(3) 任務懈怠の認定</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">B, C: 承認なき利益相反取引を行い任務懈怠あり</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">C: <span class="article-ref">423条3項1号</span>により任務懈怠推定</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">B: <span class="article-ref">423条3項2号</span>により任務懈怠推定</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">A, D, E: 監視義務 (<span class="article-ref">362条2項2号</span>) 違反で任務懈怠あり</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">D: <span class="article-ref">423条3項3号</span>により任務懈怠推定</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2. 故意・過失の有無 (<span class="article-ref">428条参照</span>)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">B, C: 法令違反の利益相反取引につき、特段の事情なければ少なくとも過失あり</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">D, E: 価格相当性議論せず利益相反取引を看過したため過失あり</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">A: 取締役会開催時入院中のため過失なし</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">3. 甲社の「損害」発生の有無</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">本件土地売買契約は承認決議を欠く利益相反取引 (直接取引)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">甲社は乙社 (相手方) に対し契約無効を主張可能</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">甲社は乙社に対し既払金5億円の原状回復請求 (<span class="article-ref">民法121条の2第1項</span>) 可能</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">甲社の損害: 5億円のうち乙社が返還できない部分</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">4. 結論: 甲社はB,C,D,Eに対し損害賠償請求可能 (<span class="article-ref">会社法430条</span>により連帯責任)</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第2 乙社取締役BCDの甲社（第三者）に対する責任 (<span class="article-ref">429条1項</span>)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">「悪意又は重大な過失」の対象が問題</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2"><span class="article-ref">429条1項</span>の趣旨: 株式会社の社会的地位、役員等の責任加重による第三者保護</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">「悪意又は重大な過失」は任務懈怠について存すれば足りる</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">結論: BCDに任務懈怠とその悪意・重過失があれば甲社は損害賠償請求可能 (<span class="article-ref">429条1項</span>)</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.mindmap li').forEach(item => {
+                const nc = item.querySelector(':scope > .node-container');
+                if (!nc) return;
+
+                const node = nc.querySelector('.node');
+                const sub = item.querySelector(':scope > ul');
+
+                if (node) {
+                    const tog = document.createElement('span');
+                    tog.className = 'toggler-icon';
+                    
+                    if (sub) {
+                        tog.textContent = '[-]';
+                        nc.insertBefore(tog, node);
+                        node.classList.add('toggleable');
+                        
+                        const toggle = (event) => {
+                            if (event.target === node || event.target === tog) {
+                                sub.classList.toggle('hidden');
+                                tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                            }
+                        };
+                        node.addEventListener('click', toggle);
+                        tog.addEventListener('click', toggle);
+
+                    } else {
+                        tog.innerHTML = '&nbsp;'; // Non-breaking space for consistent alignment
+                        nc.insertBefore(tog, node);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
