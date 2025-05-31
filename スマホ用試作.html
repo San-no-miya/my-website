@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法律文書のタイトル（ここに表示）</title>
+    <style>
+        /* 画面全体 */
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px; /* ページ全体の余白 */
+            background-color: #ffffff;
+            color: #333333;
+            display: flex; /* Flexbox を使用 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央揃え（左右） */
+        }
+
+        /* ドキュメントタイトル */
+        .document-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 20px;
+            text-align: center; /* タイトルが複数行になった場合も中央揃え */
+        }
+
+        /* コンテナ */
+        .mindmap-container {
+            /* display: flex; -- REMOVED as per instruction -- */
+            /* justify-content: center; -- REMOVED as it's a flex property -- */
+            /* width: 100%; /* 必要に応じてコンテナの幅を指定 */
+        }
+
+        .mindmap,
+        .mindmap ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .mindmap ul {
+            padding-left: 20px;
+        }
+
+        .mindmap li {
+            margin: 5px 0;
+            position: relative;
+        }
+
+        /* ノード */
+        .node {
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 1px solid #d1ccc0;
+            display: inline-block;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color .2s, color .2s;
+            /* white-space: nowrap; -- REMOVED as per instruction -- */
+            cursor: default;
+        }
+
+        /* トグル可能ノード */
+        .node.toggleable {
+            cursor: pointer;
+        }
+
+        .node.toggleable:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* トグルアイコン */
+        .toggler-icon {
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: bold;
+            width: 1em;
+            text-align: center;
+        }
+
+        /* 階層ごとの色分け */
+        .level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+        .level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+        .level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+        .level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+        .level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+        .level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+        .level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+        /* 重要事項・結論 */
+        .issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+        .conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+        /* 非表示用 */
+        .hidden { display: none !important; }
+
+        /* コネクタ線 */
+        .mindmap li::before {
+            content: "";
+            position: absolute;
+            left: -10px; /* アイコンの幅を考慮して調整 */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .mindmap li:not(:last-child)::before {
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li:last-child::before {
+            height: .9em; /* node のテキストの上端に合わせる */
+            border-left: 1px solid #b0bec5;
+        }
+        
+        /* nodeから左に伸びる線 */
+        .mindmap li > .node-container > .node::after {
+            content: "";
+            position: absolute;
+            left: -10px;  /* li::before と同じ位置 */
+            top: .9em; /* node のテキストの上端に合わせる */
+            width: 9px; /* li::before までの長さ */
+            border-top: 1px solid #b0bec5;
+        }
+        
+        /* ルートノードには線を表示しない */
+        .mindmap > li::before {
+            display: none;
+        }
+        .mindmap > li > .node-container > .node::after {
+             display: none; /* ルートノードから左に伸びる線も非表示 */
+        }
+
+        /* 子要素リストの最初の要素の縦線開始位置調整 */
+        .mindmap > li > .node-container + ul > li:first-child::before {
+            top: -5px; /* nodeの高さやマージンに応じて調整 */
+        }
+
+
+        /* 強調用 */
+        .crime-name { font-weight: bold; }
+        .article-ref { font-size: .85em; opacity: .8; }
+
+        /* アイコン＋ノードまとめ */
+        .node-container {
+            display: inline-flex; /* アイコンとノードを横並びにする */
+            align-items: center; /* アイコンとノードを中央揃え（垂直） */
+            position: relative; /* ::after 疑似要素の基準とする */
+        }
+
+        /* --- 追加するスマホ用CSS --- */
+        @media (max-width: 600px) {
+          .mindmap-container {
+            display: block;          /* 横並びを解除して縦並びに */
+            width: 100%;
+            overflow-x: visible;     /* 横スクロール禁止 */
+            padding: 6px;
+            box-sizing: border-box;
+          }
+          .node {
+            font-size: 16px;         /* モバイルでは文字を大きめに */
+            white-space: normal;     /* 自動折り返し */
+            word-break: break-word;  /* 英語も日本語も折り返しOK */
+          }
+          .mindmap {
+            padding-left: 0;         /* 余白も調整 */
+          }
+        }
+
+        /* PC・タブレットでも横スクロール不要に */
+        .node {
+          white-space: normal !important;  /* nowrapを強制的に上書き */
+          word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="document-title">法律文書のタイトル（ここに表示）</h1>
+
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <!-- JSがアイコンをここに追加 -->
+                    <span class="node level-0">【講師作成論述例】</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">1 乙の罪責</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 issue">1(1) Xに対する罪</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">A <span class="crime-name">住居侵入罪</span>（<span class="article-ref">刑法130条前段</span>）の成否</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">客観的構成要件</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">主観的構成要件</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">結論：成立する</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">B <span class="crime-name">窃盗罪</span>（<span class="article-ref">刑法235条</span>）の成否</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">1(2) Yに対する罪</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">2 甲の罪責</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">2(1) Zに対する罪</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">3 罪数</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.mindmap li').forEach(item => {
+                const nc = item.querySelector(':scope > .node-container'); // 直接の子のみを選択
+                if (!nc) return; // node-container がない場合はスキップ
+
+                const node = nc.querySelector('.node');
+                const sub = item.querySelector(':scope > ul'); // 直接の子のulのみを選択
+
+                if (node) { // node が存在する場合のみ処理
+                    const tog = document.createElement('span');
+                    tog.className = 'toggler-icon';
+                    
+                    if (sub) { // 子リストがある場合
+                        tog.textContent = '[-]';
+                        nc.insertBefore(tog, node);
+                        node.classList.add('toggleable');
+                        
+                        const toggle = (event) => {
+                            // node自体またはトグルアイコンのクリックでのみ反応
+                            if (event.target === node || event.target === tog) {
+                                sub.classList.toggle('hidden');
+                                tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                            }
+                        };
+                        // node 本体とトグルアイコンの両方にイベントリスナーを設定
+                        node.addEventListener('click', toggle);
+                        tog.addEventListener('click', toggle);
+
+                    } else { // 子リストがない場合
+                        tog.innerHTML = '&nbsp;'; // ダミーアイコン（スペース）
+                        nc.insertBefore(tog, node);
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
