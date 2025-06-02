@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>56期論文マスター行政法16 第30問</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* その後、指定の「徹底リセットCSS」を追加 */
+/* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">56期論文マスター行政法16 第30問</h1>
+    <div class="summary-container">
+        <pre id="summary-text">A県知事はB川の河川区域指定（本件指定）を行った。Cは指定区域境界付近にコテージを建築。A県知事は建築基準法違反で是正指導、Cはコテージを改築。その際、県職員D・Eから「河川区域外」との見解を得た。後にA県知事はコテージが河川区域内と判断し除却命令（本件命令）。Cは命令取消訴訟を提起。
+設問1：本件指定が抗告訴訟の対象となる処分に当たるか。
+設問2：Cが本件取消訴訟で主張できる本件命令の違法事由と、それが認められるか。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問1: 本件指定の処分性</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">処分性の定義 (<span class="article-ref">行訴法3条2項</span>)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">① 公権力性: 国又は公共団体の行為</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">② 法効果性: 直接国民の権利義務を形成し、又はその範囲を確定することが法律上認められるもの</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">本件指定の検討</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">ア. 公権力性 (①)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">A県知事が優越的地位に基づき一方的になしたものであり、公権力性あり (①充足)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 issue">イ. 法効果性 (②)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">肯定的要素: 河川区域内での工作物新築等に許可が必要 (<span class="article-ref">河川法26条1項</span>)</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">無許可の場合: 罰則 (<span class="article-ref">同法102条2号</span>)、監督処分・除却命令 (<span class="article-ref">同法75条1項柱書、1号</span>) の可能性</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">しかし、本件指定には名宛人が存在しない</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">効果は、区域内の不特定多数者に対する一般抽象的な制約にすぎない</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">紛争の成熟性: 許可申請→不許可処分後に抗告訴訟で争うことが可能</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">よって、本件指定は直接国民の権利義務を形成する効果を有するとはいえない (②不充足)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">ウ. 結論: 本件指定は「処分」に当たらない</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問2: 本件命令の違法事由</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">Cの主張: 信義則違反による裁量権の逸脱・濫用 (<span class="article-ref">民法1条2項</span>, <span class="article-ref">行訴法30条</span>)</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">本件命令の根拠と性質</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">根拠: <span class="article-ref">河川法75条1項1号</span></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">「できる」との文言、専門的・技術的判断要素から効果裁量が認められる</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">裁量権の逸脱・濫用となる場合</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">処分の基礎とされた重要な事実に誤認がある等、重要な事実の基礎を欠く場合</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">処分の内容が社会通念に照らし著しく妥当性を欠く場合</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">信義則適用の検討</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">法律の留保の原則を修正するため、適用は慎重になされるべき</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">要件 (特別の事情):</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">③ 行政庁が公的見解を表示したこと</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">④ 被処分者がその表示を信頼したこと</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">⑤ 被処分者が信頼に基づいて行動したこと</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">⑥ 被処分者の信頼に帰責性がないこと</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">本件へのあてはめ</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 issue">③ 行政庁による公的見解表示の有無</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">権限者: 河川管理者であるA県知事</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">河川現況台帳: <span class="article-ref">河川法12条3項</span>, <span class="article-ref">河川法施行令5条2項1号</span>。しかし、本件土地は地形変化あり、台帳は公的見解として機能していない。</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">Eの回答: 「測量をしないと正確なことは言えないが、今のところ」と留保付き。正式な見解ではない。</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">したがって、公的な見解を表示したとはいえない (③不充足)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: 本件命令は信義則に違反せず、裁量権の逸脱・濫用もない。Cの主張は認められない。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>
