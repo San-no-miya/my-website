@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>予備試験令和4年 民法 - 56期論文マスター民法31</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+        /* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">予備試験令和4年 民法 - 56期論文マスター民法31</h1>
+    <div class="summary-container">
+        <pre id="summary-text">【事実】の概要
+1. A社（建築設計工事等）とB社（複合商業施設経営等）は、令和4年4月1日、B社所有地にA社が甲建物を報酬2億円で新築する建築請負契約（本件請負契約）を締結。
+2. B社はA社に対し「外壁塗装に塗料a（鮮やかなピンク色）を使用してほしい」と申し入れ、A社は了承。塗料aはB社のコーポレートカラー。
+3. A社は、近隣住民の反発を受け、より明度の低い同系色の塗料βで甲建物の外壁を塗装。
+4. 令和7年10月25日、塗料βによる塗装を含む工事完了。同月30日、A社はB社に甲建物を引渡し。
+5. 同月31日、B社はA社に対し、塗料aがコーポレートカラーであり、塗料βの使用は重大な契約違反であると指摘。
+6. 塗料βは塗料aより高価で耐久性・防汚防水性能に優れ、塗料βで塗装した場合の甲建物の客観的価値の方が高い。
+
+〔設問1〕
+(1) B社が塗料aによる再塗装を求めたがA社が拒絶した場合、B社からA社への本件請負契約に基づく報酬減額請求は認められるか。【事実】6に留意しつつ論じなさい。
+(2) A社が塗料aによる再塗装を行う旨申し入れたがB社が拒絶した場合、B社からA社への再塗装に要する費用相当額の損害賠償請求は認められるか論じなさい。
+
+【事実】の概要 (続き)
+7. C（個人ラーメン店経営）は、従業員Dの功労に報いるため、C所有の土地建物（乙不動産）をDに無償貸与（固定資産税はD負担）。
+8. 令和2年1月10日、CとDは上記内容の覚書（本件覚書）を取り交わし使用貸借契約を締結、Dは引渡しを受け、同年3月1日からラーメン店（本件ラーメン店）を開業、固定資産税を支払う。
+9. 令和8年1月、Cが死亡し子Eが単独相続（Eは事情を知らずDに固定資産税を支払ってもらっていた）。登記名義はCのまま。
+10. 令和9年3月1日、Dが死亡し本件ラーメン店は閉鎖。Dを単独相続した子Fは、乙不動産をDがCから贈与されたものと理解。FはEに「乙不動産はDがCから贈与されたものだから登記名義を自分に移したい」と相談。Eは納得し、同年4月1日、乙不動産の登記名義人をFとする登記が行われた。
+11. その後Fは営業を引き継ぐことを決意し、同年5月1日、従業員から乙不動産の管理を引き継ぎ営業再開。Fは令和29年まで営業継続。同年3月、Eは本件覚書を発見し贈与がなかったことを知る。同年4月1日、EはFに対し所有権に基づき乙不動産の明渡しを請求する訴えを提起。これに対しFは同月15日、乙不動産の20年の取得時効を援用。
+
+〔設問2〕
+【事実】7から11までを前提として、【事実】11においてFが援用する乙不動産の取得時効の成否について論じなさい。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問1 小問(1) Bの報酬減額請求</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求根拠: <span class="article-ref">民法559条・563条1項</span></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">契約不適合の有無</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">契約内容: 外壁塗装に塗料aを使用 (B申入れ、A了承)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">Aの履行: 塗料βを使用</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">→ 「契約の内容に適合しないもの」 (<span class="article-ref">562条1項</span>) に該当</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">減額請求の要件検討 (<span class="article-ref">563条</span>)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">追完請求「不能」(<span class="article-ref">412条の2第1項</span>) でない場合</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">Aの反論可能性: 追完可能なので<span class="article-ref">563条1項</span>本文の要件を満たさない？</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">検討: 外壁塗装は重要部分、不適合は軽微でないため追完請求可能。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">売主(A)が履行の追完を拒絶 (<span class="article-ref">563条2項2号</span>)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">事実: Bが塗料aでの再塗装を求め、Aが拒絶。</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">→ 該当する</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">不適合が買主(B)の責めに帰すべき事由でないこと (<span class="article-ref">563条3項</span>)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">事実: 塗料β使用はAの独断。</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">→ Bの帰責事由なし。</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">Aの反論: 塗料βは高価で客観的価値が高い</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">検討: 報酬減額請求権は契約の一部解除の性質。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">客観的価値の増加は考慮されず、反論は認められない。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: Bの報酬減額請求は認められる。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問1 小問(2) Bの損害賠償請求</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求根拠: 再塗装費用相当額の損害賠償 (<span class="article-ref">559条・564条、415条1項本文</span>)</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1"><span class="article-ref">民法415条2項</span>の適用検討</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">同項1、2号に該当する事情なし。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">BはAに催告しておらず、解除権は発生していない (<span class="article-ref">同項3号</span>適用なし)。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1"><span class="article-ref">民法415条1項</span>の適用検討</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">契約不適合があれば、その是正のための費用相当額の損害は通常損害 (<span class="article-ref">416条1項</span>)。</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">→ 相当因果関係あり。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">Aの反論: 塗料aによる再塗装を申し入れている (追完請求可能)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">検討: <span class="article-ref">562条1項ただし書</span> (注文者に不相当な負担)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">事実: Bは損害賠償を選択。Aの独断的変更でBに不信感。</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">→ Bにとって不相当な負担。Aの反論は認められない。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: Bの損害賠償請求は認められる。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問2 Fの取得時効の成否</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">Fの主張: 長期取得時効 (<span class="article-ref">162条1項</span>) の援用 (<span class="article-ref">145条</span>)</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">被相続人Dの占有形態</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">事実: 乙不動産の使用借主。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">→ 他主占有。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">相続人Fの占有形態 (自主占有か)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">占有の承継: 相続によりDの占有を観念的に承継。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">Fは自己の占有のみ主張可能 (<span class="article-ref">187条1項</span>)。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">他主占有から自主占有への転換には「新たな権原」(<span class="article-ref">185条</span>) が必要。</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 issue">論点: 相続が「新たな権原」に当たるか。</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">趣旨: 真の権利者の時効完成阻止機会の保障。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">要件1: 新たに相続財産を事実上支配し占有を開始。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">要件2: その占有が外形的客観的にみて独自の所有の意思に基づくもの。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">本件あてはめ:</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">要件2: Fが乙不動産の登記を取得 → 満たす。</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">要件1: 登記取得だけでは事実上支配とはいえない。</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">事実: 令和9年5月1日、管理引継ぎで事実上支配開始。</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">→ 令和9年5月1日が「新たな権原」による自主占有開始時。</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">時効期間の計算</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">起算点: 令和9年5月1日。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">検討: 援用時(令和29年4月15日)まで「20年間」経過していない。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">→ 時効取得の要件を満たさない。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: Fの長期取得時効による所有権取得は認められない。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>
