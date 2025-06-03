@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>予備試験 令和5年 民法 - 56期論文マスター民法31</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+        /* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">予備試験 令和5年 民法 - 56期論文マスター民法31</h1>
+    <div class="summary-container">
+        <pre id="summary-text">【事実】1-8（設問1関連）
+A（個人）はB（専門業者）に掛け軸甲の修復を依頼し、令和5年7月1日請負契約締結（報酬250万円）。しかし、Aの不適切な保管により、甲は契約前の同年6月15日頃までに修復不能な状態（本件損傷）となっていた。Aは契約時これを知らず、Bの確認にも「問題ない」と回答。Bは修復材料費40万円を支出済み。BはAに報酬250万円を請求、Aは契約無効または修復未了を理由に反論。
+
+〔設問1〕BのAに対する報酬請求の可否、範囲、法的根拠を論ぜよ。
+
+【事実】9-13（設問2関連）
+BはCから壺乙の展示販売を委託され（本件委託契約）、B名義で販売する権限を得た（売買成立時、所有権はC→Bに移転）。令和5年5月、Dが乙に関心を示し、BはDに〔ア〕。同月25日、BはDに200万円で販売意向を示す。同年6月1日、CはBに乙の返還を請求（通知到達）。同月2日、BはDに乙を200万円で売却、Dは代金完済。Dは乙につき〔イ〕と信じていた。Bは「Dのために保管」と告げ乙をバックヤードへ。同月3日、CはBから乙の引渡しを受け持ち帰る。DはCに乙の引渡しを請求。
+
+〔設問2〕
+(1) 〔ア〕＝乙の所有者がCであると説明せず、〔イ〕＝Bが所有者である、とDが信じた場合、DのCへの引渡請求の可否。
+(2) 〔ア〕＝委託契約書を示しBの売却権限を説明、〔イ〕＝Bが現在も処分権限を有するとDが信じた場合、DのCへの引渡請求の可否。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問1 BのAに対する報酬請求</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求根拠: 請負契約 (<span class="article-ref">民法632条</span>) に基づく報酬請求</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">本件請負契約の有効性（原始的不能）</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">Aの反論: 契約締結時点で仕事完成債務が原始的不能であり契約無効</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2"><span class="article-ref">民法412条の2第2項</span>の趣旨: 原始的不能を理由とする契約無効を前提としない</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">当事者間のリスク負担: BはAに確認し、Aは大丈夫と回答。Aがリスク負担。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">→ 本件請負契約は有効</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">仕事未完成の場合の報酬請求の可否 (<span class="article-ref">民法536条2項</span>)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">「債務を履行することができなくなった」: 原始的不能も含む</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">本件請負契約は原始的不能であり該当</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">「債権者の責めに帰すべき事由」(Aの帰責事由)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">Aの保管方法の不備、状態確認の懈怠</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">→ Aの帰責事由あり、<span class="article-ref">同項</span>適用</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求範囲</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">原則: 報酬全額250万円</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">Bの支出費用40万円は、報酬とは別個の問題（自己の債務を免れたことによる利益ではない）</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">→ 250万円全額の請求が認められる</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問2(1) DのCに対する壺乙の引渡請求 (Bが所有者と誤信)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求根拠: 所有権 (<span class="article-ref">民法206条</span>) に基づく引渡請求</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">Dが乙の所有権を取得したか</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">原則: BD間売買契約 (<span class="article-ref">555条</span>) 時、Bは処分権限なし (Cが返還請求済) → Dは所有権取得せず</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">例外: 即時取得 (<span class="article-ref">民法192条</span>) の成否</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">取引行為: BD間売買契約</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">占有取得: Dは占有改定 (<span class="article-ref">183条</span>) により占有取得</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">平穏・公然・善意: <span class="article-ref">186条1項</span>により推定。DはBが所有者と信じている。</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">無過失: <span class="article-ref">188条</span>により前主Bの適法占有推定からDの無過失も推定。</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 issue">問題点: 占有改定が「占有を始めた」に当たるか</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4"><span class="article-ref">192条</span>の趣旨: 権利外観保護と取引安全。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">占有改定では外部から占有移転が認識できず、原権利者の占有喪失も不明確。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">→ 占有改定は「占有を始めた」に当たらない。</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">→ Dは即時取得しない。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">Dの請求は認められない。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問2(2) DのCに対する壺乙の引渡請求 (Bが処分権限有りと誤信)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">前提: 設問2(1)同様、Dは乙の所有権を有する必要がある。</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">Dが乙の所有権を取得したか（<span class="article-ref">民法112条1項</span>類推適用）</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">原則: Bは処分権限喪失しており、Dは所有権取得せず (<span class="article-ref">民法176条</span>)。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">例外: <span class="article-ref">民法112条1項</span>（代理権消滅後の表見代理）の類推適用の可否</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">趣旨: 代理権消滅の事実を知らない善意無過失の相手方保護。処分権限の終了にも妥当。</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">→ 類推適用可能。</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">要件検討</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">かつて処分権限が存在したこと: BはCから売却権限を得ていた。</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">相手方Dの善意無過失: DはBが現在も処分権限を有すると信じていた。</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">BはDに契約書を示し処分権限を説明 (5/25)。売買は6/2。</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">短期間であり、Dに調査確認義務懈怠なし。</span>
+                                                        </div>
+                                                        <ul>
+                                                            <li>
+                                                                <div class="node-container">
+                                                                    <span class="node level-6 conclusion">→ Dは善意無過失。</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">→ <span class="article-ref">112条1項</span>類推適用により、Dは所有権を取得する。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">Dの請求は認められる。</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>
