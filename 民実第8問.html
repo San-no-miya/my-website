@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第8問 賃貸借1(期間満了・建物所有目的・黙示の更新)</title>
+<style>
+        /* 画面全体 */
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+            line-height: 1.5;
+            margin: 0; /* body自体のマージンは0 */
+            padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* ドキュメントタイトル */
+        .document-title {
+            font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+            font-weight: bold;
+            color: #333333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* 問題文要約コンテナ */
+        .summary-container {
+            border: 1px solid #cccccc;
+            padding: 15px;
+            margin: 20px auto;
+            font-size: 0.85em;
+            background-color: #f8f8f8;
+            max-width: 90%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .summary-container pre {
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: inherit;
+            line-height: inherit;
+            color: #333333;
+        }
+
+        /* マインドマップコンテナ */
+        .mindmap-container {
+            display: block;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mindmap,
+        .mindmap ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .mindmap ul {
+            padding-left: 20px;
+        }
+
+        .mindmap li {
+            margin: 5px 0;
+            position: relative;
+        }
+
+        /* ノード */
+        .node {
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 1px solid #d1ccc0;
+            display: inline-block;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color .2s, color .2s;
+            cursor: default;
+        }
+
+        /* トグル可能ノード */
+        .node.toggleable {
+            cursor: pointer;
+        }
+
+        .node.toggleable:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* トグルアイコン */
+        .toggler-icon {
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: bold;
+            width: 1em;
+            text-align: center;
+        }
+
+        /* 階層ごとの色分け */
+        .level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+        .level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+        .level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+        .level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+        .level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+        .level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+        .level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+        /* 重要事項・結論 */
+        .issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+        .conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+        /* 非表示用 */
+        .hidden { display: none !important; }
+
+        /* コネクタ線 */
+        .mindmap li::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .mindmap li:not(:last-child)::before {
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li:last-child::before {
+            height: .9em;
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li > .node-container > .node::after {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: .9em;
+            width: 9px;
+            border-top: 1px solid #b0bec5;
+        }
+
+        .mindmap > li::before {
+            display: none;
+        }
+        .mindmap > li > .node-container > .node::after {
+            display: none;
+        }
+
+        .mindmap > li > .node-container + ul > li:first-child::before {
+            top: -5px;
+        }
+
+        /* 強調用 */
+        .crime-name { font-weight: bold; }
+        .article-ref { font-size: .85em; opacity: .8; }
+
+        /* アイコン＋ノードまとめ */
+        .node-container {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+        /* --- 徹底リセットCSS (ここから追加) --- */
+        html, body {
+          width: 100% !important;
+          min-width: 0 !important;
+          overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+          box-sizing: border-box;
+        }
+
+        .mindmap-container { /* mindmap-container のスタイル */
+          display: block !important;
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          overflow-x: auto !important; /* 水平スクロールはコンテナで */
+          box-sizing: border-box !important;
+          padding: 0 6px !important; /* コンテナ左右に少し余白 */
+          text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+        }
+
+        .mindmap { /* mindmap (ul ルート要素) のスタイル */
+          display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+          text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+          /* width は inline-block のため内容依存 */
+          max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+          box-sizing: border-box !important;
+          margin: 0 !important; /* ul のデフォルトマージンをリセット */
+          padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+          /* list-style: none; は元のCSSで指定済み */
+          /* position: relative; は元のCSSで指定済み */
+        }
+
+        .node {
+          font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+          white-space: normal !important; /* テキストを折り返す */
+          word-break: break-word !important; /* 単語の途中でも折り返す */
+        }
+
+        @media (max-width: 600px) {
+          .node {
+            font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+          }
+          body {
+              padding: 10px; /* モバイルではbodyの余白を少し減らす */
+          }
+          .document-title {
+              font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+          }
+          .summary-container {
+              max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+              font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+          }
+        }
+        /* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第8問 賃貸借1(期間満了・建物所有目的・黙示の更新)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し、甲土地の賃貸借契約（平成23年4月1日～平成26年3月31日、賃料月額30万円、敷金100万円、事務所等建築目的）が期間満了により終了したとして、甲土地の明渡しを求める訴訟（本件訴訟）。口頭弁論期日は平成26年7月28日。
+
+【Xの言い分】
+1. 契約内容通り賃貸し引き渡したが、期間満了後もYは使用継続し、明渡要求に応じない。
+2. Xは定年後（平成26年夏から）のマンション経営のため甲土地を使用予定だった。Yもこれを理解し、マンション建設開始までの期間、事務所等を設置するために甲土地を借りたいと言ったため賃貸した。3年後の計画のため、設置事務所等は簡易なものとする話もした。よって、甲土地賃貸借は一時使用目的のはず。
+3. Yは、Xが4月1日以降の使用を知りながら何も言わなかったと主張するが、Xは4月25日頃にYの使用を発見し、直ちに明渡しを求めた。契約は一時使用目的で期間満了しているので、Yは明け渡すべき。
+4. 賃貸借契約終了を理由に甲土地の明渡しを求める。
+
+【Yの言い分】
+1. X主張の契約で甲土地を借りて占有していることは認める。事務所等設置目的も事実だが、Xのマンション建設計画は知らなかったし、建物を簡易なものに限る合意もしていない。
+2. Xは賃料支払期日（毎月25日頃）に土地を見回るので、平成26年4月1日以降のYの使用を知っていたはず。Xはそのことを知りながら同年5月末まで何も言ってこなかった。Xの明渡要求はXの勘違いであり、今更の明渡請求はおかしい。
+
+【設問】
+1. 本件訴訟の訴訟物及びその個数並びに請求の趣旨を記載せよ。
+2. 本件訴訟の訴訟物及びその個数について、小問1で記載した結論に至った理由について説明せよ。
+3. 当事者の主張を、請求原因、抗弁、再抗弁などに整理して、各主張の要件事実を記載せよ（主張自体失当の主張は記載しない。）。
+4. 小問3で記載した要件事実のうち、Yの言い分1に基づく抗弁について、その事実から生じる実体法上の効果を踏まえて、それが抗弁となる理由を説明せよ。
+5. 小問3で記載した要件事実のうち、再抗弁について、その事実から生じる実体法上の効果を踏まえて、それが再抗弁となる理由を説明せよ。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">第1 小問1について</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">1 訴訟物及びその個数</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">賃貸借契約終了に基づく目的物返還請求権としての土地明渡請求権、1個</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">2 請求の趣旨</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">被告は、原告に対し、甲土地を明け渡せ。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">第2 小問2について</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">1 賃貸借契約の終了原因と訴訟物</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">終了原因には解除、期間満了、解約申入れ等複数ある。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">これら終了原因ごとに訴訟物が異なるか（多元説）。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">2 訴訟物一元説</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">賃貸借契約は終了時に目的物返還を約する契約。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">賃借物返還義務は契約自体の効果であり、終了原因自体の効果ではない。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">終了した契約が同一なら、終了原因が異なっても訴訟物は同じ（一元説）。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">3 結論</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">1個の賃貸借契約に基づく明渡請求である限り、終了原因が複数でも訴訟物は1個。個々の終了原因は攻撃方法。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">第3 小問3について (要件事実整理)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">1 請求原因</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">あ. X Y間、平23.4.1、甲土地賃貸借契約締結（賃料月30万）</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">い. X、Yに対し平23.4.1、(あ)契約に基づき甲土地引渡し</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">う. X Y間、(あ)契約の際、期間を平23.4.1～平26.3.31と合意</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">え. 平成26.3.31経過</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">2 抗弁1 (建物所有目的)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">カ. X Y間、(あ)契約の際、甲土地をYが建築する事務所等敷地として使用する旨合意</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">3 抗弁2 (黙示の更新)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">キ. Y、平26.4.1以後も事務所等敷地として甲土地使用継続</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">ク. X、平26.4.25頃、(キ)の事実を知った</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">ケ. (ク)から相当期間経過</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">コ. X、(ケ)の期間内に異議を述べなかった</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">4 再抗弁 (一時使用目的、抗弁1に対して)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">さ. X Y間、(あ)契約の際、期間を3年間に限る合意</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">し. 一時使用の評価根拠事実</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">① Yは(あ)契約当時、Xが3年後に甲土地にマンション建設計画を有することを知っていた</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">② X Y間、(あ)契約の際、甲土地に建築する建物を簡易なものに限る旨合意</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">第4 小問4について (Yの言い分1に基づく抗弁の理由)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">1 Yの言い分1に基づく抗弁1の内容</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">請求原因(あ)の賃貸借契約が建物所有目的の合意であったと主張。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">2 建物所有目的の場合の法的効果</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">土地賃貸借が「建物の所有を目的」(<span class="article-ref">借地借家法2条1号</span>)とする場合、存続期間は30年 (<span class="article-ref">同法3条本文</span>)。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">請求原因(う)の約定3年期間満了は、借地借家法適用により否定される。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">3 結論</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">建物所有目的の主張は、賃貸借契約終了に基づく目的物返還請求権の発生を障害するため、抗弁となる。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">第5 小問5について (再抗弁の理由)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">1 再抗弁の内容</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">請求原因(あ)の賃貸借契約が一時使用目的であると主張。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">2 一時使用目的の場合の法的効果</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">一時使用目的の土地賃貸借の場合、<span class="article-ref">借地借家法3条</span>(存続期間)は適用されない (<span class="article-ref">同法25条</span>)。</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">建物所有目的の土地賃貸借であっても、一時使用目的ならば民法の原則に戻り、約定期間満了で終了する。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">3 結論</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">一時使用目的の主張は、建物所有目的の抗弁の法的効果発生を障害し、請求原因の法的効果を復活させるため、再抗弁となる。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // マインドマップノードの処理
+            document.querySelectorAll('.mindmap li').forEach(item => {
+                const nc = item.querySelector(':scope > .node-container');
+                if (!nc) return;
+
+                const node = nc.querySelector('.node');
+                const sub = item.querySelector(':scope > ul');
+
+                if (node) {
+                    const tog = document.createElement('span');
+                    tog.className = 'toggler-icon';
+                    
+                    if (sub) {
+                        tog.textContent = '[-]';
+                        nc.insertBefore(tog, node);
+                        node.classList.add('toggleable');
+                        
+                        const toggle = (event) => {
+                            if (event.target === node || event.target === tog) {
+                                sub.classList.toggle('hidden');
+                                tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                            }
+                        };
+                        node.addEventListener('click', toggle);
+                        tog.addEventListener('click', toggle);
+
+                    } else {
+                        tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                        nc.insertBefore(tog, node);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

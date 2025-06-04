@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第7問 所有権2 (登記保持権原・虚偽表示の第三者)</title>
+<style>
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第7問 所有権2 (登記保持権原・虚偽表示の第三者)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し、X所有の甲土地になされたY名義の抵当権設定登記の抹消を求める訴訟。
+Xは、甲土地を相続後、Aと通謀して甲土地の売買を仮装しAに所有権移転登記。その後、AがYから借金をする際に甲土地にYのための抵当権を設定し、その登記がされたと主張。
+Yは、Aへの貸付及び抵当権設定は正当であり、XA間の売買が仮装であったとしてもYは善意であると主張。
+設問は、(1)訴訟物と請求の趣旨、(2)当事者の主張整理（要件事実）、(3)請求原因の要件事実の必要十分性の理由、(4)Yの「善意の第三者」主張の法的効果・位置付け及び要件事実の必要十分性の理由について問う。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">小問1について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">訴訟物</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">所有権に基づく妨害排除請求権としての抵当権設定登記抹消登記請求権 (1個)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">請求の趣旨</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">被告は土地について抵当権設定登記の抹消登記手続をせよ</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">小問2について (要件事実整理)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">請求原因</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">あ) Xの所有 (H25.12.18時点)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">い) Y名義の本件抵当権設定登記の存在</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">抗弁1 (所有権喪失 - 売買)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">か) XA間売買契約 (H25.12.18, 3000万円)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">抗弁2 (登記保持権原 - 抵当権設定) (抗弁1及び再抗弁を前提)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">キ) YA間金銭消費貸借 (H25.12.18, 1000万円, 利息・損害金約定)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ク) AY間抵当権設定合意 ((キ)債務担保)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ケ) 本件登記は(ク)の合意に基づく</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">コ) Yの善意 ((ク)の際、(さ)の仮装を知らず)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">再抗弁 (虚偽表示 - 抗弁1に対して)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">さ) XA間売買契約は仮装売買の合意</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">小問3について (請求原因の必要十分性)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">物権的請求権の要件</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">① 原告の不動産所有</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">② 妨害状態(抵当権設定登記)の存在</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(あ)の事実の必要性 (Xの所有)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Yが所有権喪失抗弁主張のため、Xの過去時点所有が前提</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Aの所有権取得原因事実時点でX所有に権利自白成立</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">他者所有権取得立証なければX所有は現在も存続</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">∴ (あ)の事実が必要</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(い)の事実の必要性 (Y名義登記)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Yの抵当権登記存在がX所有権の妨害</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">妨害状態明確化のため登記内容の具体的記載・主張立証</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">∴ (い)の事実が必要</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">結論: (あ)(い)が必要かつ十分</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">小問4について (Yの主張3: 虚偽表示と善意の第三者)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(1) 実体法上の効果と攻撃防御方法の位置付け</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Yの主張: <span class="article-ref">民法94条2項</span>の「第三者」保護</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">虚偽表示と善意第三者の権利関係 (法定承継取得説)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">仮装譲渡人から第三者への法定承継</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">第三者は仮装譲渡人から直接権利取得</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">第三者の登記保持権原を基礎付け</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">位置付け: 予備的抗弁 (所有権喪失抗弁・虚偽表示再抗弁が前提)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(2) 要件事実の必要十分性</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">要件事実 (善意第三者の登記保持権原抗弁)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① AY間被担保債権発生原因事実</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② AY間抵当権設定契約 (①担保のため)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">③ Yの善意 (②の際、XA間売買の虚偽表示を知らず)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">④ 登記が②の契約に基づく</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(キ)の事実の必要性 (① 被担保債権)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">抵当権の付従性 (被担保債権なしに不成立)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">本件: 消費貸借契約 (<span class="article-ref">民法587条</span>): ㋐金銭返還合意, ㋑金銭交付</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">登記と実体関係の具体的合致 (債権額・利息等)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">∴ (キ)の事実が必要</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(ク)の事実の必要性 (② 抵当権設定契約)</span>
+                    </div>
+                    <ul>
+                       <li>
+                        <div class="node-container">
+                          <span class="node level-3">登記保持権原の基礎付け</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">∴ (ク)の事実が必要</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(コ)の事実の必要性 (③ 善意)</span>
+                    </div>
+                    <ul>
+                       <li>
+                        <div class="node-container">
+                          <span class="node level-3">主張立証責任はY (<span class="article-ref">民法94条2項</span>効果主張者)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">∴ (コ)の事実が必要</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(ケ)の事実の必要性 (④ 登記と契約の関連)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">登記有効には実体関連性・手続適法性</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">争いなければ登記が契約に基づく旨で足りる</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">∴ (ケ)の事実が必要</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">結論: (キ)～(コ)が必要かつ十分</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = '&nbsp;'; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>

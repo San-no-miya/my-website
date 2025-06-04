@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第5問 代理(有権代理・表見代理・正当理由)</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第5問 代理(有権代理・表見代理・正当理由)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し、BをYの代理人とするA選手メモリアルバット売買契約（平成26年5月1日、代金50万円）に基づき代金支払を求めた訴訟。
+
+Xの主張概要：
+1. 有権代理：Yは以前からBを介して野球グッズを購入しており、本件売買もBがYを代理して行った。
+2. 表見代理：仮にBに代理権がなくとも、Xは過去の取引実績やYのA選手への関心等からBに代理権があると信ずべき正当な理由があった。
+3. 追認：Yは平成26年6月20日に契約内容を認め、月末支払を約束した。
+
+Yの主張概要：
+1. Bからの報告なし：本件売買契約についてBから聞いていない。
+2. 代理権範囲の限定：Bへの代理権は日本プロ野球グッズ買付に限定。メジャーリーググッズは対象外であり、XもYのコレクションを見てその事実を知っていたはず。XにはYへの確認義務違反という落ち度がある。
+3. 追認の否定：契約を追認した事実はない。
+
+設問の概要：
+1. 本件訴訟の訴訟物、その個数、請求の趣旨の記載。
+2. XとYの主張を請求原因、抗弁等に整理し、各主張の要件事実の記載。
+3. 有権代理主張（請求原因）について、記載した各事実の主張が必要かつ十分である理由の説明。
+4. 表見代理の「代理権があると信ずべき正当な理由」を根拠付ける具体的事実ごとの理由説明。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0 issue">小問1: 訴訟物・請求の趣旨</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">訴訟物</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">売買契約に基づく代金支払請求権</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">個数: 1個</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">請求の趣旨</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">被告は原告に対し50万円を支払え</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0 issue">小問2: 要件事実の整理</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">請求原因1 (有権代理)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">あ: X・B間売買契約 (H26.5.1, 本件バット, 50万円)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">い: Bの顕名 (Yのため)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">う: YからBへの代理権授与 (本件バット売買)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">請求原因2 (表見代理: <span class="article-ref">民法110条</span>)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">え: (あ)(い)と同様 (売買契約・顕名)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">お: Xの信頼 (Bに代理権ありと信じる)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">か: 正当な理由の評価根拠事実</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① XとY、B経由での過去の野球グッズ取引歴</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② Yによる野球グッズ収集</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">③ A選手は日本人メジャーリーガー、Yのお気に入り</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">④ XによるYへのA選手バット売却歴 (過去)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">⑤ XはYの収集範囲限定 (日本プロ野球グッズのみ) を知らず</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">き: YからBへの基本代理権授与 (日本プロ野球グッズ買付)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">請求原因3 (追認)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">く: (あ)(い)と同様 (売買契約・顕名)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">け: Yの追認意思表示 (H26.6.20, Xに対し)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">Yの抗弁 (正当な理由の評価障害事実)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">サ⑥: Yの収集は日本プロ野球グッズのみ</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">⑦ YがXに⑥のコレクションを提示 (H26春頃)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">⑧ Xは売買契約時、Yの意思を確認せず</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0 issue">小問3: 有権代理主張の理由 (<span class="article-ref">民法99条1項</span>)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">Xの請求: Yへの売買代金支払請求 (Bの代理行為理由)</span>
+                </div>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">必要な事実</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">i. 代理人との法律行為 (XとBの売買契約)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">要件: 目的物確定、代金額(決定方法)確定 (<span class="article-ref">民法555条</span>)</span>
+                        </div>
+                      </li>
+                       <li>
+                        <div class="node-container">
+                          <span class="node level-3">事実(あ)が該当</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ii. 顕名 (BがYのためにすることを示す)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">事実(い)が該当</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">iii. 代理権授与 (法律行為以前)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">事実(う)が該当</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">結論: 事実(あ)～(う)が必要かつこれで足りる</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0 issue">小問4: 「正当な理由」(<span class="article-ref">民法110条</span>) の根拠説明</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">「正当な理由」の意義: 代理権存在を信じたことに無過失</span>
+                </div>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">各事実の評価</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">事実① (同種取引・同代理人での過去取引)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">XがBの代理権を不審に思わずとも不自然でない根拠</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">事実②～④ (目的物と同種品取引歴、関心)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">YがBを通じて行う可能性のある取引範囲を基礎付ける根拠</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">事実⑤ (Yの収集範囲限定の不知)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">XがBの代理権範囲を不審に思わずとも不自然でない根拠 (特殊事情の不知)</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">結論: 事実①～⑤が「正当な理由」を根拠付ける具体的事実</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+
+    // 問題文要約の抽出と表示 (ここを追加)
+    // AIがHTML生成時に静的に要約を埋め込むため、このJavaScriptブロックでの処理は不要。
+});
+    </script>
+</body>
+</html>

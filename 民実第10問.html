@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第10問 動産引渡し(対抗要件・即時取得)</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第10問 動産引渡し(対抗要件・即時取得)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XとYは、家具販売業者Aから同じタンス（本件タンス）を買い受けたと主張しています。XがYに対し、本件タンスの引渡しを求める訴訟を提起しました。
+
+【Xの主張】
+平成26年6月5日、Aから本件タンスを50万円で購入。
+同月10日、Aから引渡しを受けた直後、金具の不調が見つかり修理を依頼。
+現在、Yが本件タンスを占有している。
+
+【Yの主張】
+平成26年6月11日、Aから本件タンスを10万円で購入し代金支払い済み。
+同月18日、Aから引渡しを受け、現在も占有。
+Xが先に購入し引渡しを受けていたとは知らなかった。仮にXの主張が事実だとしても、Yは平穏・公然・善意・無過失で引渡しを受けたので、即時取得している。X主張のステッカーは見ていない。
+
+【Xの反論】
+Yが本件タンス購入時、側面には「売約済み。X様」というステッカーが貼られていたはずであり、Yはこれを見ていた（悪意）、または容易にAに確認できたはず（過失）。
+
+【設問】
+1. 本件訴訟の訴訟物、その個数、請求の趣旨を記載せよ。
+2. X及びYの主張を、請求原因、抗弁、再抗弁などに整理し、各主張の要件事実を記載せよ。
+3. Yの即時取得に関する主張について、小問2で記載した各事実の主張が必要であり、かつ、これで足りると考えられる理由を説明せよ。
+4. (1) 過失の主要事実は何かを説明した上で、即時取得における過失の主要事実として一般的にどのような事実を主張する必要があるか説明せよ。
+   (2) Xの言い分3でYの過失を主張している点について、小問2で記載した事実ごとに、その主張を根拠付ける具体的事実と理由を簡潔に説明せよ。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第1 小問1について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1 訴訟物及びその個数</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">所有権に基づく返還請求権としての動産引渡請求権、1個</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 請求の趣旨</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">被告は、原告に対し、本件タンスを引き渡せ。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第2 小問2について (要件事実整理)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1 請求原因 (Xの所有権に基づく引渡請求)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">あ Aは、H26.6.5当時、本件タンスを所有</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">い AはXに対し、H26.6.5、本件タンスを代金50万円で売却</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">う Yは、本件タンスを占有</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 抗弁1 (対抗要件具備による所有権喪失 - 売買)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">カ AはYに対し、H26.6.11、本件タンスを代金10万円で売却</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">キ AはYに対し、H26.6.18、(カ)に基づき本件タンス引渡し</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">3 抗弁2 (所有権喪失 - 即時取得)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ク (カ) (キ)と同じ事実</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">4 再抗弁1 (先立つ対抗要件具備、抗弁1に対して)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">さ AはXに対し、H26.6.10、(い)に基づき本件タンス引渡し</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">5 再抗弁2 (悪意、抗弁2に対して)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">し Yは、(キ)の際、Aが本件タンスの所有者でないことを知っていた</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">6 再抗弁3 (過失の評価根拠事実、抗弁2に対して)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">す① (キ)の当時、タンスに「売約済み。X様」ステッカー貼付</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">す② (キ)の際、YはAに対しタンス所有者につき確認せず</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0 issue">第3 小問3について (Yの即時取得主張の要件事実の必要十分性)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1 <span class="article-ref">民法192条</span> 即時取得の要件</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">i 取引行為</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ii 引渡し (占有開始)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">iii 平穏・公然・善意</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">iv 無過失</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 要件事実として主張すべきもの</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">i 取引行為 (Yの売買契約 (カ))</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ii 引渡し (Yの現実の引渡し (キ))</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">占有改定による即時取得は不可</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">3 主張立証不要なもの</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">iii 平穏・公然・善意 (占有の事実から推定: <span class="article-ref">民法186条1項</span>)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">iv 無過失 (前主の適法権利者推定から無過失も推定: <span class="article-ref">民法188条</span>)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">前主の無権利 (積極的要件ではなく消極的要件)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">4 結論: (ク)の事実(売買と引渡し)の主張で必要かつ十分</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第4 小問4について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">1 (1) 過失の主要事実とは</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">過失は規範的評価。主要事実はそれを根拠付ける具体的事実 (不意打ち防止)。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">即時取得における過失の主要事実:</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">占有取得者が前主を権利者と信じた点に過失ありと評価される具体的事実。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 (2) XのYに対する過失主張の根拠</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">過失の構成: (a)調査確認義務の存在・内容 + (b)同義務の懈怠</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(す)①「売約済み。X様」ステッカーの事実</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">理由: Aの処分権限欠如を示唆し、Yの(a)調査確認義務を基礎付ける。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(す)② YがAに所有者確認をしなかった事実</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">理由: (す)①の事実により調査確認義務があったにも関わらず怠ったため、(b)義務懈怠を基礎付ける。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>

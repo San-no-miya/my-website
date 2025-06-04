@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第6問 所有権1 (対抗要件・所有権喪失)</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+        /* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第6問 所有権1 (対抗要件・所有権喪失)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し、本件土地の所有権に基づき明渡しを求める訴訟（本件訴訟）を提起。
+Xの言い分：
+1. 平成23年1月26日、Aから本件土地を1000万円で購入（本件売買契約）、林業を営む。契約書あり。
+2. 平成25年8月頃から何者かが侵入。平成26年には木が伐採されキャンプ場が作られていた。Yが作ったと判明。YはAから購入したと主張。
+3. 本件土地はXの土地なので、所有権に基づき明渡しを求める。
+Yの言い分：
+1. Yは本件土地の所有者。平成25年7月26日、Aから850万円で購入。Yが使用収益するのは所有者だから。
+2. Xは本件土地の所有権移転登記手続をしていないので、Yに対して明渡請求できない。
+
+設問：
+1. 本件訴訟の訴訟物及びその個数並びに請求の趣旨を記載せよ。
+2. 当事者の主張を、請求原因、抗弁、再抗弁などに整理して、各主張の要件事実を記載せよ（主張自体失当の主張は記載しない）。
+3. 請求原因について、小問2で記載した各事実の主張が必要であり、かつ、これで足りると考えられる理由を説明せよ（ただし、売買契約の締結の要件に該当する事実の説明はしなくてよい）。
+4. Yの言い分2に関する主張について、小問2で記載した各事実の主張が必要であり、かつ、これで足りると考えられる理由を説明せよ。
+5. Yの言い分2に代えて、Yが「平成25年7月26日に、Aとの売買契約に基づき、所有権移転登記手続をしている。したがって、本件土地の所有者は私であって、Xが私に対して明渡請求することはできない」と主張した場合（Yの言い分2'）を前提として、
+   (1) 上記言い分に関して、Yが抗弁として主張立証すべき要件事実を記載せよ。
+   (2) (1)で記載した事実について、その事実から生じる実体法上の効果を踏まえて、それが抗弁となる理由を説明せよ。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第1 小問1について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1 訴訟物及びその個数</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">所有権に基づく返還請求権としての土地明渡請求権、1個</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 請求の趣旨</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">被告は、原告に対し、別紙物件目録(省略)記載の本件土地を明け渡せ。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第2 小問2について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">1 請求原因</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">あ Aは、平成23年1月26日当時、本件土地を所有</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">い Aは、Xに対し、平成23年1月26日、本件土地を代金1000万円で売却</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">う Yは、本件土地を占有</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">2 抗弁 (対抗要件-売買)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">カ Aは、Yに対し、平成25年7月26日、本件土地を代金850万円で売却</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">キ Xが対抗要件を具備するまで、Xの所有権取得を認めない</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第3 小問3について (請求原因の必要性・十分性)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">1 所有権に基づく不動産明渡請求権の要件事実</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">① Xがその不動産を所有していること</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">② Yがその不動産を占有していること</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 ① Xの所有について (過去の所有権取得原因)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(1) X・Y共にAからの承継取得を主張</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">Aの所有につき権利自白成立 (早い時点)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">要件事実: (あ) H23.1.26時点のAの所有</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">要件事実: (い) XのAからの所有権取得原因事実(売買)</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(2) 売買による所有権取得 (<span class="article-ref">民法176条</span>)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">要件事実: 売買契約締結の事実</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">(3) したがって、①について(あ)(い)の事実が必要</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">3 ② Yの占有について (口頭弁論終結時の占有)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">実体法上、妨害状態が現存する場合に発生</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">要件事実: (う)現在の占有 (口頭弁論終結時の占有)</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">4 占有権原の不存在の立証責任</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">請求権者が不存在を立証するのは困難・不公平</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">相手方が正当な占有権原を主張立証</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2"><span class="article-ref">民法188条</span> (権利推定) は前主には効力なし</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">結論: 占有権原の不存在の主張立証は不要</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">5 よって、請求原因は(あ)～(う)で必要かつ十分</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第4 小問4について (Yの言い分2: 対抗要件の抗弁)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">1 Yの言い分2は対抗要件の抗弁 (<span class="article-ref">民法177条</span>)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">権利抗弁説</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① 正当な利益を有する第三者であることの基礎事実</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② 対抗要件の有無を問題として争う権利主張</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 ①について (正当な利益を有する第三者)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">二重譲渡の譲受人は登記未了を主張する正当な利益あり</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">要件事実: (カ)所有権移転の原因たるAY間売買契約</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">3 ②について (対抗要件の有無を問題とする意思)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">意思の明確化、対抗要件具備者への立証責任転換の公平性</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">要件事実: (キ)対抗要件の有無を問題として争う権利主張</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">4 よって、対抗要件の抗弁の要件事実は(カ)(キ)で必要かつ十分</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第5 小問5について (Yの言い分2': 対抗要件具備による所有権喪失)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">1 (1) 抗弁 (対抗要件具備による所有権喪失-売買)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ク (カ)と同じ (AY間売買契約)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ケ Yは、H25.7.26、(ク)の売買契約に基づき、本件土地につき所有権移転登記を具備</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">2 (2) 抗弁となる理由</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Yが目的物の所有権を確定的に取得</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">Xは所有権を喪失</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">したがって、Yの主張は請求原因による明渡請求権の発生を障害する抗弁となる</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>

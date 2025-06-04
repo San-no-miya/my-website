@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第2問 売買2(錯誤・消滅時効)</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* その後、指定の「徹底リセットCSS」を追加 */
+/* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第2問 売買2(錯誤・消滅時効)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し提起したパワーショベル売買代金請求訴訟（本件訴訟）に関する問題。平成26年7月28日の口頭弁論におけるXとYの言い分が示されている。
+設問は以下の4点：
+1. 本件訴訟の訴訟物、その個数、請求の趣旨の記載。
+2. 当事者の主張（Xの言い分、Yの言い分）を請求原因、抗弁、再抗弁等に整理し、各主張の要件事実の記載。
+3. 小問2で記載した抗弁の事実について、実体法上の効果を踏まえ、それが抗弁となる理由の説明。
+4. Yの言い分の消滅時効に関する主張について、小問2で記載した各事実の主張が必要かつそれで足りる理由の説明。
+Xは売買契約に基づく代金支払を請求。Yは錯誤による契約取消（改正民法95条1項）、消滅時効を主張。XはYの錯誤主張に対し重過失を、時効主張に対し債務承認による時効援用権喪失を主張している。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">小問1について</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">訴訟物及びその個数</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">売買契約に基づく代金支払請求権、1個</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求の趣旨</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">被告は、原告に対し、50万円を支払え。</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">小問2について (当事者の主張整理と要件事実)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">請求原因 (X)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">あ: X Y間、H21.5.7、本件機械を代金50万円で売買 (本件売買契約)</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">抗弁1 (Y: 錯誤)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">カ: (あ)当時、Yは本件機械がA社製甲II型パワーショベルでないのに、これが同型と誤信</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">キ: YはXに対し、(あ)に際し、A社製甲II型パワーショベルであるから本件機械を買い受けると述べた (動機の表示)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">ク: YはXに対し、H21.5.14、本件売買契約を取り消す旨の意思表示をした</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">抗弁2 (Y: 消滅時効)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">ケ: (あ)の際、(あ)の代金支払期日をH21.5.31とする合意</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">コ: H26.5.31経過 (支払期日から5年経過)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">サ: YはXに対し、H26.6.30、上記時効を援用する旨の意思表示</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">再抗弁1 (X: Yの重過失 - 抗弁1に対して)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">さ①: Yは(あ)当時、建設業を営みパワーショベルの型式に詳しかった</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">さ②: Yは(あ)の際、本件機械の型式を調査できたのにこれを怠った</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">再抗弁2 (X: 時効援用権の喪失 - 抗弁2に対して)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">し: YはXに対し、H26.6.27、(あ)の代金債務の支払を約束した (債務承認)</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">再々抗弁 (Y: 重過失の評価障害事実 - 再抗弁1に対して)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">タ①: A社製甲II型パワーショベルは、甲型パワーショベルと外観、形状、機能が類似</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">タ②: (あ)当時、Yは甲II型パワーショベルを保有していなかった</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">小問3について (抗弁となる理由)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">抗弁1 (錯誤) について</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">主張内容: 請求原因の売買契約につき錯誤があったことを主張</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">法律効果: 錯誤に基づく意思表示は取り消すことができる (<span class="article-ref">民法95条1項柱書</span>)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">取消の効果: 取り消された法律行為は初めから無効であったものとみなされる (<span class="article-ref">民法121条</span>)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">結論: 錯誤の主張は、売買契約に基づく代金支払請求権の発生を障害するものとして抗弁となる</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">抗弁2 (消滅時効) について</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">主張内容: 請求原因の債権について消滅時効を主張</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">法律効果: 消滅時効の完成により、債権は消滅する (<span class="article-ref">民法166条1項柱書</span>)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">結論: 消滅時効の主張は、売買契約に基づく代金支払請求権の消滅原因として抗弁となる</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">小問4について (消滅時効の主張の必要十分性)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">要件事実 (<span class="article-ref">民法166条1項1号</span>)</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">① 権利を行使することができることを知ったこと</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">② ①の時から5年間が経過したこと</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">③ 援用権者が相手方に対し時効援用の意思表示をしたこと</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">(ケ)の事実の必要性: 権利行使可能時(知った時)の確定</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">事実: 代金支払時期をH21.5.31とする合意</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">理由: ①の事実(権利行使を知った時)の前提</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">(ケ)の事実が必要</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">(コ)の事実の必要性: 時効期間経過の確定</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">事実: H26.5.31経過 (H21.6.1から5年経過)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">期間計算の起算点: <span class="article-ref">民法140条本文</span> (支払期日の翌日)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">権利不行使の主張立証: 不要 (権利行使は時効障害事由として債権者側が主張立証 <span class="article-ref">民法147条</span>)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">(コ)の事実が必要</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">(サ)の事実の必要性: 時効援用の確定</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">事実: H26.6.30、YがXに対し時効援用の意思表示</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">援用の法的性質: 時効による権利消滅の効果は援用によって確定的に生じる (<span class="article-ref">民法145条</span>)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2 conclusion">(サ)の事実が必要</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: よって、(ケ)～(サ)の事実が必要であり、かつ、これで足りる</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>第4問 保証(連帯保証・弁済・催告)</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">第4問 保証(連帯保証・弁済・催告)</h1>
+    <div class="summary-container">
+        <pre id="summary-text">XがYに対し、AのXに対する貸金債務（200万円、弁済期H26.6.11）についてYが連帯保証したとして、連帯保証契約に基づき200万円及び遅延損害金の支払を求める訴訟（本件訴訟）。
+
+Xの言い分:
+1. Aに対し、平成25年6月11日、200万円を貸し付けた（弁済期：平成26年6月11日）。
+2. 同日、Yとの間で、YがAの債務について連帯保証する契約を締結し、契約書も作成した。
+3. Aは弁済期を経過しても全く返済しない。Yは、Aが貸金の元本を平成26年6月11日に支払ったと言っているようだが、そのようなことはない。
+4. Yに対し、連帯保証契約に基づき、200万円と弁済期の翌日から支払済みまでの年3パーセントの割合による遅延損害金の支払を求める。
+
+Yの言い分:
+1. AのXとの消費貸借契約締結の際、Xとの間でAの債務を保証する契約を書面で締結した。これは単なる保証契約であり、連帯保証契約ではないはず。
+2. Aから、平成26年6月11日にXに対して貸金元本200万円を返済したと聞いているので、保証人としての責任はないと思う。Aの事業も軌道に乗り始めたので、Aが弁済したのは確かなはず。
+3. 仮にAが支払を行っていないとしても、先に主債務者Aに対して支払の催告を行ってほしい。
+
+設問の概要:
+1. 本件訴訟の訴訟物・個数、請求の趣旨を記載せよ。
+2. 小問1の訴訟物・個数の結論に至った理由を説明せよ。
+3. 当事者の主張を請求原因・抗弁・再抗弁に整理し、各主張の要件事実を記載せよ。
+4. 請求原因について、小問3で記載した各事実の主張が必要かつ十分な理由を説明せよ（主債務の発生原因事実は除く）。
+5. 小問3で記載した抗弁の弁済主張について、(1) 当該事実から生じる実体法上の効果を踏まえて抗弁となる理由を説明せよ。(2) 要件事実として小問3の記載が必要かつ十分な理由を説明せよ。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第1 小問1について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">訴訟物及びその個数</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">保証契約に基づく保証債務履行請求権、1個</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">請求の趣旨</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">被告は、原告に対し、200万円及びこれに対する平成26年6月12日から支払済みまで年3パーセントの割合による金員を支払え。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第2 小問2について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">連帯保証契約と訴訟物の理解</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">連帯の約定の位置づけ</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">保証契約と連帯保証契約を別個の契約類型とする見解もあるが、連帯保証契約は保証契約に特約が付されたものと解する。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">訴訟物は、保証契約に基づく保証債務履行請求権。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">保証債務の範囲</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">主たる債務に関する利息、違約金、損害賠償その他従たるもの全てを包含 (<span class="article-ref">民法447条1項</span>)。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">元本、利息、遅延損害金の保証債務履行請求は、1個の保証契約に基づくものであり訴訟物は1個。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第3 小問3について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">請求原因</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">あ. Xは、Aに対し、平成25年6月11日、200万円を貸し付けた。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">い. XとAは、(あ)に際し、返還時期を平成26年6月11日と定めた。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">う. 平成26年6月11日は経過した。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">え. Yは、Xとの間で、平成25年6月11日、(あ)の貸金債務を保証するとの合意をした。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">お. Yの(え)の意思表示は、契約書による。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">抗弁1 (主債務弁済)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">カ. Aは、Xに対し、平成26年6月11日、200万円を支払った。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">キ. (カ)は、(あ)の貸金返還債務の履行としてされた。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">抗弁2 (催告の抗弁)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">ク. Yは、XがAに催告をするまで、(え)の債務の履行に応じない。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">再抗弁 (連帯の約定、抗弁2に対して)</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">さ. (え)につき、連帯の約定がなされた。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第4 小問4について</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">請求原因の要件事実の必要十分性</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">保証債務履行請求権の要件事実</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① 主債務の発生原因事実</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② 保証契約の締結</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">③ 保証意思表示の書面性 (<span class="article-ref">民法446条2項</span>)</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">主債務者の不履行の要否</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3"><span class="article-ref">民法446条1項</span>の文言上は要件に見えるが、立証困難性から当事者の公平を考慮。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">不履行の事実は原告の主張立証不要。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">書面性の趣旨 (<span class="article-ref">民法446条2項</span>)</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">保証人の保護、保証意思の明確化のため。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">要件事実：専ら保証人の保証意思が書面上に示されていれば足りる。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">結論：(あ)～(お)の事実の主張で必要かつ十分。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">第5 小問5について (弁済の主張)</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(1) 弁済が抗弁となる理由</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">弁済は債権消滅原因 (<span class="article-ref">民法473条</span>)。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">主債務が弁済で消滅すれば、保証債務も付従性 (<span class="article-ref">民法448条等</span>)により消滅。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">本件：Aによる元本弁済主張。これにより保証債務の元本対応部分が消滅。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">元本弁済日以降の遅延損害金も発生しなくなる。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">Aによる元本弁済は、請求原因による保証債務履行請求権の効果を覆すため抗弁となる。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(2) 弁済の要件事実の必要十分性</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">弁済の要件事実</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① 債務の本旨に従った給付をしたこと。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② ①の給付がその債権についてされたこと（充当）。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">②の必要性：①だけでは給付目的が不明確なため、給付と債権の結合関係も主張立証対象。</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">結論：(カ)「AがXに200万円支払」と(キ)「(カ)が貸金返還債務の履行として」の事実の主張で必要かつ十分。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>
