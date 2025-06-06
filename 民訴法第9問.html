@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>民事訴訟法 第9問 (予備試験 平成27年) 不法行為に基づく損害賠償請求における訴訟物と一部請求</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* その後、指定の「徹底リセットCSS」を追加 */
+/* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">民事訴訟法 第9問 (予備試験 平成27年) 不法行為に基づく損害賠償請求における訴訟物と一部請求</h1>
+    <div class="summary-container">
+        <pre id="summary-text">【事例概要】
+X運転の二輪車とY運転の自動車が信号機のない交差点で衝突。Xは直進、Yは対向車線から右折。
+Yには交差点進入時の安全確認義務違反の過失、Xには前方不注視の過失があった。
+Xの損害: 人的損害合計1000万円 (内訳: 財産的損害(治療費・休業損害等)700万円、精神的損害(傷害慰謝料)300万円)。
+
+【設問1】
+不法行為に基づく損害賠償請求において、財産的損害と精神的損害をまとめて請求する場合、訴訟物は一つとする判例（最判昭48.4.5）の立場について、
+1. 理論的な理由
+2. そのように考えることによる利点
+を、上記【事例】に即して説明しなさい。
+
+【設問2】
+弁護士Aは、本件事故態様等から過失相殺により損害額が少なくとも3割減額されると考え、損害総額1000万円のうち、一部請求であることを明示して3割減額した700万円の損害賠償を求める訴えを提起することにした。
+この選択をした理由について説明しなさい。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問1: 不法行為に基づく損害賠償請求の訴訟物 (判例の立場)</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">判例の考え方: 訴訟物は1個</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">理論的理由</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">訴訟物特定の基準: 実体法上の権利 (明確性・実体法との調和)</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">利益の同一性: 身体という同一利益の侵害</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">結論: 財産的損害・精神的損害の賠償請求権は合わせて1個</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">訴訟物を1個と考える利点 (事例に即して)</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">紛争の一回的解決</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">一般的利点: 数度の応訴・審判回避、判決の矛盾抵触防止</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">本件での検討: Xが両損害を同時提起のため、二重起訴 (<span class="article-ref">民訴法142条</span>) や既判力により後訴は排斥され、上記弊害は少ない。</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 issue">慰謝料の補完的機能の実現 (本件での重要性大)</span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">背景: 慰謝料認定の裁量性、財産的損害の厳密な立証・認定の困難性</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">機能: 財産的損害で填補しきれない損害を慰謝料で調整し、適正な賠償額を確保</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">訴訟物が1個の場合 (判例の立場)</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">請求総額(1000万円)の範囲内で各損害項目間の流用が可能</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">例: 財産的損害認定額100万円でも、慰謝料を増額し総額で妥当な賠償額認定可</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">処分権主義 (<span class="article-ref">民訴法246条</span>) との関係: 申立額を超えない限り問題なし</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4">訴訟物が別個の場合 (反対説)</span>
+                                                </div>
+                                                <ul>
+                                                    <li>
+                                                        <div class="node-container">
+                                                            <span class="node level-5">精神的損害の訴訟物(慰謝料300万円)を超えた慰謝料認定は処分権主義違反</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <div class="node-container">
+                                                    <span class="node level-4 conclusion">結論: 判例の立場は、具体的妥当性を図り、Xの損害の適切かつ柔軟な填補に資する</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div class="node-container">
+                    <span class="node level-0">設問2: 一部請求 (700万円) を選択した理由</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1">弁護士Aの状況認識</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">過失相殺: 少なくとも3割減額を想定 (1000万円 × 0.7 = 700万円)</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">選択: 一部請求であることを明示して700万円を請求</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">理由1: 訴訟経済 (無駄な費用負担の回避) と依頼者Xの利益</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">全額請求(1000万円)の場合の問題点</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">予想される結果: 300万円分 (1000万 - 700万) は一部棄却濃厚</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">不利益: 棄却部分に対応する訴訟費用・弁護士費用が無駄になる可能性</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">一部請求(700万円)のメリット</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">判例の扱い: 過失相殺は損害全額から行い、残額が請求額を超えなければ残額認容、超えれば請求額認容 (一部請求でも認容額は減らない)</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">効果: 訴訟費用・弁護士費用を節約し、実質的勝訴を目指せる</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 issue">理由2: 将来の残部請求の確保</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">明示の一部請求の法的効果</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">既判力: 請求した一部(700万円)にのみ及ぶ</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">残部請求: 別訴で可能</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">時効完成猶予: 訴え提起により残部にも効力が及ぶ (<span class="article-ref">民法147条1項1号</span>, <span class="article-ref">民法724条の2</span>)</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="node-container">
+                                    <span class="node level-2">具体的な状況への対応</span>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3">仮に裁判所が損害額を700万円超と認定した場合 (例: 過失相殺が2割だった場合、800万円認容可能)</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="node-container">
+                                            <span class="node level-3 conclusion">効果: 残部(例: 100万円)を別訴で請求可能。時効消滅のリスクも低い。</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="node-container">
+                            <span class="node level-1 conclusion">結論: 弁護士Aの選択は、訴訟費用等を節約しつつ、過失相殺の程度が予想より軽微だった場合の残部請求の途も残す合理的判断</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+});
+    </script>
+</body>
+</html>
