@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>関心分野の紹介</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #FAFAFC; font-family: "Segoe UI", sans-serif; color: #333; }
+    header { text-align: center; padding: 2rem 1rem; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    header h1 { font-size: 2.2rem; color: #2E3A59; margin-bottom: 0.5rem; }
+    header p { font-size: 1rem; color: #677294; }
+    main { max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+    section { margin-bottom: 2rem; }
+    h2 { font-size: 1.5rem; color: #2E3A59; margin-bottom: 1rem; }
+
+    /* 共通カードスタイル */
+    details { background: #FFFFFF; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 1rem 0; overflow: hidden; }
+    summary { display: flex; align-items: center; cursor: pointer; padding: 1rem; font-weight: bold; font-size: 1.1rem; position: relative; transition: background 0.3s; }
+    summary::before { content: "▶"; display: inline-block; margin-right: 0.5rem; transition: transform 0.2s; }
+    details[open] summary::before { transform: rotate(90deg); }
+    details > div { padding: 1rem; border-top: 1px solid #F0F4FF; background: #FAFCFF; }
+
+    /* 関心事項用 青系 */
+    #interests summary { background: #E3F2FD; color: #1565C0; }
+    #interests li::before { color: #90CAF9; }
+
+    /* 就活用エントリーシート用 ピンク系 */
+    #reference > details.summary-pink > summary { background: #FCE4EC; color: #C2185B; }
+    #reference li::before { color: #F8BBD0; }
+
+    /* 要約ボックス */
+    .es-summary { background:#FCE4EC; padding:0.75rem; border-radius:8px; margin-bottom:1rem; color:#333; }
+
+    /* 引用ラベル枠 */
+    .es-label summary { background:#F8BBD0; color:#AD1457; }
+    .es-label > div { background:#FFF0F6; padding:1rem; border-radius:8px; }
+
+    ul { list-style: none; padding-left: 1rem; }
+    li { margin: 0.25rem 0; }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>関心分野の紹介</h1>
+    <p>一次産業を中心に、幅広い視点から取り組んでいるテーマ一覧</p>
+  </header>
+
+  <main>
+    <section id="interests">
+      <h2>関心事項</h2>
+      <details>
+        <summary>一次産業全般</summary>
+        <div>
+          <ul>
+            <li>農業（営農、畜産、果樹）</li>
+            <li>林業（伐採、造林、間伐）</li>
+            <li>漁業・水産業（沿岸漁業、沖合漁業、養殖業）</li>
+            <li>鉱業・資源開発（石炭、鉱石、希少金属）</li>
+            <li>エネルギー資源（石油・天然ガス採掘、地熱）</li>
+            <li>二次利用（バイオマス、林地残材利用）</li>
+            <li>地域循環型資源管理</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>インフラ＆サプライチェーン</summary>
+        <div>
+          <ul>
+            <li>港湾インフラ（水産物輸出、資源輸送ターミナル）</li>
+            <li>森林／漁港の整備・再生</li>
+            <li>農業用水・河川管理</li>
+            <li>鉱山アクセス道路・パイプライン</li>
+            <li>物流DX（コールドチェーン、トレーサビリティ）</li>
+            <li>地域強靭化インフラ（防潮堤、治山治水）</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>企業参入・産学官連携</summary>
+        <div>
+          <ul>
+            <li>一次産業法人設立（農業法人、漁業協同組合法人、林業経営体）</li>
+            <li>国家戦略特区・地域再生特区での参入促進</li>
+            <li>スマート農林漁業（IoT／ドローン／遠隔操業）</li>
+            <li>アグリ・フォレスト・マリンスタートアップ（FoodTech, AquaTech, ForestTech）</li>
+            <li>ESG・SDGs投資（CO₂吸収源、海洋保全）</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>先端テクノロジー・フード／バイオテック</summary>
+        <div>
+          <ul>
+            <li>植物工場・垂直農法</li>
+            <li>海洋養殖の陸上クローズドシステム</li>
+            <li>バイオマス発電（木質バイオマス、藻類バイオ燃料）</li>
+            <li>クリーンミート／セルカルチャーフィッシュ</li>
+            <li>ブロックチェーンによる漁獲証明・林産物トレーサビリティ</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>JA・漁協・林協と自民党・行政</summary>
+        <div>
+          <ul>
+            <li>農協法・漁協法・林協組織改革（2015年以降）</li>
+            <li>全農・漁連・林野庁のガバナンス</li>
+            <li>協同組合の政治資金・票読み</li>
+            <li>LDP農林漁政務調査会の動向</li>
+            <li>地域協同組合の経営多角化</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>一次産業支援策・政策形成力</summary>
+        <div>
+          <ul>
+            <li>食料・農業・農村基本法改正</li>
+            <li>漁業法改正（資源管理、クォータ制度）</li>
+            <li>森林環境税・森林経営管理法</li>
+            <li>補助金・価格支持策（耕作放棄地対策、漁業保障）</li>
+            <li>農林水産分野の国家プロジェクト（Society 5.0、地方創生）</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>国際貿易協定と一次産業</summary>
+        <div>
+          <ul>
+            <li>CPTPP（TPP 11）・日米FTAの影響（農水産物・林産物・鉱物資源）</li>
+            <li>IPEF・RCEP・日中韓FTA</li>
+            <li>関税撤廃・セーフガード・原産地ルール</li>
+            <li>海洋資源権益交渉</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>制度・補助金・規制一覧（2014–2024）</summary>
+        <div>
+          <ul>
+            <li>農林水産成長産業化支援交付金／林業再生支援金</li>
+            <li>水産資源維持管理交付金</li>
+            <li>税制優遇（認定農業者、特定林業経営体）</li>
+            <li>HACCP義務化（食品・水産加工）</li>
+            <li>環境規制（水質基準、漁場保全条例）</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <section id="reference">
+      <h2>就活用エントリーシート</h2>
+      <details class="summary-pink">
+        <summary>就活用エントリーシート</summary>
+        <div>
+          <!-- 要約 -->
+          <div class="es-summary">
+            高校時代の友人の自殺を契機に、人のトラブルに真正面から向き合い解決へ導く弁護士を志望。幅広い知識習得に注力し、企業法務を通じて社会的視座を活かしたいと考えています。
+          </div>
+          <!-- 引用ラベルと本文 -->
+          <details class="es-label">
+            <summary>「関心事項と将来の展望を理解してもらう参考」として引用</summary>
+            <div>
+              <blockquote>
+                私が法曹を志した理由は、社会で発生している問題に対して、「仕方ないことだ」と言わないようになりたいと考えたからです。私はかつて北海道大学工学部に在籍していましたが、周囲の人間から家庭環境や経済的事情で苦しむ話を聞く中で、人間が抱える問題と直接に接する職業に就き、人生を賭けてそのことを考え抜きたいと考えるようになりました。民間企業やシンクタンク、公務員などの進路も視野に入れて東京大学文科一類に入学しましたが、入学して２ヶ月後、高校時代の友人が自殺したことを契機に、資格を以て人間のトラブルに向き合い、相談を受けて解決のために誰かと一緒に取り組んでいくような、弁護士の職業に強く憧れを抱くようになりました。
+
+                現在に至るまでの学生生活では、幅広い知識の習得に熱意を持って取り組んできました。1年次秋学期には1コマを除き、成績評価のある全ての授業で上位3割以内の得点を取得し、とりわけ第二外国語の中国語では平均87点と1年を通じて好成績を維持しました。その結果として法学部進学者希望者内順位16位（文科一類枠）の高順位で前期教養課程を終えています。幅広い分野の知識と学習は、相手の立場を理解しながら建設的な関係を築く能力、変容する状況に対応する能力を培い、法律家としての活動にも活かせると考えています。
+
+                貴所のインターンプログラムには、大規模な事務所で、企業法務弁護士としての働き方を学ぶ貴重な機会であると考え、志望しました。
+                私は、自身が法曹を志した理由から、学部2年生までは個人の家庭問題や地域企業の問題に取り組む弁護士としてのキャリアを検討していました。しかし、障害当事者団体の方と話した経験や、比較政治の中での労働組合の役割を学んだこと、そして企業が他国の政治状況に直面する報道を目にしたことで、個人の問題の上部構造として存在する企業活動に関心を持つようになりました。また、私は法学部第３類政治コースに在籍し、国内外の政治制度についても関心を持って学んでいます。これら関心事により現在は、多くの人々の生活を支える企業の代理人の立場に立つことで私の知識を、国内外の政治状況と不可分である企業利益や社会のより良いあり方へと活かすことができるのではないかと考えるに至りました。企業法務を扱う中でも、社会的な視座を強調されている貴所で、先生方の活動を直接に体感したいということが、本プログラムに応募した理由です。
+              </blockquote>
+            </div>
+          </details>
+        </div>
+      </details>
+    </section>
+  </main>
+</body>
+</html>
