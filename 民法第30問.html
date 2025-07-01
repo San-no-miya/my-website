@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>民法 第30問 転貸借と権利濫用・解除</title>
+<style>
+/* CSSは後述のものをそのまま使用 */
+/* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+</style>
+</head>
+<body>
+    <h1 class="document-title">民法 第30問 転貸借と権利濫用・解除</h1>
+    <div class="summary-container">
+        <pre id="summary-text">甲から土地Aを借りた乙（賃借権登記なし）は、その半分を丙に無断で転貸した。
+丙は無断転貸の事実を知りながら建物を建築した後、元の所有者である甲から土地Aの所有権を譲り受け、移転登記を完了した。
+丙が乙に対し、使用部分の明渡しを請求したとき、この請求は認められるか。
+①所有権を根拠とする場合、②無断転貸による解除を根拠とする場合に分け、丙の主張と乙の反論を論じる。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">丙の乙に対する明渡請求の可否</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">第1：所有権を根拠とする請求</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">丙の主張：所有権(<span class="article-ref">206条</span>)に基づく明渡請求</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">乙の反論：賃借権による占有権原の抗弁</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">丙の再反論：乙の賃借権は登記がなく対抗力がない(<span class="article-ref">605条</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">乙の再々反論</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4 issue">[論点1] 背信的悪意者排除論の適用</span>
+                            </div>
+                            <ul>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5 conclusion">結論：賃貸借は対抗関係ではないため適用されない</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4 issue">[論点2] 権利濫用(<span class="article-ref">1条3項</span>)</span>
+                            </div>
+                            <ul>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5">あてはめ：丙は転借人として乙の賃借権を前提としていたにもかかわらず、所有権取得後にその存在を否定するのは矛盾挙動</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5 conclusion">結論：丙の請求は権利濫用にあたり許されない</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">小結論：所有権に基づく請求は認められない</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">第2：無断転貸による解除を根拠とする請求</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">丙の主張の前提</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">① 丙の賃貸人たる地位の取得</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">所有権に基づく請求が権利濫用で否定される結果、丙は賃貸人の地位を承継する(<span class="article-ref">605条の2</span>)</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">② 解除権の発生 (<span class="article-ref">612条2項</span>)</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4 issue">[論点3] 信頼関係破壊理論</span>
+                            </div>
+                            <ul>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5">あてはめ：土地の1/2の転貸は軽微ではなく、信頼関係を破壊する</span>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5 conclusion">結論：旧賃貸人(甲)との関係では解除権は発生</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">乙の反論：丙は解除権を行使できない</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-4 issue">[論点4] 新賃貸人による解除権行使の可否</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-5">判断基準：信頼関係は当事者間で相対的に判断される</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-5">あてはめ：丙自身が悪意の転借人であり、丙との関係では信頼関係破壊の背信行為とはいえない</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-5 conclusion">結論：丙は解除権を行使できない</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">小結論：解除に基づく請求も認められない</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">最終結論：丙の請求はいずれの根拠によっても認められない</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+
+    // 問題文要約の抽出と表示 (ここを追加)
+    const fullText = document.body.parentElement.outerHTML; // HTML全体のテキストを取得 (荒っぽい方法なので改善の余地あり)
+                                                          // もし入力テキストが直接ここに渡されるなら、その方が良い。
+                                                          // ここでは、プロンプトの指示に基づき、生成されたHTML内に
+                                                          // 区切り文字がある前提で動作するよう記述するが、
+                                                          // 実際にはHTML生成時に静的に埋め込む方が望ましい。
+                                                          // このスクリプトはブラウザで実行されるため、
+                                                          // AIが「入力テキスト」を直接参照することはできない。
+                                                          // よって、この部分はAIがHTMLを生成する際に、
+                                                          // 「7. コンテンツ抽出とマッピングのガイドライン」に従って
+                                                          // 静的に要約を埋め込むことを期待する。
+                                                          // JavaScriptでの動的抽出・挿入はここでは行わない。
+                                                          // (AIがHTML生成時に行うべき処理のため)
+});
+    </script>
+</body>
+</html>
