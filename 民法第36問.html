@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>民法 第36問 94条2項類推適用と転貸借</title>
+<style>
+        /* CSSは後述のものをそのまま使用 */
+        /* 画面全体 */
+        body {
+            font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+            line-height: 1.5;
+            margin: 0; /* body自体のマージンは0 */
+            padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* ドキュメントタイトル */
+        .document-title {
+            font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+            font-weight: bold;
+            color: #333333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* 問題文要約コンテナ */
+        .summary-container {
+            border: 1px solid #cccccc;
+            padding: 15px;
+            margin: 20px auto;
+            font-size: 0.85em;
+            background-color: #f8f8f8;
+            max-width: 90%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .summary-container pre {
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: inherit;
+            line-height: inherit;
+            color: #333333;
+        }
+
+        /* マインドマップコンテナ */
+        .mindmap-container {
+            display: block;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mindmap,
+        .mindmap ul {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .mindmap ul {
+            padding-left: 20px;
+        }
+
+        .mindmap li {
+            margin: 5px 0;
+            position: relative;
+        }
+
+        /* ノード */
+        .node {
+            padding: 4px 8px;
+            border-radius: 5px;
+            border: 1px solid #d1ccc0;
+            display: inline-block;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color .2s, color .2s;
+            cursor: default;
+        }
+
+        /* トグル可能ノード */
+        .node.toggleable {
+            cursor: pointer;
+        }
+
+        .node.toggleable:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* トグルアイコン */
+        .toggler-icon {
+            display: inline-block;
+            margin-right: 4px;
+            font-weight: bold;
+            width: 1em;
+            text-align: center;
+        }
+
+        /* 階層ごとの色分け */
+        .level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+        .level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+        .level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+        .level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+        .level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+        .level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+        .level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+        /* 重要事項・結論 */
+        .issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+        .conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+        /* 非表示用 */
+        .hidden { display: none !important; }
+
+        /* コネクタ線 */
+        .mindmap li::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .mindmap li:not(:last-child)::before {
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li:last-child::before {
+            height: .9em;
+            border-left: 1px solid #b0bec5;
+        }
+
+        .mindmap li > .node-container > .node::after {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: .9em;
+            width: 9px;
+            border-top: 1px solid #b0bec5;
+        }
+
+        .mindmap > li::before {
+            display: none;
+        }
+        .mindmap > li > .node-container > .node::after {
+            display: none;
+        }
+
+        .mindmap > li > .node-container + ul > li:first-child::before {
+            top: -5px;
+        }
+
+        /* 強調用 */
+        .crime-name { font-weight: bold; }
+        .article-ref { font-size: .85em; opacity: .8; }
+
+        /* アイコン＋ノードまとめ */
+        .node-container {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+        /* --- 徹底リセットCSS (ここから追加) --- */
+        html, body {
+          width: 100% !important;
+          min-width: 0 !important;
+          overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+          box-sizing: border-box;
+        }
+
+        .mindmap-container { /* mindmap-container のスタイル */
+          display: block !important;
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          overflow-x: auto !important; /* 水平スクロールはコンテナで */
+          box-sizing: border-box !important;
+          padding: 0 6px !important; /* コンテナ左右に少し余白 */
+          text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+        }
+
+        .mindmap { /* mindmap (ul ルート要素) のスタイル */
+          display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+          text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+          /* width は inline-block のため内容依存 */
+          max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+          box-sizing: border-box !important;
+          margin: 0 !important; /* ul のデフォルトマージンをリセット */
+          padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+          /* list-style: none; は元のCSSで指定済み */
+          /* position: relative; は元のCSSで指定済み */
+        }
+
+        .node {
+          font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+          white-space: normal !important; /* テキストを折り返す */
+          word-break: break-word !important; /* 単語の途中でも折り返す */
+        }
+
+        @media (max-width: 600px) {
+          .node {
+            font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+          }
+          body {
+              padding: 10px; /* モバイルではbodyの余白を少し減らす */
+          }
+          .document-title {
+              font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+          }
+          .summary-container {
+              max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+              font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+          }
+        }
+        /* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">民法 第36問 94条2項類推適用と転貸借</h1>
+    <div class="summary-container">
+        <pre id="summary-text">【設問1の事案】
+*   AがBから建物を購入したが、登記はBのままだった。
+*   BはAを騙し、架空債権の担保として「譲渡担保」を原因とする所有権移転登記をB名義で行った。
+*   BはCに建物を売却。Cは「Aの譲渡担保権が付いている」と誤信し、Aが真の権利者でないことに過失で気付かなかった。
+*   CはAに弁済しようとしたが拒否され、弁済供託した。
+
+【設問1】
+CはAに対し、本件登記の抹消を請求できるか。
+
+【設問2の事案】
+*   (別事案) AとCの和解で建物はC所有に。
+*   CはDに賃貸（修繕費はD負担特約）。DはCの承諾を得てEに転貸。
+*   Eが雨漏りの修繕費30万円を支出。
+*   CとDが賃貸借契約を合意解除。
+*   CはEに明渡し又は相場賃料を請求。EはCに修繕費を請求。
+
+【設問2】
+C→Eの請求、E→Cの請求は認められるか。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">設問1の検討</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">CのAに対する抹消登記請求の可否</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">請求権の前提: Cが甲建物の所有権を有すること</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">Cは所有権を取得したか？</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">Bからの取得: 不可</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">理由: AB売買+Aの登記(<span class="article-ref">177条</span>)によりAが所有者。Bは無権利者。</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3"><span class="article-ref">94条2項類推適用</span>による取得の検討</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">要件① 虚偽の外観の存在: 譲渡担保登記 → 〇</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">要件② 真の権利者Aの帰責性: 漫然と署名押印 → 〇</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">要件③ 第三者Cの信頼: 善意だが「過失」あり → ×</span>
+                            </div>
+                            <ul>
+                              <li>
+                                <div class="node-container">
+                                  <span class="node level-5">補足: 意思外形非対応型であり、<span class="article-ref">110条</span>も類推しCには無過失が要求される。</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">結論: Cは所有権を取得しない。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">Cの抹消登記請求は認められない。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">設問2の検討</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">前提: CE間の法律関係</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">CD間の合意解除はEに対抗不可 (<span class="article-ref">613条3項</span>)</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">結果、DE間の転貸借契約がCE間に承継される。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">CのEに対する請求の検討</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">明渡請求: 不可</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">理由: Eは承継された賃借権という適法な占有権原を持つ。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">相場賃料(25万)請求: 不可</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">理由: 承継された賃料は月額15万円。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">結論: 15万円の限度で請求可能。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">EのCに対する請求の検討</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">修繕費30万円の請求: 可能</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">法的根拠: 必要費償還請求権 (<span class="article-ref">608条1項</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">理由: CD間の修繕費特約はCE間に承継されない。新賃貸人Cが義務を負う。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">Cの不利益: 自ら合意解除した結果であり、甘受すべき。</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">結論: Eの請求は認められる。</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+
+    // 問題文要約の抽出と表示 (ここを追加)
+    const fullText = document.body.parentElement.outerHTML; // HTML全体のテキストを取得 (荒っぽい方法なので改善の余地あり)
+                                                          // もし入力テキストが直接ここに渡されるなら、その方が良い。
+                                                          // ここでは、プロンプトの指示に基づき、生成されたHTML内に
+                                                          // 区切り文字がある前提で動作するよう記述するが、
+                                                          // 実際にはHTML生成時に静的に埋め込む方が望ましい。
+                                                          // このスクリプトはブラウザで実行されるため、
+                                                          // AIが「入力テキスト」を直接参照することはできない。
+                                                          // よって、この部分はAIがHTMLを生成する際に、
+                                                          // 「7. コンテンツ抽出とマッピングのガイドライン」に従って
+                                                          // 静的に要約を埋め込むことを期待する。
+                                                          // JavaScriptでの動的抽出・挿入はここでは行わない。
+                                                          // (AIがHTML生成時に行うべき処理のため)
+});
+    </script>
+</body>
+</html>
