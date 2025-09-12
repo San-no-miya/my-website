@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=3.0, user-scalable=yes">
+    <title>司法試験2024年　行政法</title>
+<style>
+        /* 画面全体 */
+body {
+    font-family: 'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+    font-size: 13px; /* モバイル表示を考慮した基本フォントサイズ */
+    line-height: 1.5;
+    margin: 0; /* body自体のマージンは0 */
+    padding: 20px; /* 全体余白、リセットCSSのメディアクエリで調整される */
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* ドキュメントタイトル */
+.document-title {
+    font-size: 24px; /* bodyのフォントサイズに合わせて調整、リセットCSSのメディアクエリで調整される */
+    font-weight: bold;
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 問題文要約コンテナ */
+.summary-container {
+    border: 1px solid #cccccc;
+    padding: 15px;
+    margin: 20px auto;
+    font-size: 0.85em;
+    background-color: #f8f8f8;
+    max-width: 90%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.summary-container pre {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: inherit;
+    line-height: inherit;
+    color: #333333;
+}
+
+/* マインドマップコンテナ */
+.mindmap-container {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mindmap,
+.mindmap ul {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+}
+
+.mindmap ul {
+    padding-left: 20px;
+}
+
+.mindmap li {
+    margin: 5px 0;
+    position: relative;
+}
+
+/* ノード */
+.node {
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #d1ccc0;
+    display: inline-block;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color .2s, color .2s;
+    cursor: default;
+}
+
+/* トグル可能ノード */
+.node.toggleable {
+    cursor: pointer;
+}
+
+.node.toggleable:hover {
+    background-color: #e0e0e0;
+}
+
+/* トグルアイコン */
+.toggler-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: bold;
+    width: 1em;
+    text-align: center;
+}
+
+/* 階層ごとの色分け */
+.level-0 { background: #b2dfdb; color: #004d40; border-color: #80cbc4; }
+.level-1 { background: #bbdefb; color: #0d47a1; border-color: #90caf9; }
+.level-2 { background: #c8e6c9; color: #1b5e20; border-color: #a5d6a7; }
+.level-3 { background: #fff9c4; color: #795548; border-color: #fff59d; }
+.level-4 { background: #ffccbc; color: #bf360c; border-color: #ffab91; }
+.level-5 { background: #d1c4e9; color: #311b92; border-color: #b39ddb; }
+.level-6 { background: #b2ebf2; color: #006064; border-color: #80deea; }
+
+/* 重要事項・結論 */
+.issue { background: #ffcdd2; color: #c62828; border-color: #ef9a9a; font-weight: bold; }
+.conclusion { background: #cfd8dc; color: #263238; border-color: #b0bec5; }
+
+/* 非表示用 */
+.hidden { display: none !important; }
+
+/* コネクタ線 */
+.mindmap li::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.mindmap li:not(:last-child)::before {
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li:last-child::before {
+    height: .9em;
+    border-left: 1px solid #b0bec5;
+}
+
+.mindmap li > .node-container > .node::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: .9em;
+    width: 9px;
+    border-top: 1px solid #b0bec5;
+}
+
+.mindmap > li::before {
+    display: none;
+}
+.mindmap > li > .node-container > .node::after {
+    display: none;
+}
+
+.mindmap > li > .node-container + ul > li:first-child::before {
+    top: -5px;
+}
+
+/* 強調用 */
+.crime-name { font-weight: bold; }
+.article-ref { font-size: .85em; opacity: .8; }
+
+/* アイコン＋ノードまとめ */
+.node-container {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+/* --- 徹底リセットCSS (ここから追加) --- */
+html, body {
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: visible !important; /* visibleのママで、中の要素でauto */
+  box-sizing: border-box;
+}
+
+.mindmap-container { /* mindmap-container のスタイル */
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important; /* 水平スクロールはコンテナで */
+  box-sizing: border-box !important;
+  padding: 0 6px !important; /* コンテナ左右に少し余白 */
+  text-align: center !important; /* 子要素である .mindmap を中央揃えするため */
+}
+
+.mindmap { /* mindmap (ul ルート要素) のスタイル */
+  display: inline-block !important; /* 内容に応じた幅になり、text-align:centerで中央寄せされる */
+  text-align: left !important; /* マインドマップ自身のテキストや要素の基点を左に */
+  /* width は inline-block のため内容依存 */
+  max-width: 100% !important; /* 親コンテナを超えることは防ぐ (スクロールのため) */
+  box-sizing: border-box !important;
+  margin: 0 !important; /* ul のデフォルトマージンをリセット */
+  padding: 0 !important; /* ul のデフォルトパディングをリセット (元のCSSの padding-left: 0; を強化) */
+  /* list-style: none; は元のCSSで指定済み */
+  /* position: relative; は元のCSSで指定済み */
+}
+
+.node {
+  font-size: 16px !important; /* ノードのフォントサイズを読みやすく */
+  white-space: normal !important; /* テキストを折り返す */
+  word-break: break-word !important; /* 単語の途中でも折り返す */
+}
+
+@media (max-width: 600px) {
+  .node {
+    font-size: 17px !important; /* 小さな画面ではノードフォントを僅かに大きく */
+  }
+  body {
+      padding: 10px; /* モバイルではbodyの余白を少し減らす */
+  }
+  .document-title {
+      font-size: 20px; /* モバイルではタイトルフォントを少し小さく */
+  }
+  .summary-container {
+      max-width: 95%; /* モバイルでは要約コンテナの幅を広めに */
+      font-size: 0.9em; /* モバイルでの要約フォントサイズ調整 */
+  }
+}
+/* --- 徹底リセットCSS (ここまで追加) --- */
+    </style>
+</head>
+<body>
+    <h1 class="document-title">司法試験2024年　行政法</h1>
+    <div class="summary-container">
+        <pre id="summary-text">【事案の概要】
+Q県R市の都市再開発事業において、施行区域に新たな土地（C地区）が編入される事業計画の変更が知事により認可された（本件事業計画変更認可）。施行地区内の宅地所有者Dは、この変更により自己の権利床が減少したことに不満を持ち、後続の権利変換処分の取消訴訟を提起した。
+
+【設問の概要】
+■設問1
+(1) 先行処分である本件事業計画変更認可が、取消訴訟の対象となる「処分」に当たるか。その法的効果を明らかにして論じることが求められる。
+(2) 同認可の違法事由として、Dはどのような主張が可能か。手続的瑕疵と実体的瑕疵の観点から検討する。
+
+■設問2
+後行処分である権利変換処分の取消訴訟において、先行処分である本件事業計画変更認可の違法性を主張できるか（違法性の承継）。先行処分の出訴期間が経過していることが前提となる。
+
+【関連法令の抜粋】
+本件は都市再開発法及び都市計画法が関わる。
+・都市計画法第13条第1項第13号：市街地開発事業は「一体的に開発し、又は整備する必要がある土地の区域」について定める。
+・都市再開発法第3条第4号：施行区域は「土地の高度利用を図ることが、当該都市の機能の更新に貢献する」ことが要件。
+・都市再開発法第16条：事業計画の縦覧及び利害関係者の意見書提出手続を定める。
+・都市再開発法第38条第2項：事業計画の「軽微な変更」については、縦覧手続等を要しない。
+・都市再開発法第71条：権利変換を希望しない旨の申出制度。
+・都市再開発法第72条、第86条：権利変換計画の認可と権利変換処分。</pre>
+    </div>
+    <div class="mindmap-container">
+        <ul class="mindmap">
+          <li>
+            <div class="node-container">
+              <span class="node level-0">設問1：本件事業計画変更認可の処分性と違法性</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(1) 処分性の論拠</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">処分性の定義（最判昭39.10.29）</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">公権力性：都道府県知事の優越的地位に基づき肯定</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">直接的な法的効果の有無</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">権利変換or金銭給付の選択を迫られる法的地位を創設 (<span class="article-ref">法71条1項</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">建築行為等の制限を受ける法的地位を創設 (<span class="article-ref">法66条1項</span>)</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">権利床面積が変動しうる法的地位を創設</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 conclusion">結論：法的効果があり「処分」に当たる</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">(2) Dが主張しうる違法事由</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">手続的瑕疵</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">縦覧・意見書提出手続(<span class="article-ref">法16条</span>)の不履践</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">「軽微な変更」(<span class="article-ref">法38条2項</span>)への非該当</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">施行地区の変更は、施行令4条に列挙されておらず「軽微」ではない</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">結論：重大な手続違反で違法</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2 issue">実体的瑕疵（前提となる都市計画の違法）</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">都市計画基準違反 (<span class="article-ref">都市計画法13条1項13号</span>)</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">C地区はB地区と河川で分断され「一体的に開発」する必要がない</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">施行区域要件違反 (<span class="article-ref">再開発法3条4号</span>)</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">C地区の公園化は「都市の機能の更新に貢献」しない</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3 conclusion">結論：違法な都市計画に基づく本件変更認可も違法</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="node-container">
+              <span class="node level-0">設問2：権利変換処分取消訴訟における違法性の承継</span>
+            </div>
+            <ul>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">違法性の承継の原則と例外</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">出訴期間の趣旨から原則として承継は否定</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">国民の権利救済のため例外的に肯定</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 issue">判断基準（最判平21.12.17）</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">実体法的観点：先行・後行処分が結合して一つの法的効果を発生させるか</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">あてはめ：事業計画と権利変換は一体の事業の段階的実現であり、結合して効果を発生させる → 肯定</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">手続法的観点：先行処分を争う手続的保障が十分に与えられているか</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">あてはめ</span>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">認可段階では個人の不利益が不明確で、争訟提起を期待するのは酷</span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="node-container">
+                              <span class="node level-4">そもそも縦覧等の手続が履践されておらず、争う機会がなかった</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="node-container">
+                          <span class="node level-3">→ 手続的保障は不十分 → 肯定</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1">被告（B地区組合）からの反論（想定）</span>
+                </div>
+                <ul>
+                  <li>
+                    <div class="node-container">
+                      <span class="node level-2">出訴期間の徒過による法的安定性を害する。</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="node-container">
+                  <span class="node level-1 conclusion">結論：実体・手続両観点から違法性の承継は肯定され、Dは違法性を主張できる。</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // マインドマップノードの処理
+    document.querySelectorAll('.mindmap li').forEach(item => {
+        const nc = item.querySelector(':scope > .node-container');
+        if (!nc) return;
+
+        const node = nc.querySelector('.node');
+        const sub = item.querySelector(':scope > ul');
+
+        if (node) {
+            const tog = document.createElement('span');
+            tog.className = 'toggler-icon';
+            
+            if (sub) {
+                tog.textContent = '[-]';
+                nc.insertBefore(tog, node);
+                node.classList.add('toggleable');
+                
+                const toggle = (event) => {
+                    if (event.target === node || event.target === tog) {
+                        sub.classList.toggle('hidden');
+                        tog.textContent = sub.classList.contains('hidden') ? '[+]' : '[-]';
+                    }
+                };
+                node.addEventListener('click', toggle);
+                tog.addEventListener('click', toggle);
+
+            } else {
+                tog.innerHTML = ' '; // Non-breaking space for consistent alignment
+                nc.insertBefore(tog, node);
+            }
+        }
+    });
+
+    // 問題文要約の抽出と表示 (ここを追加)
+    const fullText = document.body.parentElement.outerHTML; // HTML全体のテキストを取得 (荒っぽい方法なので改善の余地あり)
+                                                          // もし入力テキストが直接ここに渡されるなら、その方が良い。
+                                                          // ここでは、プロンプトの指示に基づき、生成されたHTML内に
+                                                          // 区切り文字がある前提で動作するよう記述するが、
+                                                          // 実際にはHTML生成時に静的に埋め込む方が望ましい。
+                                                          // このスクリプトはブラウザで実行されるため、
+                                                          // AIが「入力テキスト」を直接参照することはできない。
+                                                          // よって、この部分はAIがHTMLを生成する際に、
+                                                          // 「7. コンテンツ抽出とマッピングのガイドライン」に従って
+                                                          // 静的に要約を埋め込むことを期待する。
+                                                          // JavaScriptでの動的抽出・挿入はここでは行わない。
+                                                          // (AIがHTML生成時に行うべき処理のため)
+});
+    </script>
+</body>
+</html>
