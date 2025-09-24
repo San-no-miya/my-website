@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お金の推移シミュレーター（万円単位版）</title>
+    <!-- グラフ描画ライブラリ Chart.js の読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* --- ページ全体のスタイル --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- コンテナのスタイル --- */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        p.description {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        /* --- フォームのスタイル --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group h2 {
+            font-size: 1.2em;
+            color: #34495e;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        /* 期間設定用のグリッド */
+        .period-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* --- 追加収入欄のスタイル --- */
+        .income-item {
+            display: grid;
+            grid-template-columns: 80px 60px 1fr 40px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .income-item input { padding: 8px; }
+        .remove-income-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .remove-income-btn:hover { background-color: #c0392b; }
+        #add-income-btn {
+            background-color: #2ecc71;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        #add-income-btn:hover { background-color: #27ae60; }
+
+
+        /* --- ボタンのスタイル --- */
+        #calculate-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        #calculate-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* --- 結果表示エリアのスタイル --- */
+        .result-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>お金の推移シミュレーター</h1>
+        <p class="description">現在の資産と将来の支出・収入を入力して、お金がどのように変化するかをグラフで確認しましょう。</p>
+
+        <div class="form-grid">
+            <!-- 現在の資産入力欄 -->
+            <div class="form-group">
+                <h2>現在の資産</h2>
+                <div class="input-group">
+                    <label for="money-1">手元のお金 1 (万円)</label>
+                    <input type="number" id="money-1" placeholder="例: 300" value="300">
+                </div>
+                <div class="input-group">
+                    <label for="money-2">手元のお金 2 (万円)</label>
+                    <input type="number" id="money-2" placeholder="例: 0">
+                </div>
+                <div class="input-group">
+                    <label for="money-3">手元のお金 3 (万円)</label>
+                    <input type="number" id="money-3" placeholder="例: 0">
+                </div>
+            </div>
+
+            <!-- 支出と期間の入力欄 -->
+            <div class="form-group">
+                <h2>支出と期間</h2>
+                <label>シミュレーション期間</label>
+                <div class="period-group">
+                    <input type="number" id="start-year" placeholder="開始年" value="2027">
+                    <input type="number" id="start-month" placeholder="開始月" value="4">
+                </div>
+                <div class="input-group">
+                    <label for="duration-years">期間 (年数)</label>
+                    <input type="number" id="duration-years" placeholder="例: 2" value="2">
+                </div>
+                <div class="input-group">
+                    <label for="rent">家賃 (万円/月)</label>
+                    <input type="number" id="rent" placeholder="例: 7" value="7">
+                </div>
+                <div class="input-group">
+                    <label for="living-cost">生活費 (万円/月)</label>
+                    <input type="number" id="living-cost" placeholder="例: 5" value="5">
+                </div>
+                <div class="input-group">
+                    <label for="tuition">学費 (万円/年)</label>
+                    <input type="number" id="tuition" placeholder="例: 120" value="120">
+                </div>
+            </div>
+        </div>
+
+        <!-- 追加収入欄 -->
+        <div class="form-group">
+            <h2>追加収入</h2>
+            <div id="income-list">
+                <!-- ここに収入入力欄が動的に追加される -->
+            </div>
+            <button id="add-income-btn" type="button">＋ 収入を追加</button>
+        </div>
+
+        <button id="calculate-btn">結果を表示</button>
+    </div>
+
+    <div class="result-container">
+        <canvas id="balance-chart"></canvas>
+    </div>
+
+    <script>
+        const calculateBtn = document.getElementById('calculate-btn');
+        const addIncomeBtn = document.getElementById('add-income-btn');
+        const incomeList = document.getElementById('income-list');
+        const ctx = document.getElementById('balance-chart').getContext('2d');
+        let balanceChart; // チャートのインスタンスを保持する変数
+
+        // --- 追加収入欄の動的生成と削除 ---
+        function createIncomeInput() {
+            const div = document.createElement('div');
+            div.className = 'income-item';
+            div.innerHTML = `
+                <input type="number" class="income-year" placeholder="年" value="2027">
+                <input type="number" class="income-month" placeholder="月" value="10">
+                <input type="number" class="income-amount" placeholder="金額(万円)" value="10">
+                <button type="button" class="remove-income-btn">×</button>
+            `;
+            incomeList.appendChild(div);
+        }
+
+        addIncomeBtn.addEventListener('click', createIncomeInput);
+
+        incomeList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-income-btn')) {
+                e.target.closest('.income-item').remove();
+            }
+        });
+
+        // --- 計算とグラフ描画のメイン処理 ---
+        calculateBtn.addEventListener('click', () => {
+            // --- 1. 入力値の取得 (すべて万円単位) ---
+            const money1 = parseFloat(document.getElementById('money-1').value) || 0;
+            const money2 = parseFloat(document.getElementById('money-2').value) || 0;
+            const money3 = parseFloat(document.getElementById('money-3').value) || 0;
+            
+            const rent = parseFloat(document.getElementById('rent').value) || 0;
+            const livingCost = parseFloat(document.getElementById('living-cost').value) || 0;
+            const annualTuition = parseFloat(document.getElementById('tuition').value) || 0;
+
+            // 期間設定の取得
+            const startYear = parseInt(document.getElementById('start-year').value) || new Date().getFullYear();
+            const startMonth = parseInt(document.getElementById('start-month').value) || 1;
+            const durationYears = parseInt(document.getElementById('duration-years').value) || 1;
+            const totalMonths = durationYears * 12;
+
+            if (totalMonths <= 0) {
+                alert('期間は1年以上で入力してください。');
+                return;
+            }
+
+            // 追加収入の情報を取得
+            const incomeItems = document.querySelectorAll('.income-item');
+            const incomes = [];
+            incomeItems.forEach(item => {
+                const year = parseInt(item.querySelector('.income-year').value);
+                const month = parseInt(item.querySelector('.income-month').value);
+                const amount = parseFloat(item.querySelector('.income-amount').value);
+                if (year && month && amount) {
+                    incomes.push({ year, month, amount });
+                }
+            });
+
+            // --- 2. 計算ロジック (すべて万円単位) ---
+            const initialBalance = money1 + money2 + money3;
+            let currentBalance = initialBalance;
+            
+            const monthlyExpense = rent + livingCost;
+            const semiAnnualTuition = annualTuition / 2;
+
+            const balanceHistory = [initialBalance];
+            const labels = ['開始時点'];
+
+            for (let i = 0; i < totalMonths; i++) {
+                const elapsedMonths = i + 1;
+                const currentMonthIndex = startMonth - 1 + i;
+                const currentMonth = (currentMonthIndex % 12) + 1;
+                const currentYear = startYear + Math.floor(currentMonthIndex / 12);
+                
+                currentBalance -= monthlyExpense;
+
+                if (elapsedMonths % 6 === 0) {
+                    currentBalance -= semiAnnualTuition;
+                }
+
+                const matchedIncome = incomes.find(inc => inc.year === currentYear && inc.month === currentMonth);
+                if (matchedIncome) {
+                    currentBalance += matchedIncome.amount;
+                }
+
+                balanceHistory.push(currentBalance);
+                labels.push(`${currentYear}年${currentMonth}月`);
+            }
+
+            // --- 3. グラフの描画 (すべて万円単位) ---
+            if (balanceChart) {
+                balanceChart.destroy();
+            }
+            
+            const endMonthIndex = startMonth - 1 + totalMonths - 1;
+            const endYear = startYear + Math.floor(endMonthIndex / 12);
+            const endMonth = (endMonthIndex % 12) + 1;
+            const chartTitle = `資産残高の推移予測 (${startYear}年${startMonth}月〜${endYear}年${endMonth}月)`;
+
+            balanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '残高の推移 (万円)',
+                        data: balanceHistory,
+                        fill: true,
+                        tension: 0.1,
+                        segment: {
+                            borderColor: ctx => ctx.p0.parsed.y < 0 || ctx.p1.parsed.y < 0 ? 'rgb(255, 99, 132)' : 'rgb(54, 162, 235)',
+                            backgroundColor: ctx => ctx.p0.parsed.y < 0 || ctx.p1.parsed.y < 0 ? 'rgba(255, 99, 132, 0.2)' : 'rgba(54, 162, 235, 0.2)',
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: chartTitle,
+                            font: { size: 18 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) {
+                                        // ツールチップの表示を「万円」に変更
+                                        label += context.parsed.y.toLocaleString() + ' 万円';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            // Y軸のタイトルを「万円」に変更
+                            title: { display: true, text: '残高 (万円)' },
+                            ticks: {
+                                // Y軸の目盛りを「万円」に変更
+                                callback: function(value) { return value.toLocaleString() + ' 万円'; }
+                            }
+                        },
+                        x: {
+                            title: { display: true, text: '年月' }
+                        }
+                    }
+                }
+            });
+        });
+
+        // ページ読み込み時に一度、初期値で実行する
+        createIncomeInput(); // 初期状態で収入欄を1つ表示
+        calculateBtn.click();
+        
+    </script>
+
+</body>
+</html>
