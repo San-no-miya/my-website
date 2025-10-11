@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商法総則商行為 論証一覧</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: sans-serif; 
+            background-color: #f8f9fa; 
+            margin: 0; 
+            padding: 40px 20px; 
+            box-sizing: border-box; 
+        }
+        .main-title { 
+            text-align: center; 
+            color: #444; 
+            margin-bottom: 50px; 
+            font-family: "Meiryo", sans-serif;
+        }
+        .pattern-container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 30px; 
+        }
+        .pattern-card { 
+            background-color: #f0f0f0; 
+            border-radius: 10px; 
+            padding: 25px 30px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            width: 90%; 
+            max-width: 800px; 
+            box-sizing: border-box; 
+        }
+        .pattern-title { 
+            font-family: "Meiryo", sans-serif; 
+            color: #0056b3; 
+            margin: 0 0 15px 0; 
+            font-size: 1.4em; 
+            border-bottom: 2px solid #0056b3; 
+            padding-bottom: 10px; 
+        }
+        .pattern-body { 
+            font-family: "MS Mincho", serif; 
+            color: #333333; 
+            line-height: 1.9; 
+            font-size: 1.1em; 
+            white-space: pre-wrap; 
+            margin: 0; 
+        }
+        
+        /* 補足情報コンテナのスタイル */
+        .supplement-box {
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #00acc1;
+        }
+        .supplement-box p {
+            margin: 0;
+            font-family: "MS Mincho", serif;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .supplement-box strong {
+            color: #007c91;
+        }
+
+        /* --- ナビゲーション関連のスタイル --- */
+        #nav-toggle-checkbox { display: none; }
+        .nav-toggle-label { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background-color: #fff; 
+            padding: 8px 16px; 
+            border: 1px solid #ccc; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            z-index: 1002; 
+            user-select: none; 
+            font-size: 14px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15); 
+        }
+        .navigation-container { 
+            position: fixed; 
+            top: 50%; 
+            right: 10px; 
+            transform: translateY(-50%); 
+            z-index: 1001; 
+            display: flex; 
+            align-items: center; 
+            transition: opacity 0.3s, visibility 0.3s; 
+        }
+        #nav-toggle-checkbox:checked ~ .navigation-container { 
+            opacity: 0; 
+            visibility: hidden; 
+        }
+
+        /* ラインインジケーター */
+        .line-indicators { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            padding: 10px; 
+        }
+        .nav-line { 
+            display: block; 
+            width: 20px; 
+            height: 2px; 
+            background-color: #ccc; 
+            transition: background-color 0.2s; 
+        }
+        .nav-line:hover { 
+            background-color: #0056b3; 
+        }
+
+        /* タイトルリストパネル (マウスオーバーで表示) */
+        .title-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 15px;
+            width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin-left: 5px;
+            border: 1px solid #eee;
+        }
+        .navigation-container:hover .title-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .title-panel-list { 
+            list-style: none; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
+        .title-panel-list a { 
+            text-decoration: none; 
+            color: #333; 
+            font-family: "Meiryo", sans-serif; 
+            font-size: 14px; 
+            display: block; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+        }
+        .title-panel-list a:hover { 
+            background-color: #f0f0f0; 
+            color: #0056b3; 
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            body { padding: 30px 10px; }
+            .main-title { font-size: 1.5em; margin-bottom: 30px; }
+            .pattern-card { width: 100%; padding: 20px 15px; }
+            .pattern-title { font-size: 1.2em; }
+            .pattern-body { font-size: 1em; }
+            .supplement-box p { font-size: 0.95em; }
+            .navigation-container { right: 5px; }
+            .nav-line { width: 15px; }
+            .title-panel { width: 220px; }
+            .nav-toggle-label { font-size: 12px; padding: 6px 12px; top: 10px; right: 10px;}
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="nav-toggle-checkbox">
+    <label for="nav-toggle-checkbox" class="nav-toggle-label">ナビ</label>
+
+    <nav class="navigation-container">
+        <div class="line-indicators">
+            <a href="#pattern-1"><span class="nav-line"></span></a>
+            <a href="#pattern-2"><span class="nav-line"></span></a>
+            <a href="#pattern-3"><span class="nav-line"></span></a>
+            <a href="#pattern-4"><span class="nav-line"></span></a>
+            <a href="#pattern-5"><span class="nav-line"></span></a>
+            <a href="#pattern-6"><span class="nav-line"></span></a>
+            <a href="#pattern-7"><span class="nav-line"></span></a>
+        </div>
+        <div class="title-panel">
+            <ul class="title-panel-list">
+                <li><a href="#pattern-1">商1 自然人の商人資格の取得時期</a></li>
+                <li><a href="#pattern-2">商2 名板貸責任 第三者の主観的要件</a></li>
+                <li><a href="#pattern-3">商3 名板貸責任 不法行為と名板貸人の責任</a></li>
+                <li><a href="#pattern-4">商4 支配人の意義</a></li>
+                <li><a href="#pattern-5">商5 営業譲渡の意義</a></li>
+                <li><a href="#pattern-6">商6 504条の解釈</a></li>
+                <li><a href="#pattern-7">商7 問屋と委託者との関係</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 class="main-title">商法総則商行為 論証一覧</h1>
+
+    <div class="pattern-container">
+        
+        <div class="pattern-card" id="pattern-1">
+            <h2 class="pattern-title">商1 自然人の商人資格の取得時期</h2>
+            <p class="pattern-body">自然人は、商人資格をいつ取得するか。商人資格を取得していれば、その者が営業のためにする行為は附属的商行為(503条)として、商事債務の連帯性(511条)などの適用があることになるため問題となる。
+
+この点について、商人であることという法律効果(4条)を生ずべき要件事実が意思ないしその実現であることから、行為の相手方の不測の損害を避けるために、その意思は行為の相手方に行為時の事情から客観的に認識できなければならない。
+
+もっとも、行為の相手方がこの事情を知っている場合には、相手方が不測の損害を被ることはないため、商行為性を認めるのが妥当である。
+
+そこで、営業の意思を相手方が認識し、又は営業の意思が客観的に認識可能となった時点で自然人は商人資格を取得すると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-2">
+            <h2 class="pattern-title">商2 名板貸責任 第三者の主観的要件</h2>
+            <p class="pattern-body">取引の相手方が14条の責任を名板貸人に問うためには、いかなる主観的要件が必要か。同条が「誤認」としか規定していないことから問題となる。
+
+そもそも、同条が定める名板貸人の責任が外観信頼保護の規定である以上、相手方が善意であっても重過失がある場合には、悪意と同様に保護に値しない。
+
+そこで、同条の責任を問うためには、相手方が善意無重過失であることを要すると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-3">
+            <h2 class="pattern-title">商3 名板貸責任 不法行為と名板貸人の責任</h2>
+            <p class="pattern-body">名板貸人は、名板借人の営業活動上生じた不法行為について14条により責任を負うか。
+
+同条は「当該取引によって生じた債務」と規定して、外観を信頼して取引した第三者の保護を図る取引法的規定であるから、不法行為には適用されないのが一般である。
+
+もっとも、純然たる事実行為としての不法行為とは異なり、取引行為的不法行為の場合は、取引主体誤認の問題になるので、このような被害者の信頼は同条で保護すべきである。
+
+そこで、名板貸人は名板借人の営業活動上生じた不法行為のうち、事実行為的不法行為については同条による責任は負わないが、取引行為的不法行為については同条によって責任を負うと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-4">
+            <h2 class="pattern-title">商4 支配人の意義</h2>
+            <p class="pattern-body">支配人の意義をいかに解するか。
+
+この点について、商法上の商業使用人の類型は営業主から授与される代理権の範囲の広狭によって区別されているから、支配人か否かもこれと同一平面,同一標準で決定する必要がある。
+
+そこで、支配人とは、営業主に代わってその営業に関する一切の裁判上又は裁判外の行為をする権限(包括的代理権,21条1項)を有する商業使用人であると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-5">
+            <h2 class="pattern-title">商5 営業譲渡の意義</h2>
+            <p class="pattern-body">営業譲渡の意義をいかに解するかが問題となる。
+
+この点について、営業譲渡に該当すれば、譲渡人に競業避止義務を課して譲受人を保護し(16条)、営業譲渡を知らない譲渡人の債権者を保護し(17条1項、2項,18条1項)、営業譲渡を知らないで弁済した譲渡人の債務者を保護する(17条4項)という効果が発生する。
+
+そこで、営業譲渡とは、一定の営業目的のために組織化され、有機的一体として機能する財産(得意先関係等の経済的価値ある事実関係を含む。)の全部又は重要な一部を譲渡し、これによって、譲渡人がその財産によって営んでいた営業的活動の全部又は重要な一部を譲受人に受け継がせ、譲渡人がその譲渡の限度に応じ法律上当然に16条に定める競業避止義務を負う結果を伴うものをいうと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-6">
+            <h2 class="pattern-title">商6 504条の解釈</h2>
+            <p class="pattern-body">504条ただし書にいう「履行の請求」に伴う法律関係をいかに解すべきかが問題となる。
+
+この点について、同条の規定の文言に忠実に、本人と相手方との間にのみ法律関係が生じるが、相手方が本人のためにすることを知らなかった場合には、代理人は、相手方に対して履行の責任を負い、両者は不真正連帯債務になるとする見解もあるが、もともと代理人の資力のみをあてにしていたにすぎない相手方の利益を保護しすぎるため妥当でない。
+
+そこで、同条本文により本人・相手方間に法律関係が生じているが、同条ただし書により相手方・代理人間にも同様の法律関係が生じ、相手方はそのいずれかを選択して請求することができるにとどまり、一方を選択して主張したときにはもはや他方の主張はできなくなると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-7">
+            <h2 class="pattern-title">商7 問屋と委託者との関係</h2>
+            <p class="pattern-body">問屋が物品の販売又は買入れによって権利を取得した後、これを委託者に移転する前に破産手続開始の決定を受けた場合において、委託者が上記権利について取戻権(破産法62条)を行使することを認めて、委託者を救済できないかが問題となる。
+
+この点について、確かに、問屋が取得した権利は、いったんは問屋に帰属する。
+
+しかし、その権利について実質的利益を有するのは問屋ではなく委託者であり、問屋の債権者は、この権利についてまで自己の債権の一般担保として期待すべきではない。
+
+そこで、委託者の取戻権を認めるべきであると解する。</p>
+        </div>
+        
+    </div>
+
+</body>
+</html>
