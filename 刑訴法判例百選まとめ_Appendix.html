@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刑訴法判例百選 Appendix</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; box-sizing: border-box; }
+        h1 { text-align: center; color: #444; margin-bottom: 50px; }
+        .pattern-container { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .pattern-card { background-color: #f0f0f0; border-radius: 10px; padding: 25px 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 800px; box-sizing: border-box; }
+        .pattern-title { font-family: "Meiryo", sans-serif; color: #0056b3; margin: 0 0 15px 0; font-size: 1.4em; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+        .pattern-body { font-family: "MS Mincho", serif; color: #333333; line-height: 1.9; font-size: 1.1em; white-space: pre-wrap; margin: 0; }
+        
+        /* 補足情報コンテナのスタイル */
+        .supplement-box {
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #00acc1;
+        }
+        .supplement-box p {
+            margin: 0;
+            font-family: "MS Mincho", serif;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .supplement-box strong {
+            color: #007c91;
+        }
+
+        /* --- ナビゲーション関連のスタイル --- */
+        #nav-toggle-checkbox { display: none; }
+        .nav-toggle-label { position: fixed; top: 20px; right: 20px; background-color: #fff; padding: 8px 16px; border: 1px solid #ccc; border-radius: 20px; cursor: pointer; z-index: 1002; user-select: none; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+        .navigation-container { position: fixed; top: 50%; right: 10px; transform: translateY(-50%); z-index: 1001; display: flex; align-items: center; transition: opacity 0.3s, visibility 0.3s; }
+        #nav-toggle-checkbox:checked ~ .navigation-container { opacity: 0; visibility: hidden; }
+
+        /* ラインインジケーター */
+        .line-indicators { display: flex; flex-direction: column; gap: 6px; padding: 10px; max-height: 80vh; overflow-y: auto; }
+        .nav-line { display: block; width: 20px; height: 2px; background-color: #ccc; transition: background-color 0.2s; }
+        .nav-line:hover { background-color: #0056b3; }
+
+        /* タイトルリストパネル (マウスオーバーで表示) */
+        .title-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 15px;
+            width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin-left: 5px;
+            border: 1px solid #eee;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .navigation-container:hover .title-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .title-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+        .title-panel-list a { text-decoration: none; color: #333; font-family: "Meiryo", sans-serif; font-size: 14px; display: block; padding: 4px 8px; border-radius: 4px; }
+        .title-panel-list a:hover { background-color: #f0f0f0; color: #0056b3; }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            body { padding: 30px 10px; }
+            h1 { font-size: 1.5em; margin-bottom: 30px; }
+            .pattern-card { width: 100%; padding: 20px 15px; }
+            .pattern-title { font-size: 1.2em; }
+            .pattern-body { font-size: 1em; }
+            .supplement-box p { font-size: 0.95em; }
+            .navigation-container { display: none; } /* スマホではナビを非表示にする */
+            .nav-toggle-label { display: none; } /* スマホではナビ切り替えボタンも非表示 */
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="nav-toggle-checkbox">
+    <label for="nav-toggle-checkbox" class="nav-toggle-label">ナビ</label>
+
+    <nav class="navigation-container">
+        <div class="line-indicators">
+            <a href="#pattern-a1"><span class="nav-line"></span></a>
+            <a href="#pattern-a2"><span class="nav-line"></span></a>
+            <a href="#pattern-a3"><span class="nav-line"></span></a>
+            <a href="#pattern-a4"><span class="nav-line"></span></a>
+            <a href="#pattern-a5"><span class="nav-line"></span></a>
+            <a href="#pattern-a6"><span class="nav-line"></span></a>
+            <a href="#pattern-a7"><span class="nav-line"></span></a>
+            <a href="#pattern-a8"><span class="nav-line"></span></a>
+            <a href="#pattern-a9"><span class="nav-line"></span></a>
+            <a href="#pattern-a10"><span class="nav-line"></span></a>
+            <a href="#pattern-a11"><span class="nav-line"></span></a>
+            <a href="#pattern-a12"><span class="nav-line"></span></a>
+            <a href="#pattern-a13"><span class="nav-line"></span></a>
+            <a href="#pattern-a14"><span class="nav-line"></span></a>
+            <a href="#pattern-a15"><span class="nav-line"></span></a>
+            <a href="#pattern-a16"><span class="nav-line"></span></a>
+            <a href="#pattern-a17"><span class="nav-line"></span></a>
+            <a href="#pattern-a18"><span class="nav-line"></span></a>
+            <a href="#pattern-a19"><span class="nav-line"></span></a>
+            <a href="#pattern-a20"><span class="nav-line"></span></a>
+            <a href="#pattern-a21"><span class="nav-line"></span></a>
+            <a href="#pattern-a22"><span class="nav-line"></span></a>
+            <a href="#pattern-a23"><span class="nav-line"></span></a>
+            <a href="#pattern-a24"><span class="nav-line"></span></a>
+            <a href="#pattern-a25"><span class="nav-line"></span></a>
+            <a href="#pattern-a26"><span class="nav-line"></span></a>
+            <a href="#pattern-a27"><span class="nav-line"></span></a>
+            <a href="#pattern-a28"><span class="nav-line"></span></a>
+            <a href="#pattern-a29"><span class="nav-line"></span></a>
+            <a href="#pattern-a30"><span class="nav-line"></span></a>
+            <a href="#pattern-a31"><span class="nav-line"></span></a>
+            <a href="#pattern-a32"><span class="nav-line"></span></a>
+            <a href="#pattern-a33"><span class="nav-line"></span></a>
+            <a href="#pattern-a34"><span class="nav-line"></span></a>
+            <a href="#pattern-a35"><span class="nav-line"></span></a>
+            <a href="#pattern-a36"><span class="nav-line"></span></a>
+            <a href="#pattern-a37"><span class="nav-line"></span></a>
+            <a href="#pattern-a38"><span class="nav-line"></span></a>
+            <a href="#pattern-a39"><span class="nav-line"></span></a>
+            <a href="#pattern-a40"><span class="nav-line"></span></a>
+            <a href="#pattern-a41"><span class="nav-line"></span></a>
+            <a href="#pattern-a42"><span class="nav-line"></span></a>
+            <a href="#pattern-a43"><span class="nav-line"></span></a>
+            <a href="#pattern-a44"><span class="nav-line"></span></a>
+            <a href="#pattern-a45"><span class="nav-line"></span></a>
+            <a href="#pattern-a46"><span class="nav-line"></span></a>
+            <a href="#pattern-a47"><span class="nav-line"></span></a>
+            <a href="#pattern-a48"><span class="nav-line"></span></a>
+            <a href="#pattern-a49"><span class="nav-line"></span></a>
+            <a href="#pattern-a50"><span class="nav-line"></span></a>
+            <a href="#pattern-a51"><span class="nav-line"></span></a>
+            <a href="#pattern-a52"><span class="nav-line"></span></a>
+            <a href="#pattern-a53"><span class="nav-line"></span></a>
+            <a href="#pattern-a54"><span class="nav-line"></span></a>
+            <a href="#pattern-a55"><span class="nav-line"></span></a>
+            <a href="#pattern-a56"><span class="nav-line"></span></a>
+        </div>
+        <div class="title-panel">
+            <ul class="title-panel-list">
+                <li><a href="#pattern-a1">A1 自動車検問</a></li>
+                <li><a href="#pattern-a2">A2 現行犯逮捕</a></li>
+                <li><a href="#pattern-a3">A3 緊急逮捕</a></li>
+                <li><a href="#pattern-a4">A4 差押の必要性</a></li>
+                <li><a href="#pattern-a5">A5 令状提示前の立ち入り</a></li>
+                <li><a href="#pattern-a6">A6 逮捕に伴う捜索押収</a></li>
+                <li><a href="#pattern-a7">A7 血液の採取</a></li>
+                <li><a href="#pattern-a8">A8 呼気検査</a></li>
+                <li><a href="#pattern-a9">A9 法律上の報告義務と黙秘権</a></li>
+                <li><a href="#pattern-a10">A10 面会接見</a></li>
+                <li><a href="#pattern-a11">A11 公訴の提起と犯罪の嫌疑</a></li>
+                <li><a href="#pattern-a12">A12 訴因変更と時効の停止</a></li>
+                <li><a href="#pattern-a13">A13 捜査の違法と公訴提起</a></li>
+                <li><a href="#pattern-a14">A14 被告人の取り調べ</a></li>
+                <li><a href="#pattern-a15">A15 訴因の特定ー白山丸事件</a></li>
+                <li><a href="#pattern-a16">A16 過失犯の訴因</a></li>
+                <li><a href="#pattern-a17">A17 罰条変更の要否</a></li>
+                <li><a href="#pattern-a18">A18 訴因変更の時機</a></li>
+                <li><a href="#pattern-a19">A19 訴因変更の許否</a></li>
+                <li><a href="#pattern-a20">A20 訴因変更命令の形成力</a></li>
+                <li><a href="#pattern-a21">A21 訴訟条件と訴因</a></li>
+                <li><a href="#pattern-a22">A22 訴因と罪数</a></li>
+                <li><a href="#pattern-a23">A23 刑訴法316の17と自己に不利益な供述の強要</a></li>
+                <li><a href="#pattern-a24">A24 裁判官の忌避</a></li>
+                <li><a href="#pattern-a25">A25 訴訟指揮権に基づく証拠開示</a></li>
+                <li><a href="#pattern-a26">A26 争点顕在化措置</a></li>
+                <li><a href="#pattern-a27">A27 職権審理義務の存否</a></li>
+                <li><a href="#pattern-a28">A28 保釈と余罪</a></li>
+                <li><a href="#pattern-a29">A29 被害者特定事項の秘匿</a></li>
+                <li><a href="#pattern-a30">A30 迅速な裁判ー高田事件</a></li>
+                <li><a href="#pattern-a31">A31 厳格な証明</a></li>
+                <li><a href="#pattern-a32">A32 手錠をかけたままの取調べと自白</a></li>
+                <li><a href="#pattern-a33">A33 補強法則と公判廷の自白</a></li>
+                <li><a href="#pattern-a34">A34 補強証拠としての適格</a></li>
+                <li><a href="#pattern-a35">A35 証人尋問権と検察官面前調書</a></li>
+                <li><a href="#pattern-a36">A36 裁判官面前調書</a></li>
+                <li><a href="#pattern-a37">A37 特信情況</a></li>
+                <li><a href="#pattern-a38">A38 実況見分調書</a></li>
+                <li><a href="#pattern-a39">A39 鑑定受託者による鑑定書</a></li>
+                <li><a href="#pattern-a40">A40 刑訴法325の任意性の調査時期</a></li>
+                <li><a href="#pattern-a41">A41 証拠とすることの同意</a></li>
+                <li><a href="#pattern-a42">A42 写し</a></li>
+                <li><a href="#pattern-a43">A43 違法な手続きと証拠の関係</a></li>
+                <li><a href="#pattern-a44">A44 罪となるべき事実</a></li>
+                <li><a href="#pattern-a45">A45 概括的認定</a></li>
+                <li><a href="#pattern-a46">A46 余罪と未決通算</a></li>
+                <li><a href="#pattern-a47">A47 検察官上訴</a></li>
+                <li><a href="#pattern-a48">A48 上訴の利益</a></li>
+                <li><a href="#pattern-a49">A49 刑訴法382の2「やむを得ない事由」</a></li>
+                <li><a href="#pattern-a50">A50 新証拠の取調べ</a></li>
+                <li><a href="#pattern-a51">A51 判決影響性の意義ー三鷹事件</a></li>
+                <li><a href="#pattern-a52">A52 破棄判決の拘束力ー八海事件</a></li>
+                <li><a href="#pattern-a53">A53 不利益変更の禁止</a></li>
+                <li><a href="#pattern-a54">A54 裁量保釈と抗告</a></li>
+                <li><a href="#pattern-a55">A55 証拠の明白性(1)ー白鳥事件</a></li>
+                <li><a href="#pattern-a56">A56 証拠の明白性(2)ー財田川事件</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>刑訴法判例百選 Appendix</h1>
+
+    <div class="pattern-container">
+        <div class="pattern-card" id="pattern-a1">
+            <h2 class="pattern-title">A1 自動車検問</h2>
+            <p class="pattern-body">自動車検問は目的によって
+1. 交通違反の予防・検挙のための交通検問
+2. 不特定の一般犯罪の予防・検挙のための警戒検問
+3. 特定の犯罪が発生した際における犯人の補足及び捜査情報の収集のための緊急配備検問
+に分類され、本件では①の検問の適法性を判示する。
+
+交通の安全及び交通秩序の維持などに必要な警察の諸活動は、強制力を伴わない任意手段による限り一般的に許容されるべきであるが、無制限に許されるものではない。
+しかし自動車の運転者は行動における自動車利用を許されていることに伴う当然の負担として合理的に必要な限度で行われる交通の取り締まりに協力すべきである。
+そこで警察官が交通取り締まりの一環として
+1. 交通違反の多発する地域等の適当な場所において
+2. 外観上の不審な点の有無に関わりなく短時分の停止を求めて
+3. 相手方の任意の協力を求める形で行われ
+4. 自動車の利用者の自由を不当に制約することにならない方法態様
+で行われる限り、適法なものと解される。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 不審自由の存在を前提とする警職法2-1も、組織規範であり根拠規範でない警察法2-1も、交通検問の法的根拠とはならない</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 対象者の同意を得て行われる検問には、そもそも法的根拠を要しない</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a2">
+            <h2 class="pattern-title">A2 現行犯逮捕</h2>
+            <p class="pattern-body">現行犯逮捕も、人の身体の自由を拘束する強制処分であるからその要件はできる限り厳格に解するべきであり、通常逮捕の場合と同様に、逮捕の必要性をその要件と解するのが相当である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現行犯逮捕の場合、被逮捕者は犯行を現認されており、逃亡または罪証隠滅を企てる現実の必要に迫られるので、逮捕の必要性は一般的に推定され、ここの逮捕の際に具体的に判断する必要はないとされる</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> もっとも軽微事件については上記の推定は認められず、逃亡の恐れの積極的認定が要求</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a3">
+            <h2 class="pattern-title">A3 緊急逮捕</h2>
+            <p class="pattern-body">緊急逮捕（刑訴法210）は厳格な制約のもとに、罪状の重い一定の犯罪のみについて、緊急やむを得ない場合に限り、逮捕後直ちに裁判官の審査を受けて逮捕状の発行を求めることを条件として被疑者の逮捕を認めており、憲法33条規定の趣旨に反するものではない。
+
+【合憲説の類型】
+1. 手続き全体を評価すれば憲法33にいう令状による逮捕と評価できる
+   1. この説によると令状発布は憲法上の要求として、「逮捕後直ちに」は「即時に」と近い意味となる。
+   2. 逮捕後に被疑者すを釈放したり罪名が変わったとしても、逮捕時の罪名で必ず令状を請求しなければならない
+2. 憲法33の「現行犯」は緊急逮捕を含むとする説
+3. 憲法33は「現行犯」以外にも合理性を認めうる限り令状主義の例外を許容しており緊急逮捕がその例外に該当するとする説</p>
+        </div>
+        <div class="pattern-card" id="pattern-a4">
+            <h2 class="pattern-title">A4 差押の必要性</h2>
+            <p class="pattern-body">刑訴法218-1によると検察官もしくは検察事務官または司法警察職員は「犯罪の捜査をするについて必要がある時」に差押をすることができるのであり、刑訴法430によって不服申し立てを受けた準抗告裁判所は差押の必要性の有無についても審査することができる。
+
+そして、本決定は令状裁判官にも同様の審査権限があるとの判断を含むと理解される。従って、令状裁判官は捜索差押検証についても諸事情を考慮した上で明らかに処分の必要性がないと認める時は令状請求を却下すべきことになる。
+
+処分の「必要性」とは、証拠の隠滅・毀損の防止や、証拠価値の保全の需要にとどまらず、対立利益との健康という要請（相当性）を含む概念である。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a5">
+            <h2 class="pattern-title">A5 令状提示前の立ち入り</h2>
+            <p class="pattern-body">捜索差押許可状の呈示に先立って警察官等がホテル客室のドアをマスターキーで開けて入室した措置は捜索差押の実効性を確保するために必要であり、社会通念条相当な態様で行われているため、222-1,111-1に基づく処分として許容される。
+また222-1,110による差押許可状の呈示は、手続きの公正を担保するとともに、処分を受けるものの人権に配慮する趣旨であり、直後に呈示を行う事は法意にもとるものでなく、捜索差押の実効性を確保するためにやむを得ないところであり適法である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 社会通念上相当な態様とは、当該処分の必要性と被処分者の被る法益侵害との間に合理的権衡が求められる。その判断にあたっては以下を総合考慮
+1. 被疑事実の内容
+2. 差押対象物件の重要性
+3. 差押対象物件の破棄隠匿の恐れ
+4. 被処分者が受ける不利益の内容
+5. 被処分者の協力態様</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 令状呈示の趣旨は手続きの公正担保と処分を受けるものの人権の保護であるが、令状提示は憲法35の令状主義そのものの要請ではない
+   * 被処分者が不在の場合など合理的理由があれば、令状を提示する事なく処分ができる</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a6">
+            <h2 class="pattern-title">A6 逮捕に伴う捜索押収</h2>
+            <p class="pattern-body">「被疑者を逮捕する場合において」必要のある時は「逮捕の現場で」令状によらない捜索・差押・検証を行うことができる（刑訴法220-1-2,220-3）。
+「逮捕する場合において」とは単なる時点よりも幅のある逮捕する際をいい、時間的接着を必要とするが、逮捕着手時との前後関係を問わない。
+被疑者がたまたま他出不在であっても帰宅次第緊急逮捕する体制の元に捜索差押が行われかつこれと時間的に接着して逮捕がなされるかがぎり、緊急逮捕する場合その現場でなされたとするのを妨げない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a7">
+            <h2 class="pattern-title">A7 血液の採取</h2>
+            <p class="pattern-body">同意によらない採血は令状の取得を要する強制処分である。
+刑訴法218の身体検査令は、身体の外部から五官の作用によってなしる程度のものに限られるべきであり、軽度であるにせよ身体に対する損傷を伴い生理的機能に障害を与える恐れのある血液採取は検証の限度を超える。
+そこで、特別の知識経験を必要とする医学的な鑑定のための処分としての身体検査によるのが相当であり、鑑定処分許可上が必要である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は鑑定処分許可状説をとったが、実務の大勢は身体検査令状・鑑定処分許可状併用説によっていた。</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a8">
+            <h2 class="pattern-title">A8 呼気検査</h2>
+            <p class="pattern-body">呼気検査は供述を得ようとするものではないから、検査を拒んだものを処罰する道路交通法の規定は、憲法38-1に違反するものではない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件では憲法38-1による強要禁止の対象が言語を用いた意思・観念の伝達行為に限定される旨の先例として昭和32判決が引用された</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 面通し・証拠物の押収・身体検査・血液筆跡音声等の鑑定資料の採取・公判廷での態度の観察など、刑事手続状、自己に不利益な証拠の提供を強いられる場面があるが、これらは本判決によれば憲法38-1の埒外となる</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 既存文書の提出・生体認証による電子機器のロック解除が「供述」に当たるかは、問題として残る</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a9">
+            <h2 class="pattern-title">A9 法律上の報告義務と黙秘権</h2>
+            <p class="pattern-body">旧道路交通取締法は交通事故を起こしたものに対して報告義務として「事故の内容」を所轄警察署の警察官に直ちに報告することを要求していた。
+最高裁は「事故の内容」とはその発生した日時、場所、死傷者の数及び負傷の程度ならびにものの損壊及びその程度等、交通事故の態様に関する事項を指すものと解し、事故の態様は憲法38-1にいう「不利益」な事項に当たらないとした。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現行の道路交通法は報告すべき事項を「交通事故が発生した日時及び場所、当該交通事故における死傷者の数及び負傷者の負傷の程度並びに損壊したもの及びその損壊の程度、当該交通事故に係る車両等の積載物並びに当該交通事故について講じた措置」と明記した（72-1,119-1-17）</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 最高裁は本判決を引用して現行の道路交通法の合憲性を確認した</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a10">
+            <h2 class="pattern-title">A10 面会接見</h2>
+            <p class="pattern-body">検察庁の庁舎内において、弁護人等と被疑者との立会人なしの接見を認めても、被疑者の逃亡や罪証の隠滅を防止することができ、戒護上の支障が生じないような設備のある部屋等が存在しない場合には、接見の申し出を拒否したとしてもこれを違法という事はできない。
+
+設備の不存在を理由に接見を拒否した場合も、弁護人等がなお検察庁の庁舎内における即時の接見を求め、必要性が認められる場合には、検察官は例えば、立ち会い人のいる部屋での短時間での接見などのように、いわゆる秘密交通権が十分に保証されないような態様の短時間の接見（面会接見という）であっても良いかどうか弁護人等の意向を確かめ、差し支えないとの意向を示した時には面会接見ができるように特別の配慮をすべき義務がある。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a11">
+            <h2 class="pattern-title">A11 公訴の提起と犯罪の嫌疑</h2>
+            <p class="pattern-body">刑事事件において無罪の判決が確定したというだけで、直ちに起訴前の逮捕・勾留、公訴の提起・追行、起訴後の勾留が違法となるという事はない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 無罪判決が確定した場合に、公訴の提起が国家賠償法上違法となるか</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 職務行為基準説
+無罪判決が確定しても違法となる事はなく、客観的に嫌疑が十分にあり起訴時における各種の証拠資料を総合勘案して有罪判決を期待しうるだけの合理的根拠があれば違法性はないとする。
+→本判決はこの立場を採用</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 結果違法説
+無罪判決が確定すれば、公訴の提起は妥当でなかったことになり、当然に違法となる。</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a12">
+            <h2 class="pattern-title">A12 訴因変更と時効の停止</h2>
+            <p class="pattern-body">検察官において訴因変更請求書を裁判所に提出することにより、その請求にかかる特定の事実に対する訴追意思を表明したものと見られるから、その時点で刑訴法254-1に準じて公訴時効の進行が停止すると解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 不適法な訴因変更請求について、それにより検察官の訴追意思を表明したものと見られるなら254-1準用を認めた判決</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> そうであるとすれば、254-1の準用には、特定の事実に対する検察官の訴追意思表明があればたり、裁判所による訴追変更許可決定を待つ必要はない（この点に本判決は言及しなかった）</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a13">
+            <h2 class="pattern-title">A13 捜査の違法と公訴提起</h2>
+            <p class="pattern-body">逮捕の手続きに違法があったとしても、公訴提起の手続きが憲法31に違反して無効となるものとは言えない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> その後の判例は「仮に捜査手続きに違法があるとしてもそれが必ずしも公訴提起の効力を当然に失わせるものでないことは、検察官の極めて広範な裁量にかかる公訴提起の性質にかんがみ明らか」として、捜査の違法が手続き打ち切りをもたらす余地を否定はしていない</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> しかし、公訴権濫用による公訴提起無効に関する判断（百選39）に鑑みれば極めて限定的な場面にとどまると考えられる</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a14">
+            <h2 class="pattern-title">A14 被告人の取り調べ</h2>
+            <p class="pattern-body">捜査機関が被告人をその訴追の対象となっている犯罪事実について取り調べることの可否が問題となる。
+刑訴法198の「被疑者」という文字に関わりなく、起訴後においても捜査官はその公訴を維持するために必要な取り調べを行うことができる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a15">
+            <h2 class="pattern-title">A15 訴因の特定ー白山丸事件</h2>
+            <p class="pattern-body">刑訴法256-3は起訴状における公訴事実の記載について、訴因の明示を要求し、訴因を明示するには、「できる限り日時、場所及び方法を持って罪となるべき事実を特定」すべきことを定めている。
+訴因の明示は裁判所に対して審判の対象を限定するとともに、被告人に対して防御の範囲を示すことを目的とするものである。そして犯罪の日時、場所及び方法はこれらの事項が犯罪を構成する要素になっている場合を除き、本来は罪となるべき事実そのものではなく、ただ訴因を特定する一手段としてできる限り具体的に表示することが求められている。従って
+      1. これらを明らかにすることができない特殊事情がある場合には
+      2. 前記の法の目的を害さない限り
+幅のある表示をしても直ちに違法とは言えない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a16">
+            <h2 class="pattern-title">A16 過失犯の訴因</h2>
+            <p class="pattern-body">起訴状に訴因として明示された態様の過失を認めずに、それとは別の態様の過失を認定するためには、被告人に防御の機会を与えるため訴因の変更手続きを要する。
+
+【過失の「態様」が異なるとはいかなる場合か】
+過失犯の訴因において記載される事項は
+      1. 注意義務を課す根拠となる具体的事実
+      2. 注意義務の内容
+      3. 注意義務違反の具体的行為
+
+学説上は、
+      * ①〜③のいずれかが変動した場合にも訴因変更を要するという見解
+      * ①②の変動は独立に問題とする必要がなく、それが③の変動に及ぶ場合に限って訴因変更を要求する見解
+が存在していた。
+本判決ののち、最決S63.10.24は①の事実について「訴因としての拘束力が認められるものではない」と判断した。従って、これと併せて読めば、過失の「態様」が異なる場合とは、③に実質的変動がある場合と理解できる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a17">
+            <h2 class="pattern-title">A17 罰条変更の要否</h2>
+            <p class="pattern-body">起訴状における罰条の記載は、訴因をより一層特定して被告人の防御を助けるためのものであり、裁判所による法令の適用をその派にに拘束するためのものではない。
+従って、裁判所は訴因により公訴事実が十分に明確にされていて被告人の防御に実質的な不利益が生じない限りは、罰条変更の手続きを経ないで、起訴状に記載されていない罰条であっても適用することができる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a18">
+            <h2 class="pattern-title">A18 訴因変更の時機</h2>
+            <p class="pattern-body">訴因変更に一定の時機的限界があるかが問題となる。
+刑訴法312-7に鑑みると、検察官の訴因変更の権限は「被告人の防御に実質的な不利益を生ぜしめないこと」との適正な釣り合いの上に成り立っていることが明らかである。
+被告人のそのような不利益を生ずる恐れが著しく、公平を損なう恐れが顕著な場合には裁判所は公判手続きの停止措置にとどまらず、検察官の請求そのものを許さないことが例外として認められる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a19">
+            <h2 class="pattern-title">A19 訴因変更の許否</h2>
+            <p class="pattern-body">刑訴法312-1は「許さなければならない」と規定しており、また刑訴法が起訴便宜主義を採用（248）し、検察官に公訴の取り消しを認めている（257）ことに鑑みれば、仮に起訴状記載の訴因について有罪の判決が得られる場合であっても、第一審において検察官から訴因、罰条の追加、撤回または変更の請求があれば、公訴事実の同一性を害しない限り、これを許可しなければならない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 公訴事実の同一性を害しない訴因変更請求を受けた場合に、常に直ちに許可すべきかは一考の余地がある</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 重大な犯罪を内容とする旧訴因について有罪判決が得られるにも関わらず、検察官から無罪になる新訴因への変更請求がされた場合には、裁判所として少なくとも許可決定の前に、訴因維持勧告をする程度の義務は負うとする考え方は十分成り立ちうる。</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a20">
+            <h2 class="pattern-title">A20 訴因変更命令の形成力</h2>
+            <p class="pattern-body">検察官が裁判所の訴因変更命令に従わないのに、裁判所の訴因変更命令により、訴因が変更されたものとすることは、裁判所に直接訴因を動かす権限を認めることになり、訴因の変更を検察官の権限としている刑訴法の基本的構造（当事者主義）に反するから、許されない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a21">
+            <h2 class="pattern-title">A21 訴訟条件と訴因</h2>
+            <p class="pattern-body">非親告罪として起訴された後にこれが申告罪と判明した場合について、起訴の時点では告訴がなかった点をどう考えるかが問題となる。
+訴訟の進展に伴い訴因変更の手続き等によって申告罪として審判すべき事態に至ったときは、その時点で初めて告訴が必要となったにすぎない。
+従って、何ら問題なく実態判決をすることができる。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件と異なり、検察官が申告罪について告訴なしに公訴定期した場合、告訴を追完することによってそれを補正することができるかが問題となる。</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 通説は追完を否定
+（検察官の落ち度は重大であり、それに対する否定的評価を明確にする必要があるから）</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a22">
+            <h2 class="pattern-title">A22 訴因と罪数</h2>
+            <p class="pattern-body">当初は包括一罪として審判の対象とされたものが、証拠調べの結果、単に事実に対する法的評価の範囲を超えて訴因事実そのものに変動が生じ、そのため数個の併合罪と認定するのが相当とされる場合、裁判所としては、検察官に釈明を求めて場合により罪数補正を伴う訴因変更手続きを促すなどして、被告人側に防御の機会を与えるべき訴訟法上の義務がある。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は併合罪への訴因の書き分けを事実の変化に伴う訴因変更と罪数補正（訴因変更の前提となる一罪ごとの訴因の特定）の両者が同時になされるものと捉えている</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a23">
+            <h2 class="pattern-title">A23 刑訴法316の17と自己に不利益な供述の強要</h2>
+            <p class="pattern-body">刑訴法316の17は被告人に対して自己が刑事上の責任を問われる恐れのある事項について認めるように義務付けるものではなく、また公判期日において主張するかどうかも被告人の判断に委ねられており、主張すること自体を強要するものではない。
+従って、刑訴法316の17は、自己に不利益な供述を強要するものではなく、憲法38-1（自己負罪拒否特権）に反しない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 通常被告人側の主張は、被告人に有利な内容のはずだが、構成要件該当事実を認めて違法性阻却を争う場合など、主張に「自己に不利益」な事項が含まれることも生じうる</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 316の17は公判期日に先立ってその主張を明らかにするという、主張時期を選択する自由を制約する</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> しかし主張時期前倒しによる不利益への対応は憲法38-1で要請されるものではないと判断されたということ</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a24">
+            <h2 class="pattern-title">A24 裁判官の忌避</h2>
+            <p class="pattern-body">手続内における審理の方法、態度などはそれだけでは直ちに忌避（21-1）の理由となしえず、これらに対しては異議、上訴などの不服申し立て方法によって救済を求めるべきである。
+従って、かかる理由による忌避申し立ては、受け入れられる可能性が全くなく、結果は訴訟の遅延と裁判所の権威の失墜しかあり得ない。
+よって、そのような理由でなされた忌避申し立ては、訴訟の遅延のみを目的とするとして刑訴法24により、却下すべきである。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本決定の前に訴訟手続内における審理の方法や審理態度などが原則忌避事由とならないことはすでに判示されていた。</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a25">
+            <h2 class="pattern-title">A25 訴訟指揮権に基づく証拠開示</h2>
+            <p class="pattern-body">（本判決は平成16年改正とそれに伴う実務により、事実上の役割を終えている）
+
+証拠調べの段階に入った後、弁護人から具体的必要性を示して、一定の証拠を弁護人に閲覧させるように検察官に命ぜられたい旨の申出がされた場合、
+         * 事案の性質
+         * 審理の状況
+         * 閲覧を求める証拠の種類及び内容
+         * 閲覧の時期、程度及び方法
+         * その他諸般の事情
+を勘案して、その閲覧が被告人の防御のために特に重要であり、かつこれにより罪証隠滅、証人威迫等の弊害を将来する恐れがなく、相当と認めるときは、その訴訟指揮権に基づいて検察官に対して、閲覧させるよう命じることができる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a26">
+            <h2 class="pattern-title">A26 争点顕在化措置</h2>
+            <p class="pattern-body">「共謀」は共謀共同正犯の「罪となるべき事実」であるが、共謀の成立過程の謀議行動の日時等は訴因の特定に必要な事項ではなく、訴因として記載する必要はない。
+そのため、その点に関して検察官が訴因外で釈明・主張した内容は訴因の内容とならず、裁判所がそれと異なる認定をしても審判対象確定の見地から訴因変更が必要となることもない。
+また、謀議行為の日時は、一般に被告人の防御にとって重要な事項ではあるが、訴因に明示されていないなら、争点明確化のために訴因変更が必要となることもない。
+
+しかし、罪責の認定または量刑の判断にとって重要な事項でありそれと異なる事実を認定すれば被告人に不意打ちを与えるという場合、裁判所はこれを防止するために求釈明（規則208-1）等により当該事実を争点として顕在化させる措置を取る必要がある。
+
+かかる措置を取ることなく行われた訴訟手続きは被告人の不意打ちとなり、その防御権を不当に侵害するとして違法になる。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a27">
+            <h2 class="pattern-title">A27 職権審理義務の存否</h2>
+            <p class="pattern-body">裁判所には、原則として職権証拠調べの義務、及び検察官に対して立証を促す義務はない。
+
+しかし被告事件と被告人の共犯者または必要的共犯の関係に立つ他の共同被告人に対する事件とがしばしば併合または分離されながら同一裁判所の審理を受けた上、他の事件につき有罪の判決を言い渡され、その有罪判決の証拠となった判示多数の供述調書が他の被告事件の証拠として提出されたが検察官の不注意によって被告事件に対してはこれをを証拠として提出することを遺脱したことが明白な場合、裁判所は少なくとも検察官に対してその提出を促す義務がある。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 学説上：
+原則として義務はなく、例外的に、
+①証拠の存在が明らかで、かつ、
+②その取り調べが容易であり、
+③それを取り調べなければ著しく正義に反する結果を請来する恐れが顕著
+な時に、当事者に対して証拠調べの請求を促す義務がある。（通説）</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> それを超えて裁判所自らが職権で証拠調べを行う義務が生じるのは、裁判所の勧告に対する被告人側の対応が不十分な場合に限られる</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 検察官側の立証との関係では立証を促す義務に止めるべきとする見解が有力</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a28">
+            <h2 class="pattern-title">A28 保釈と余罪</h2>
+            <p class="pattern-body">被告人が甲乙丙の3個の公訴事実について起訴され、そのうち甲事実のみについて勾留状が発せられている場合において、刑訴法90（裁量保釈）により保釈が適当であるかどうかを判断するにあたり、甲事実の事案の内容や性質、あるいは被告人の経歴、行状、性格等の事情をも考察することが必要である。
+そして、そのための一資料として勾留状の発せられていない乙、丙各事実をも考慮することは許される。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a29">
+            <h2 class="pattern-title">A29 被害者特定事項の秘匿</h2>
+            <p class="pattern-body">刑訴法290の2に基づく被害者特定事項の秘匿措置は憲法32,37に違反しないか、問題となる。
+この点について、秘匿決定が、裁判を非公開で行う旨のものでないことは明らかであり、公開裁判を受ける権利を侵害するものとは言えず、憲法32,37に違反しない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件の判断は、本件では問題とされていない憲法82との関係でも同様に妥当すると考えられる</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a30">
+            <h2 class="pattern-title">A30 迅速な裁判ー高田事件</h2>
+            <p class="pattern-body">憲法37-1は単に迅速な裁判を一般的に保証するために必要な立法上及び司法行政上の措置を取るべきことを要請するに止まらず、ここの刑事事件について、迅速な裁判をうける被告人の権利が侵害された異常な事態が生じた場合には具体的規定がなくてもその審理を打ち切るという非常救済手段がとられるべきことをも認めている趣旨の規定である。
+審理を打ち切る方法については、判決で免訴の言い渡しをするのが相当である。
+ 
+次に、審理の遅延が憲法37-1に反する事態に至っているか否かの判断基準が問題となるが、遅延の期間のみによって一律に判断されるべきではなく、遅延の原因と理由などを勘案して、
+            1. その遅延がやむを得ないものであるか、
+            2. これにより右保障条項が守ろうとしている諸利益がどの程度実際に害せられているか
+など諸般の状況を総合的に判断して決する。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 憲法37-1はプログラム規定に止まらず、自力実効性を持つ規定であることが明らかとなった</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 遅延の主たる原因が被告人側にある場合には被告人が迅速な裁判を受ける権利を自ら放棄したものと認めるべきである</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は、憲法の規定に基づいて、いわば超訴訟法的な免訴を認めた</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a31">
+            <h2 class="pattern-title">A31 厳格な証明</h2>
+            <p class="pattern-body">累犯加重の理由となる前科は刑訴法335にいう「罪となるべき事実」ではないが、前科事実は刑の法定加重の理由となる事実であって、実質において犯罪構成事実に準ずるものであるから、これを認定するには証拠によらなければならない。
+また、この証拠書類は刑訴法305による取り調べをすることを要する。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現行法の元では構成要件該当事実に限らず、刑罰権存否及び範囲を定める事実については厳格な証明を要するという立場が多数説</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> その後の判例で、刑法45後段（併合罪）の「確定裁判」の存在についても同様の考えが示されている</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a32">
+            <h2 class="pattern-title">A32 手錠をかけたままの取調べと自白</h2>
+            <p class="pattern-body">すでに勾留されている被疑者が捜査官から取り調べられる際に、手錠をされたままである時は、その心身に何らかの圧迫を受け、任意の供述は期待できないと推定され、反証のない限りその供述の任意性は否定される。
+しかし、本件においては、検察官は終始穏やかな雰囲気で取り調べを進め、被告人の供述は全て任意にされたことが証拠に基づいて明らかであるから、被告人の自白は、任意であることの反証が立証されている。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件と異なり、方手錠の状態で取り調べが行われた事案につき、最高裁は、方手錠の場合は両手錠の場合よりも一般的に心理圧迫の程度は軽いとした</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a33">
+            <h2 class="pattern-title">A33 補強法則と公判廷の自白</h2>
+            <p class="pattern-body">憲法38-3の趣旨は、一般に自白が往々にして本人の真意と自由意志に反してなされる場合のあることを考慮した結果、被告人に不利益な証拠が本人の自白である場合には、他に補強証拠を要するものとして無実のものが処罰される危険を排除して自白偏重と自白強要の弊害を防止しようとした点にある。
+
+公判廷における被告人の自白は、身体の拘束を受けず、強制拷問脅迫その他の不当な干渉を受けることもなく、自由な状態で供述されるものであり、裁判所としても自らその任意性・信憑性を判断できる上、心証上足りないところは被告人を十分訊問できる。
+そこで、憲法38-3「本人の自白」には、公判廷における被告人の自白を含まないと解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 学説は憲法38-3「本人の自白」に公判廷における被告人の自白も含まれるとの説に傾いていた</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現行刑訴法も「公判廷における自白であると否とを問わず」自白に補強証拠を求める（刑訴法319-2）ことを明文で規定</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a34">
+            <h2 class="pattern-title">A34 補強証拠としての適格</h2>
+            <p class="pattern-body">刑訴法319-2は憲法38-3を受けて、自白に補強証拠を要求する。
+本件の未収金控帳は被告人が犯罪の嫌疑を受ける前にこれと関係なく、自らその販売未収金関係を備忘のため、その都度記入したものであり、記載内容は被告人の自白と解するべきではなく、右帳面は刑訴法323–2の書面としての証拠能力を有して被告人の公判廷の自白に対する補強証拠たりうる。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 根拠につき
+            1. 作成経緯に着目し：
+補強を要する自白を獲得した捜査とは独立無関係になされた供述を記載したものであり、その意味で自白から独立したものである点に求める見解
+            2. 性質に着目し：
+仮に被告人以外のものが作成しても同内容の書面が作成されるから、被告人が作成主体であっても実質的には自白と見るべきでないという点に求める見解</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a35">
+            <h2 class="pattern-title">A35 証人尋問権と検察官面前調書</h2>
+            <p class="pattern-body">憲法37-2（証人尋問権）は裁判所の職権によりまたは当事者の請求により喚問した証人につき、反対尋問の機会を十分に与えなければならないという趣旨であり、被告人に反対尋問の機会を与えない証人その他の者の供述を録取した書類を絶対に証拠とすることを許さない意味を含む者ではない。
+従って、法律において、これらの書類はその供述者を公判期日において尋問する機会を被告人に与えればこれを証拠とできる旨規定したからといって、憲法37-2に反するものでない。
+よって刑訴法321-1-2後段は合憲である。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a36">
+            <h2 class="pattern-title">A36 裁判官面前調書</h2>
+            <p class="pattern-body">刑訴法321-1-1の「裁判官の面前における供述を録取した書面」には、被告人以外のものに対する事件の公判調書中、同人の被告人としての供述を録取した部分をも含む。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 他の事件の被告人の供述であっても、勾留質問調書など、公判調書以外の書面については、公判廷の供述とは事情をことにするため、そこまで1号書面に含めるかは、なお検討の余地がある</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a37">
+            <h2 class="pattern-title">A37 特信情況</h2>
+            <p class="pattern-body">刑訴法321-1-2後段の「特信情況」について、必ずしみ外部的な特別の事情でなくとも、その供述の内容自体によってそれが信用性のある情況の存在を推知せしめる事由となる。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現在では外部的事情を基準として副次的にこれを推認する資料として調書の供述内容も考慮できるとする見解が有力</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 検察官面前調書の特信性は相対的なもので良い</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 被告人と供述者が父子の関係、あるいは暴力団の兄弟分の関係にあったことから被告人の面前でなされた公判供述について、真実を述べにくい状況があったと認め、「前の供述」に特信性を肯定した裁判例がある</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a38">
+            <h2 class="pattern-title">A38 実況見分調書</h2>
+            <p class="pattern-body">刑訴法321-3所定の書面には捜査機関が任意処分として行う検証の結果を記載したいわゆる実況見分調書も含まれる。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 検証調書につき伝聞例外要件が緩和されている理由：
+検証がものの形状や位置関係といったそれ自体中立的な対象を観察するもので、その性質上検証をするものの主観的意図によって内容が歪められる恐れが少ないこと</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 検証と同様の性質を有する捜査行為の結果を記載した書面については321-3を適用して証拠能力を認めて良いだろう</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 判例では、警察犬による臭気選別結果報告書も321-3の書面に含まれるとされている</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a39">
+            <h2 class="pattern-title">A39 鑑定受託者による鑑定書</h2>
+            <p class="pattern-body">捜査機関の嘱託に基づく鑑定書（223）は、裁判所が命じた鑑定人の作成した書面に関する刑訴321-4を準用すべきである。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 通説：
+鑑定の内容は複雑で、正確に記憶することが困難であり、口頭で述べるよりも書面によりその正確性について尋問する方が合理的であり、反対尋問を行使する面でも支障がない
+→判例と同様に鑑定受託者による鑑定書に321-4を準用肯定</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 通説の立場からは、専門家による鑑定及びそれに準じた検査、分析がされることが重要であり誰の依頼によるものかは重要ではない。
+→捜査機関以外のもの（e.g.弁護人）の依頼に基づいてされた鑑定等の結果を記載した書面も321-4が準用されることになる</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 判例は、医師の作成する診断書についても321-4の準用を肯定</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a40">
+            <h2 class="pattern-title">A40 刑訴法325の任意性の調査時期</h2>
+            <p class="pattern-body">刑訴法325の規定は、321ないし324の規定により証拠能力の認められる書面または供述についても、任意性の程度が低いため証明力が乏しいかもしくは任意性がないため証拠能力あるいは証明力を欠く書面または供述を証拠として取り調べて不当な心証を形成することをできる限り防止しようとする趣旨である。
+従って任意性の調査は、任意性が証拠能力にも関係することがあるところから、証拠調べに先立って321ないし324による証拠能力の要件を調査する際に併せて行われることが多いと考えられるが、必ずしもその証拠調べの前にされなければならない者ではなく、裁判所が書面または供述の証拠調べ後にその証明力を評価するにあたって調査したとしても差し支えない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a41">
+            <h2 class="pattern-title">A41 証拠とすることの同意</h2>
+            <p class="pattern-body">弁護人は包括的代理権に基づき326の同意を行うことができるが、被告人の意思に反する包括代理権行使は許されず、被告人の意思に反する弁護人の同意は無効である。
+被告人が公訴事実を否認している場合、弁護人が関係証拠に同意しても被告人の否認の陳述の趣旨を無意味に着せしめるような内容の証拠については弁護人の同意の意見のみにより被告人がこれら証拠に同意したことにはならない。
+本件では、被告人は覚醒剤所持の事実につき、覚醒剤であることの認識はなかった旨具体的に争っており、被告人に覚醒剤であるとの認識があった旨の立証に資する現行犯人逮捕手続き書について弁護人の同意意見のみによって被告人の同意があったとすることはできない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a42">
+            <h2 class="pattern-title">A42 写し</h2>
+            <p class="pattern-body">写し一般を許容するべき基準として
+                     1. 原本が存在すること
+                     2. 写しが原本を忠実に再現したものであること
+                     1. 原本の完全な複製である必要はなく、立証事項との関連においてその必要な正常が忠実に再現されていれば足りる
+                     3. 写しによっては再現し得ない原本の性状が立証事項とされていないこと
+                     1. 例えば材質、凹凸、透かし紋様の有無、重量など
+
+以上に対して、
+                     4. 原本の提出が不可能または著しく困難であること
+は写しの許容性の要件ではない。
+４は最良証拠の法則、ないし写し提出の必要性の問題にすぎないからである。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 通説：
+                     * 原本が存在しまたは存在したこと
+                     * その写しが原本を正確に転写した者であること
+                     * 原本を提出することが不可能または困難であること</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 原本の性状が問題とならない場合、正確な転写である限り、原本提出の困難性を不要とする立場も有力である
+（本判決はその立場）</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決の立場からも、原本提出の困難性は「写し提出の必要性の問題」とされており、原本の提出が可能かつ容易である場合に、写しの提出が認められない場合もあり得る</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a43">
+            <h2 class="pattern-title">A43 違法な手続きと証拠の関係</h2>
+            <p class="pattern-body">警察官が捜査過程で関係者に暴力を振るうことは許されず、本件における行為は違法である。
+しかし捜査の経緯に照らし本件の覚醒剤の証拠能力については、違法行為は捜索の現場においてなされているが、その暴行の時点は証拠物発見の後であり、被告人の発言に触発されて行われたものである。
+従って証拠物の発見を目的として捜索に利用するために行われたものとは認められず、右証拠物を違法行為の結果収集されたものとして証拠能力を否定することはできない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a44">
+            <h2 class="pattern-title">A44 罪となるべき事実</h2>
+            <p class="pattern-body">共謀共同正犯における「共謀」は刑訴法335-1「罪となるべき事実」に当たるか、当たるとした場合、その事実をどの程度に具体的に判示すべきかが問題となる。
+ 
+この点について、「共謀」または「謀議」は共謀共同正犯における「罪となるべき事実」に他ならず、これを認めるためには厳格な証明によらなければならない。
+しかし「共謀」の事実が厳格な証明で認められ、その証拠が判決に挙示されている以上、共謀の判示は前示の趣旨において成立したことが明らかにされれば足りる。謀議の行われた日時、場所、またはその内容の詳細、すなわち実行の方法、各人の行為の役割分担等についていちいち具体的に判示することは不要である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 335-1の「罪となるべき事実」とは特定の犯罪構成要件に該当する具体的事実を指す</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a45">
+            <h2 class="pattern-title">A45 概括的認定</h2>
+            <p class="pattern-body">有罪判決には「罪となるべき事実」すなわち構成要件に該当する具体的事実を記載しなければならない（刑訴335-1）。これは有罪判決の対象を明確にして他の事実と識別して法律関係の混乱を防止するとともに、裁判所の確実な心証を支えるためである。
+従って、構成要件に該当するか否かを判定するに足る程度に具体的に明白にすることを要し、かつそれを以って足りる。
+
+本件では、Xが犯行を否認し、Vは記憶を喪失して目撃者もいなかったため、犯行の手段方法は不明であったが、犯行に至る経緯や被害者の受傷の部位・程度、犯行現場の状況等は証明されて事故による転落などの可能性も排除されたために殺人未遂に実行行為の存在について裁判所は確信を得ることができた。
+そこで、第一審判決が、未必の殺意をもって「Vの身体を有形力行為し、〜」と判示して手段方法につき具体的に判示しなかったとしても罪となるべき事実の記載として足りる。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本決定は有罪判決の「罪となるべき事実」についてだが、検察官が起訴時点で概括的な心証しか得られていない場合の訴因の特定（256-3）についても同様のことが当てはまる。</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a46">
+            <h2 class="pattern-title">A46 余罪と未決通算</h2>
+            <p class="pattern-body">ある被疑事実（A）による未決勾留が余罪（B）の取り調べに事実上利用された場合、Aについて不起訴とされたときに、Bにその未決勾留日数を算入する事ができるかが問題となる。
+ 
+本件において不起訴となった窃盗目的の住居侵入の罪につき発せられた勾留状による未決勾留日数中3日を起訴された常習累犯窃盗の罪につき処せられた本刑に算入する事は、両事実が一罪の関係にあることに照らして正当である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 従来の判例は、不起訴とされた事件と有罪とされた事件が併合罪の関係にあった事案につき、算入できないとする立場だった</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件は両罪が一罪の関係にあるという点で従来の判例と異なる</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a47">
+            <h2 class="pattern-title">A47 検察官上訴</h2>
+            <p class="pattern-body">一事不再理の原則は何人も同じ犯行について、２度以上罪の有無に関する裁判を受ける危険に晒されるべきものではないという趣旨に基づく。
+上告審のそれも同じ事件においては、継続する一つの危険の各部分に過ぎず、二重危険は存在しない。従ってまた、憲法39に違反するものでもない。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は英米法系の二重の危険の発想に影響されている</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 現在は一事不再理を二重の危険の禁止により基礎付ける考え方が主流である。</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> かつては憲法39が大陸法的な一事不再理を定めたものか、英米法由来の二重の危険の禁止を定めたものか争いがあった</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 後者をとれば、一審と上訴審で二重の危険に触れると考えることも可能であった</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a48">
+            <h2 class="pattern-title">A48 上訴の利益</h2>
+            <p class="pattern-body">本件大赦令は、不敬罪で起訴されて現に公訴の係属中であるものについて、その訴追を阻止するという趣旨に解さなければならない。
+従って、被告人の側もまた、訴訟の実態に関する理由を主張して、無罪の判決を求めることは許されず、免訴の判決に対して無罪を主張して上訴することは違法である。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 免訴判決の性質につき
+                        1. 実態裁判説
+                        2. 実体関係的形式裁判説
+                        3. 形式裁判説</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は、形式裁判説にたつ</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本判決は後に一般化</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 最高裁は本判決を援用して、免訴判決に対する上訴はおよそ許されないとした（SC.S29.11.10）</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 同様のことわりを公訴棄却裁判にも及ぼして、被告人死亡を理由とする公訴棄却決定に対する上訴は許されないとした（SC.S53.10.31）</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a49">
+            <h2 class="pattern-title">A49 刑訴法382の2「やむを得ない事由」</h2>
+            <p class="pattern-body">被告人側が、第一審では事実を認めた方が量刑上有利と考えて争わなかったが、よきに反して実刑判決を受けたので控訴して、そこで初めて速度違反はないと主張した事例。
+弁護人主張のような事情は刑訴法382の2にいう「やむを得ない事由」には該当しない。
+
+審査の基準時は第一審判決時であり、控訴趣意書に援用しうるのは第一審の「訴訟記録及び現裁判所において取り調べた証拠に現れている事実」に限られ（378以下）、第一審弁論終結後に存在した事実を控訴審で新たに主張することや新たな証拠を提出することはできない。
+もっとも原則を貫くと不都合も生じるため、「やむを得ない事由によって第一審弁論終結前に取り調べを請求することができなかった証拠によって証明することのできる事実」という制限を付した上で新たな証拠の取り調べ請求とそれによって証明しうる第一審弁論終結前の事実の援用を認めた。（382の2-1,-3、393-1）</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 上記の「やむを得ない」という制限の意義に関して
+物理的不能説と心理的不能説の対立があった</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本件のような単なる見込みちがいはいずれにしても「やむを得ない事由」には当たらない</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a50">
+            <h2 class="pattern-title">A50 新証拠の取調べ</h2>
+            <p class="pattern-body">刑訴法393-1但し書きの定める「やむを得ない事由」の疎明の有無は、控訴裁判所が同規定により新たな証拠の取り調べを義務付けられるか否かに関わる問題であり、同項本文は、第一審判決以前に存在した事実に関する限り、第一審で取り調べないし取り調べ請求されていない新たな証拠につき、右「やむを得ない事由」の疎明がないなど同項但し書きの要件を書く場合であっても、控訴裁判所が第一審判決の当否を判断するにつき必要と認めるときは裁量によってその取り調べをすることができる旨定めていると解すべきである。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本決定は、第一審で取り調べないし取り調べ請求されなかったことにやむを得ない事情があったことの疎明がないなど、393-1但の要件を欠く新証拠でも控訴裁判所は同項本文に基づいて職権で取り調べることができるとした</p>
+            </div>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> しかし、取り調べうる新証拠の範囲の制約の有無、内容については示されていない</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a51">
+            <h2 class="pattern-title">A51 判決影響性の意義ー三鷹事件</h2>
+            <p class="pattern-body">刑訴法379は「訴訟手続きに法令の違反があってその違反が判決に影響を及ぼすことが明らかであること」と規定しており、従って、訴訟手続きに法令違反があっても、その違反が積極的に判決に影響を及ぼすことが明らかでない限り、379の控訴理由とならない。
+
+刑訴379の場合、訴訟手続きの法令違反が判決に影響を及ぼすべき可能性があるというだけでは、控訴理由とすることはできず、その法令違反がなかったならば現になされている判決とは異なる判決がなされたであろうという蓋然性がある場合でなければ同条の法令違反が判決に影響を及ぼすことが明らかということはできない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a52">
+            <h2 class="pattern-title">A52 破棄判決の拘束力ー八海事件</h2>
+            <p class="pattern-body">先行する破棄判決の拘束力（内容の異なる判断を禁じる効力）について、刑訴法には規定はないが、上告審も職権で事実認定に介入できるのであるから、条理上、上告審判決の破棄の理由とされた事実上の判断は拘束力を有すると解すべきである。
+そして、拘束力は破棄の直接の理由、すなわち原判決に対する消極的否定的判断についてのみ生ずるものであり、その消極的否定的判断を裏付ける積極的肯定的事由についての判断は、破棄の理由に対して縁由的な関係に立つにとどまり何らの拘束力を生ずるものではない。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a53">
+            <h2 class="pattern-title">A53 不利益変更の禁止</h2>
+            <p class="pattern-body">不利益変更の禁止における「原判決の刑より重い刑」の判断方法につき、
+                           1. 第一次的には主刑に着目し、その軽重にかかる刑法9、10に定める基準に従うという形式的なやり方
+                           2. 主刑に加えて執行猶予、付加刑、労役場留置などの付随的処分をも総合的に考慮
+と、変遷してきた。
+
+本決定は、不利益変更禁止原則に違反するか否かについて
+                           * 第一審、第二審において言い渡された主文の刑を刑名等の形式のみによらず、
+                           * 具体的に全体として総合的に観察し、
+                           * 第二審の判決の刑が第一審の判決の刑よりも実質上被告人に不利益であるか否か
+によって判断すべきとした。
+
+【本件の具体的事案について】
+被告人に対する自由拘束、法益剥奪は実質的にいずれが重いかを具体的総合的に考察すれば、禁錮2年6月の刑を懲役2年の刑に変更することは、原判決の刑の不利益な変更とは言えないと結論づけた。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> この方法によると、拘禁刑、罰金等の刑種やその長短・多寡の他、実刑、執行猶予の区別などが考慮要素として加わる結果、上訴裁判所の判断は複雑な様相を呈する</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a54">
+            <h2 class="pattern-title">A54 裁量保釈と抗告</h2>
+            <p class="pattern-body">受訴裁判所による裁量保釈（刑訴90）の判断に対する抗告審の審査方法について、抗告審としては受訴裁判所の判断が、委ねられた裁量の範囲を逸脱していないかどうか、すなわち不合理でないかどうかを審査すべきであり、受訴裁判所の判断を覆す場合には、その判断が不合理であることを具体的に示す必要がある。</p>
+        </div>
+        <div class="pattern-card" id="pattern-a55">
+            <h2 class="pattern-title">A55 証拠の明白性(1)ー白鳥事件</h2>
+            <p class="pattern-body">刑訴法435条6号にいう「無罪を言い渡すべき明らかな証拠」とは確定判決における事実認定につき合理的な疑いを抱かせ、その認定を覆すに足りる蓋然性のある証拠をいうものと解する。
+そして、右の明らかな証拠であるかどうかは、もし当の証拠が確定判決を下した裁判所の審理中に提出されていたとするならば、果たしてその確定判決においてされたような事実認定に到達したであろうかどうかという観点から、当の証拠と他の全証拠と総合的に評価して判断するべきである。
+この判断に際しても、再審開始のためには確定判決における事実認定につき合理的な疑いを生ぜしめれば足りるという意味において、「疑わしい時は被告人の利益に」という刑事裁判における鉄則が適用される。</p>
+            <div class="supplement-box">
+                <p><strong>補足:</strong> 本決定は確定判決の事実認定とその証拠関係を確認した上で、新旧全証拠を総合的に評価して確定判決の事実認定に合理的な疑いが生じるかを判断する方法（総合評価説）を採用</p>
+            </div>
+        </div>
+        <div class="pattern-card" id="pattern-a56">
+            <h2 class="pattern-title">A56 証拠の明白性(2)ー財田川事件</h2>
+            <p class="pattern-body">【明白性の要件解釈】
+証拠の明白性を肯定するには、確定判決が認定した犯罪事実の不存在が確実であるとの心証を得ることを必要とするのではなく、確定判決における事実認定の正当性について疑いが合理的な理由に基づくものであることを必要とし、かつそれを以て足りる。
+
+【具体的な事案について】
+本決定は、旧証拠の再評価の結果、確定判決の証拠評価や事実認定それ自体に難点が認められる場合には、新証拠が旧証拠の証拠価値を大幅に滅殺するようなものでなくても、新旧全証拠の総合評価によって合理的な疑いが生じる可能性を認めた。</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
