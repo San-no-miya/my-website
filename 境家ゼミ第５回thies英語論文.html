@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bicameralism vs. Parliamentarism: Lessons from Japan's Twisted Dietの分析結果</title>
+  <style>
+    /* 全体のスタイル */
+    body {
+      background-color: #f8f9fa;
+      color: #333333;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      font-family: 'MS Mincho', 'ＭＳ 明朝', serif;
+    }
+
+    /* 2カラムレイアウトの親コンテナ */
+    .layout-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* --- ▼▼▼ 左側：スクロール追従目次 ▼▼▼ --- */
+    .table-of-contents {
+      flex: 0 0 200px;
+      position: sticky;
+      top: 40px;
+      align-self: flex-start;
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 15px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e0e0e0;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .table-of-contents h3 {
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-top: 0;
+      margin-bottom: 1em;
+      padding-bottom: 0.5em;
+      border-bottom: 2px solid #1e88e5;
+    }
+    .table-of-contents ul { list-style: none; padding: 0; margin: 0; }
+    .table-of-contents li a {
+      display: block;
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      text-decoration: none;
+      color: #337ab7;
+      padding: 8px 10px;
+      border-radius: 5px;
+      font-size: 0.85em;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .table-of-contents li a:hover {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+    }
+    /* [変更] 目次を非表示にするためのスタイル */
+    .table-of-contents.hidden {
+      display: none;
+    }
+    /* --- ▲▲▲ 左側：スクロール追従目次 ▲▲▲ --- */
+
+
+    /* --- ▼▼▼ 右側：メインコンテンツ ▼▼▼ --- */
+    .content-container {
+      flex: 1;
+      min-width: 0;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+      border: 1px solid #e0e0e0;
+      padding: 20px 40px 40px 40px;
+    }
+
+    /* [新規] 目次表示/非表示ボタン */
+    .toc-toggle-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-size: 0.9em;
+      transition: background-color 0.2s;
+    }
+    .toc-toggle-button:hover {
+      background-color: #5a6268;
+    }
+
+
+    /* 書誌情報セクション */
+    .bibliography {
+      background-color: #f5f5f5;
+      border-left: 5px solid #6c757d;
+      padding: 15px 20px;
+      margin-bottom: 2.5em;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-size: 0.9em;
+      color: #444;
+    }
+    .bibliography p { margin: 0.5em 0; }
+    .bibliography strong { font-family: inherit; color: #333; font-weight: bold; }
+
+    /* メインタイトル */
+    h1.main-title {
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-weight: bold;
+      color: #0d47a1;
+      font-size: 2.2em;
+      text-align: center;
+      border-bottom: 3px solid #0d47a1;
+      padding-bottom: 0.5em;
+      margin-top: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    /* 各分析セクションの見出し */
+    h2 {
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-weight: bold;
+      color: #0d47a1;
+      font-size: 1.6em;
+      padding-bottom: 0.4em;
+      margin-top: 0;
+    }
+
+    /* 各分析セクションを囲むdiv */
+    .step-section {
+      margin-top: 2.5em;
+      padding: 20px 25px;
+      border-radius: 0 8px 8px 0;
+    }
+    .step-section:nth-of-type(3n+1) {
+      background-color: #e3f2fd;
+      border-left: 5px solid #1e88e5;
+    }
+    .step-section:nth-of-type(3n+2) {
+      background-color: #e8f5e9;
+      border-left: 5px solid #43a047;
+    }
+    .step-section:nth-of-type(3n) {
+      background-color: #fff8e1;
+      border-left: 5px solid #ffb300;
+    }
+
+    /* 本文中の強調箇所 */
+    strong, b {
+      font-family: 'MS Gothic', 'ＭＳ ゴシック', sans-serif;
+      color: #d32f2f;
+      font-weight: bold;
+    }
+
+    p, ol, ul { margin-top: 0; margin-bottom: 1.2em; }
+    .step-section ul, .step-section ol { padding-left: 25px; }
+
+    /* アコーディオン（本文対訳）のスタイル */
+    .accordion-item {
+      background-color: #ffffff;
+      border: 1px solid #b0c4de;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .accordion-item summary {
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-weight: bold;
+      color: #1a237e;
+      padding: 12px 15px;
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.2s;
+      display: list-item;
+    }
+    .accordion-item summary:hover { background-color: #f4f8ff; }
+    .accordion-content { padding: 0 15px 15px 15px; }
+    .original-text {
+      background-color: #f0f2f5;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #333;
+      line-height: 1.6;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-family: 'Helvetica', 'Arial', sans-serif;
+    }
+    .translated-text { padding: 5px; }
+
+    /* --- ▼▼▼ [変更] 単語表のスタイル（グレー基調） ▼▼▼ --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5em;
+      font-family: 'Meiryo', 'メイリオ', sans-serif;
+      font-size: 0.95em;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      padding: 12px 15px;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      background-color: #0d47a1;
+      color: #ffffff;
+      font-weight: bold;
+    }
+    tbody tr:nth-child(even) { background-color: #f2f2f2; }
+    tbody tr:nth-child(odd) { background-color: #ffffff; }
+    tbody tr:hover { background-color: #e9e9e9; }
+    /* --- ▲▲▲ [変更] 単語表のスタイル ▲▲▲ --- */
+  </style>
+</head>
+<body>
+  <div class="layout-container">
+    <nav class="table-of-contents">
+      <h3>目次</h3>
+      <ul>
+        <li><a href="#section-1">タイトルとアブストラクトの要約</a></li>
+        <li><a href="#section-2">序論と結論の確認</a></li>
+        <li><a href="#section-3">先行研究の理解</a></li>
+        <li><a href="#section-4">理論/分析枠組みの理解</a></li>
+        <li><a href="#section-5">方法論の確認</a></li>
+        <li><a href="#section-6">分析/議論の把握</a></li>
+        <li><a href="#section-7">本文の重要箇所対訳</a></li>
+        <li><a href="#section-8">重要キーワードと単語表</a></li>
+      </ul>
+    </nav>
+    <main class="content-container">
+      <button id="toc-toggle-button" class="toc-toggle-button">目次の表示/非表示</button>
+      <div class="bibliography">
+        <p><strong>論文タイトル:</strong> Bicameralism vs. Parliamentarism: Lessons from Japan's Twisted Diet</p>
+        <p><strong>著者:</strong> Michael F. THIES, Yuki YANAI</p>
+        <p><strong>掲載誌:</strong> 選挙研究 (Japanese Journal of Electoral Studies)</p>
+        <p><strong>発行年:</strong> 2014</p>
+        <p><strong>巻(Volume):</strong> 30</p>
+        <p><strong>号(Issue):</strong> 2</p>
+        <p><strong>ページ:</strong> 60-74</p>
+        <p><strong>DOI:</strong> (記載なし)</p>
+      </div>
+      <h1 class="main-title">Bicameralism vs. Parliamentarism: Lessons from Japan's Twisted Diet</h1>
+
+      <div class="step-section" id="section-1">
+        <h2 id="section-1-heading">タイトルとアブストラクトの要約</h2>
+        <p>本論文は、議院内閣制における強力な二院制が政府の立法機能に与える影響について、特に1989年以降の日本の「ねじれ国会」を事例として分析する。David Mayhewが主張した「分割政府は必ずしも政治的行き詰まり（グリッドロック）を招かない」という見解に対し、本稿は議院内閣制では政府の存続自体が立法能力に依存するため、状況が異なると指摘する。1989年から2013年までの日本の国会データを分析した結果、政府が単に参議院の多数派を失っただけの状態には比較的スムーズに適応できることが示された。しかし、<strong>野党が参議院を完全に支配する「ねじれ国会」に直面した場合、政府は法案提出数の削減、法案の修正率の上昇、不成立率の増加といった深刻な制約を受け、立法機能が著しく妨げられる</strong>ことを結論付けている。</p>
+      </div>
+
+      <div class="step-section" id="section-2">
+        <h2 id="section-2-heading">序論と結論の確認</h2>
+        <p><strong>問題意識:</strong><br>
+        大統領制における「分割政府」は広く研究されているが、議院内閣制において上院で野党が多数を占める「ねじれ」状態が政府機能に与える影響は十分に解明されていない。特に、強力な権限を持つ参議院が存在する日本で頻発する「ねじれ国会」は、政府の統治能力を麻痺させる深刻な問題ではないかという問いを立てている。</p>
+        <p><strong>研究目的とリサーチクエスチョン:</strong><br>
+        本研究の目的は、日本の「ねじれ国会」が立法プロセスに具体的にどのような影響を与えるかを実証的に明らかにすることである。主なリサーチクエスチョンは以下の通り。</p>
+        <ul>
+          <li>日本の「ねじれ国会」は政治的行き詰まり（グリッドロック）に陥っているか？</li>
+          <li>政府は参議院の多数派を失った状況にどう適応するのか？</li>
+          <li>特に、野党が参議院を支配する場合、その影響はどの程度深刻か？</li>
+        </ul>
+        <p><strong>最終的な答えと政策的含意:</strong><br>
+        分析の結果、政府が単に参議院の多数派を失った状態（本稿における<strong>Majority-Minority Diet</strong>）では、法案成立が困難にはなるものの、グリッドロックは起きない。しかし、野党が安定多数を確保した「ねじれ国会」（本稿における<strong>Divided Diet</strong>）は、法案の成立率を劇的に低下させ、政府の法案提出意欲を減退させるなど、統治能力を著しく損なうと結論付けた。政策的含意として、日本の憲法にはこの種のグリッドロックを解決する制度的手段（例：オーストラリアの両院解散制度）が欠けており、事実上、政府の辞任と総選挙に頼るしかないという構造的問題を指摘している。</p>
+      </div>
+
+      <div class="step-section" id="section-3">
+        <h2 id="section-3-heading">先行研究の理解</h2>
+        <p>本研究は、大統領制における分割政府の研究、特に<strong>David Mayhew (1991)</strong>の「分割政府は必ずしも立法活動を停滞させない」という著名な研究を出発点としている。Mayhewは、党派を超えた取引によって法案は成立すると主張した。</p>
+        <p>しかし、本論文の著者らは、<strong>議院内閣制では政府の存続が議会（特に下院）の信任に依存するため、立法上の失敗が内閣の存続に直結し、 stakes are higher (賭け金が高い)</strong>であると主張する。このため、大統領制の議論をそのまま適用することはできない。</p>
+        <p>既存研究の多くは、議院内閣制における上院の権限が弱いケースや、与党が恒常的に両院を支配するケースを扱っており、日本のように強力な上院が存在し、かつ「ねじれ」が頻発する事例の定量的分析は不十分であった。本論文の貢献は、この日本の事例を詳細なデータに基づき分析し、<strong>「単に多数派を欠く状態」と「野党に支配される状態」を明確に区別</strong>し、それぞれが立法プロセスに与える影響の質的な違いを実証した点にある。</p>
+      </div>
+
+      <div class="step-section" id="section-4">
+        <h2 id="section-4-heading">理論/分析枠組みの理解</h2>
+        <p>本論文は、国会の勢力分布を以下の3つの類型に分類し、分析の枠組みとしている。この分類が本研究の核心的な貢献の一つである。</p>
+        <ul>
+          <li><strong>Unified Diet (統一国会):</strong> 与党（連立与党を含む）が衆議院と参議院の両方で過半数を支配している状態。政府は安定して法案を成立させることができる。</li>
+          <li><strong>Majority-Minority (Maj-Min) Diet (多数派-少数派国会):</strong> 政府は衆議院では多数派だが、参議院では過半数に達していない状態。しかし、参議院ではどの単一野党も安定多数を握っていないため、政府は是々非々で他の小政党と協力することで法案を成立させる余地がある。</li>
+          <li><strong>Divided Diet (分断国会):</strong> 政府は衆議院で多数派だが、参議院では主要野党（または野党連合）が安定した過半数を支配している状態。いわゆる「ねじれ国会」の最も深刻な形態であり、政府は法案成立のために最大の政敵と直接交渉するか、衆議院での再可決（3分の2以上の賛成が必要）に頼るしかない。</li>
+        </ul>
+        <p>この枠組みを用いて、それぞれの国会の類型（独立変数）が、法案の提出数、成立率、修正率、野党の協力度（従属変数）にどのような影響を与えるかを比較分析している。</p>
+      </div>
+
+      <div class="step-section" id="section-5">
+        <h2 id="section-5-heading">方法論の確認</h2>
+        <p>本研究は、<strong>1989年から2013年までの日本の国会</strong>を対象とした定量的分析に基づいている。</p>
+        <ul>
+          <li><strong>研究デザイン:</strong> 上記の3つの国会類型（Unified, Maj-Min, Divided）に基づき、各期間における立法活動の成果を比較する準実験的デザインを採用している。</li>
+          <li><strong>データ:</strong> 国会の公式記録（国会会議録など）から、内閣提出法案（一般法案、予算関連法案）、予算案、条約の審議結果に関するデータを収集・整理している。分析対象となる指標は以下の通り。
+            <ul>
+              <li>会期日数あたりの法案提出数</li>
+              <li>法案の成立率、修正を伴う成立率、不成立・廃案率</li>
+              <li>衆議院における3分の2多数による再可決（Veto override）の行使回数</li>
+              <li>主要野党が法案に賛成した割合</li>
+            </ul>
+          </li>
+          <li><strong>分析手法:</strong> 収集したデータを類型ごとに集計し、記述統計を用いて比較することで、国会の「ねじれ」の程度が立法活動に与える影響を明らかにしている。</li>
+        </ul>
+      </div>
+
+      <div class="step-section" id="section-6">
+        <h2 id="section-6-heading">分析/議論の把握</h2>
+        <p>データ分析から得られた主要な知見は以下の通りである。</p>
+        <ul>
+          <li><strong>政府の自己検閲:</strong> 政府は参議院の多数派を失うと（特にDivided Dietでは）、<strong>そもそも法案の提出数を減らす</strong>傾向がある（Table 6）。これは、不成立のリスクを避けるための「自己検閲」が行われていることを示唆する。Unified Dietに比べ、Divided Dietでは1日あたりの法案提出数がほぼ半減する。</li>
+          <li><strong>成立率の劇的な低下:</strong> 参議院が拒否権を持つ予算関連法案において、その影響は顕著である。無修正での成立率はUnified Dietで94.5%であるのに対し、Divided Dietでは<strong>58.4%へと激減</strong>する（Table 4）。一般法案全体でも、不成立率はUnified Dietの4.0%からDivided Dietでは<strong>17.4%に急増</strong>する（Table 5）。</li>
+          <li><strong>Maj-Min Dietにおける野党協力:</strong> 意外なことに、Maj-Min Dietでは、成立した法案の実に9割以上で主要野党の支持が得られていた（Table 7）。これは、政府が法案を通すために、特定の法案ごとに野党と協力する「部分連合」や「大連立」的な運営が常態化していたことを示している。</li>
+          <li><strong>Divided Dietにおける対立激化:</strong> Divided Dietでは、法案成立は主要野党の協力か、衆議院での再可決に依存する。主要野党の支持なしに成立した法案は、<strong>ほぼ全てが衆議院での再可決によるもの</strong>であった（Table 7）。これは、党派間の対立が極めて深刻化することを示している。</li>
+        </ul>
+        <p>総じて、単に参議院で過半数を割った状態（Maj-Min Diet）と、野党に参議院を支配された状態（Divided Diet）とでは、政府が直面する困難の度合いが<strong>質的に異なる</strong>ことが明確に示された。「ねじれ国会」は、政府の立法機能を著しく阻害する深刻な制度的問題であると結論付けられる。</p>
+      </div>
+
+      <div class="step-section" id="section-7">
+        <h2 id="section-7-heading">本文の重要箇所対訳</h2>
+        <details class="accordion-item">
+          <summary>重要段落 1：アブストラクト（研究の核心）</summary>
+          <div class="accordion-content">
+            <div class="original-text">
+              <p>In this paper, we examine data from the Japanese Diet between 1989 and 2013, a period of frequent non-government upper house majorities. Have Japan's "Twisted Diets" succumbed to gridlock? We show that while governments adapt smoothly to the mere absence of upper house control, they are severely hampered when the upper house is controlled by the Opposition. They propose fewer laws and suffer more changes to and failures of the legislative proposals they do submit.</p>
+            </div>
+            <div class="translated-text">
+              <p>本稿では、1989年から2013年までの、政府が参議院で多数派を欠くことが頻繁にあった期間の日本の国会データを検証する。日本の『ねじれ国会』は政治的行き詰まり（グリッドロック）に陥ったのだろうか？ 我々の分析によれば、政府は単に参議院の支配を失っただけの状態にはスムーズに適応する一方で、参議院が野党によって支配されると深刻な制約を受けることが示される。そのような状況下では、政府はより少ない法案しか提出せず、提出した法案もより多くの修正や不成立に直面するのである。</p>
+            </div>
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary>重要段落 2：結論（ねじれ国会の二類型とその影響）</summary>
+          <div class="accordion-content">
+            <div class="original-text">
+              <p>Our review of the legislative record since 1989 leads us to two conclusions. First, the mere absence of a government HC majority matters, but it does not risk gridlock. Governments can try to expand their membership to turn a Maj-Min Diet into a Unified one, or else they can round up outside party support on an ad hoc basis for each bill. The latter slows things down – fewer bills are proposed, and more are amended, but the basic principle of responsible party government is not fatally undermined...</p>
+            </div>
+            <div class="translated-text">
+              <p>1989年以降の立法記録を検討した結果、我々は2つの結論に至る。第一に、政府が参議院の多数派を単に欠いているという事実は重要ではあるが、それ自体がグリッドロックの危険をもたらすわけではない。政府は、連立政権の構成員を拡大して『多数派-少数派国会』を『統一国会』に変えようと試みたり、あるいは個々の法案ごとにその都度、外部の政党の支持を取り付けたりすることができる。後者の方法は物事を遅らせ――法案提出数は減り、修正は増える――が、責任政党政治の基本原則が致命的に損なわれるわけではない。</p>
+            </div>
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary>重要段落 3：結論（Divided Dietの深刻さ）</summary>
+          <div class="accordion-content">
+            <div class="original-text">
+              <p>Our second finding is that while a non-government majority in the HC is not particularly troubling, an Opposition HC majority, that is a Divided Diet, is of much greater moment. When the main opposition party or coalition controls the HC, the government has no choice but to bargain with its greatest rival. An opposition that will not strike deals with the government, whether because of sincere disagreement or strategic obstructionism, can fatally undermine the government's ability to govern, up to an including the rejection of budget-enabling bills.</p>
+            </div>
+            <div class="translated-text">
+              <p>我々の第二の発見は、参議院における非政府多数派の存在は特に厄介ではない一方で、野党が参議院の多数派を占める、すなわち『ねじれ国会』の状態は、はるかに重大な意味を持つということである。主要な野党または野党連合が参議院を支配するとき、政府は最大のライバルと交渉する以外に選択肢がなくなる。真摯な意見の相違からであれ、戦略的な妨害からであれ、政府との取引に応じない野党は、予算関連法案の否決を含め、政府の統治能力を致命的に損なう可能性がある。</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="step-section" id="section-8">
+        <h2 id="section-8-heading">重要キーワードと単語表</h2>
+        <p>本論文の核心となる専門用語や重要概念は以下の通りです。</p>
+        <ul>
+          <li>Bicameralism</li>
+          <li>Parliamentarism</li>
+          <li>Divided government</li>
+          <li>Gridlock</li>
+          <li>Twisted Diet (Nejire Kokkai)</li>
+          <li>Unified Diet</li>
+          <li>Majority-Minority (Maj-Min) Diet</li>
+          <li>Divided Diet</li>
+          <li>Veto override</li>
+          <li>Budget-enabling bills</li>
+        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>英単語</th>
+              <th>日本語訳</th>
+              <th>解説</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bicameralism</td>
+              <td>二院制</td>
+              <td>立法府が二つの議院（上院・下院）から構成される制度。</td>
+            </tr>
+            <tr>
+              <td>Parliamentarism</td>
+              <td>議院内閣制</td>
+              <td>内閣が議会の信任に基づいて成立し、議会に対して責任を負う政治制度。</td>
+            </tr>
+            <tr>
+              <td>Divided government</td>
+              <td>分割政府</td>
+              <td>主に大統領制において、行政府を支配する政党と立法府の少なくとも一院を支配する政党が異なる状態。</td>
+            </tr>
+            <tr>
+              <td>Gridlock</td>
+              <td>グリッドロック（政治的行き詰まり）</td>
+              <td>分割政府などの状況で政策決定が停滞し、重要な法案が通過しなくなる状態。</td>
+            </tr>
+            <tr>
+              <td>Twisted Diet (Nejire Kokkai)</td>
+              <td>ねじれ国会</td>
+              <td>日本の政治用語で、衆議院と参議院で多数派を占める政党・会派が異なる状態。</td>
+            </tr>
+            <tr>
+              <td>House of Councillors (HC) / House of Representatives (HR)</td>
+              <td>参議院 / 衆議院</td>
+              <td>日本の国会を構成する二院。参議院が上院、衆議院が下院に相当する。</td>
+            </tr>
+            <tr>
+              <td>Unified Diet</td>
+              <td>統一国会</td>
+              <td>本論文の定義で、与党が衆参両院で過半数を確保している状態。</td>
+            </tr>
+            <tr>
+              <td>Majority-Minority (Maj-Min) Diet</td>
+              <td>多数派-少数派国会</td>
+              <td>本論文の定義で、与党が衆議院では多数派だが、参議院では過半数に届かない状態。</td>
+            </tr>
+            <tr>
+              <td>Divided Diet</td>
+              <td>分断国会</td>
+              <td>本論文の定義で、参議院で野党が安定多数を確保している状態。Maj-Min Dietよりも深刻な「ねじれ」を指す。</td>
+            </tr>
+            <tr>
+              <td>Veto override</td>
+              <td>拒否権の覆し（再可決）</td>
+              <td>日本では、参議院が否決した法案を、衆議院が出席議員の3分の2以上の賛成で再び可決すること。</td>
+            </tr>
+            <tr>
+              <td>Budget-enabling bills</td>
+              <td>予算関連法案</td>
+              <td>予算の執行に不可欠な法律。予算案そのものとは異なり、参議院は拒否権を持つため、「ねじれ国会」の重要な焦点となる。</td>
+            </tr>
+            <tr>
+              <td>Responsible government</td>
+              <td>責任政府の原則</td>
+              <td>政府は議会（特に下院）の信任を得ている限り、その政策プログラムを自由に実行できる、あるいは実行する義務があるという議院内閣制の原則。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleButton = document.getElementById('toc-toggle-button');
+    const tableOfContents = document.querySelector('.table-of-contents');
+
+    if (toggleButton && tableOfContents) {
+      toggleButton.addEventListener('click', function() {
+        tableOfContents.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
+</body>
+</html>
