@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行政法論証一覧</title>
+    <style>
+        /* --- 全体スタイル --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .main-title {
+            text-align: center;
+            color: #444;
+            margin-bottom: 50px;
+        }
+        .pattern-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* --- 論述カードのスタイル --- */
+        .pattern-card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 25px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 800px;
+            box-sizing: border-box;
+        }
+        .pattern-title {
+            font-family: "Meiryo", sans-serif;
+            color: #0056b3;
+            margin: 0 0 15px 0;
+            font-size: 1.4em;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .pattern-body {
+            font-family: "MS Mincho", serif;
+            color: #333333;
+            line-height: 1.9;
+            font-size: 1.1em;
+            white-space: pre-wrap; /* 整形済みテキストの改行を維持 */
+            margin: 0;
+        }
+        
+        /* --- 補足情報コンテナのスタイル --- */
+        .supplement-box {
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #00acc1;
+        }
+        .supplement-box p {
+            margin: 0;
+            font-family: "MS Mincho", serif;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .supplement-box strong {
+            color: #007c91;
+        }
+
+        /* --- ナビゲーション関連のスタイル --- */
+        #nav-toggle-checkbox {
+            display: none;
+        }
+        .nav-toggle-label {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1002;
+            user-select: none;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .navigation-container {
+            position: fixed;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        #nav-toggle-checkbox:checked ~ .navigation-container {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* ラインインジケーター */
+        .line-indicators {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 5px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+        }
+        .nav-line {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: #ccc;
+            transition: background-color 0.2s;
+        }
+        .nav-line:hover {
+            background-color: #0056b3;
+        }
+
+        /* タイトルリストパネル (マウスオーバーで表示) */
+        .title-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 15px;
+            width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin-left: 5px;
+            border: 1px solid #eee;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .navigation-container:hover .title-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .title-panel-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .title-panel-list a {
+            text-decoration: none;
+            color: #333;
+            font-family: "Meiryo", sans-serif;
+            font-size: 14px;
+            display: block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .title-panel-list a:hover {
+            background-color: #f0f0f0;
+            color: #0056b3;
+        }
+
+        /* --- レスポンシブ対応 --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 30px 10px;
+            }
+            .main-title {
+                font-size: 1.5em;
+                margin-bottom: 30px;
+            }
+            .pattern-card {
+                width: 100%;
+                padding: 20px 15px;
+            }
+            .pattern-title {
+                font-size: 1.2em;
+            }
+            .pattern-body {
+                font-size: 1em;
+            }
+            .supplement-box p {
+                font-size: 0.95em;
+            }
+            .navigation-container {
+                right: 5px;
+            }
+            .nav-line {
+                width: 15px;
+            }
+            .title-panel {
+                width: 220px;
+            }
+            .nav-toggle-label {
+                font-size: 12px;
+                padding: 6px 12px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="nav-toggle-checkbox">
+    <label for="nav-toggle-checkbox" class="nav-toggle-label">ナビ</label>
+
+    <nav class="navigation-container">
+        <div class="line-indicators">
+            <a href="#pattern-1"><span class="nav-line"></span></a>
+            <a href="#pattern-2"><span class="nav-line"></span></a>
+            <a href="#pattern-3"><span class="nav-line"></span></a>
+            <a href="#pattern-4"><span class="nav-line"></span></a>
+            <a href="#pattern-5"><span class="nav-line"></span></a>
+            <a href="#pattern-6"><span class="nav-line"></span></a>
+            <a href="#pattern-7"><span class="nav-line"></span></a>
+            <a href="#pattern-8"><span class="nav-line"></span></a>
+            <a href="#pattern-9"><span class="nav-line"></span></a>
+            <a href="#pattern-10"><span class="nav-line"></span></a>
+            <a href="#pattern-11"><span class="nav-line"></span></a>
+            <a href="#pattern-12"><span class="nav-line"></span></a>
+            <a href="#pattern-13"><span class="nav-line"></span></a>
+            <a href="#pattern-14"><span class="nav-line"></span></a>
+            <a href="#pattern-15"><span class="nav-line"></span></a>
+            <a href="#pattern-16"><span class="nav-line"></span></a>
+            <a href="#pattern-17"><span class="nav-line"></span></a>
+            <a href="#pattern-18"><span class="nav-line"></span></a>
+            <a href="#pattern-19"><span class="nav-line"></span></a>
+            <a href="#pattern-20"><span class="nav-line"></span></a>
+            <a href="#pattern-21"><span class="nav-line"></span></a>
+        </div>
+        <div class="title-panel">
+            <ul class="title-panel-list">
+                <li><a href="#pattern-1">行1 法律の留保の原則における「法律」</a></li>
+                <li><a href="#pattern-2">行2 法律の留保の原則の適用範囲</a></li>
+                <li><a href="#pattern-3">行3 取消事由たる瑕疵と無効事由たる瑕疵の区別の基準</a></li>
+                <li><a href="#pattern-4">行4 違法性の承継</a></li>
+                <li><a href="#pattern-5">行5 裁量権の逸脱・濫用の判断の基準</a></li>
+                <li><a href="#pattern-6">行6 理由の提示の程度</a></li>
+                <li><a href="#pattern-7">行7 手続の瑕疵と行政処分の効力</a></li>
+                <li><a href="#pattern-8">行8 処分性の判断基準</a></li>
+                <li><a href="#pattern-9">行9 「法律上の利益を有する者」の意義</a></li>
+                <li><a href="#pattern-10">行10 訴えの利益の判断基準</a></li>
+                <li><a href="#pattern-11">行11 理由の差替えの可否</a></li>
+                <li><a href="#pattern-12">行12 理由の追完の可否</a></li>
+                <li><a href="#pattern-13">行13 公務員個人への損害賠償請求の可否</a></li>
+                <li><a href="#pattern-14">行14 国賠法上の違法性の判断基準</a></li>
+                <li><a href="#pattern-15">行15 規制権限不行使の違法性の判断基準</a></li>
+                <li><a href="#pattern-16">行16 「瑕疵」の判断基準</a></li>
+                <li><a href="#pattern-17">行17 補償の要否</a></li>
+                <li><a href="#pattern-18">行18 「正当な補償」の程度</a></li>
+                <li><a href="#pattern-19">行19 予防接種禍の場合の救済方法</a></li>
+                <li><a href="#pattern-20">信義則14頁</a></li>
+                <li><a href="#pattern-21">3-32 撤回と取消し②（56頁）</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1 class="main-title">行政法論証一覧</h1>
+
+    <div class="pattern-container">
+        
+        <div class="pattern-card" id="pattern-1">
+            <h2 class="pattern-title">行1 法律の留保の原則における「法律」</h2>
+            <p class="pattern-body">法律の留保の原則における「法律」とはいかなるものを意味するか。
+
+法律の留保の原則の趣旨は、自由主義の思想に基づき、一定の行政活動について、国民の代表からなる議会の事前承認を義務付けることによって、国民の権利自由を保護するという点にある。そこで、法律の留保の原則における「法律」とは、ある行政機関が、国民の権利義務に関する一定の行政活動をするに当たって必要とされる根拠規定、すなわち根拠規範を意味すると考えられ、組織規範や規制規範はこれに当たらない。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-2">
+            <h2 class="pattern-title">行2 法律の留保の原則の適用範囲</h2>
+            <p class="pattern-body">法律の留保の原則の適用範囲が問題となる。
+
+そもそも、同原則の趣旨は、国民の代表からなる議会の事前承認を義務付けることで、国民の権利自由を保護する点にある。
+
+そうだとすれば、個人の権利を制約し義務を課す侵害行政については、自由主義的見地から法律の根拠を要求すべきである一方、国民や公衆に便益を与える給付行政については、法律で縛ることなく行政の自由度を高めておく方が、むしろ国民の利益になる。
+
+そこで、侵害的な行政活動についてのみ法律の留保の原則が適用され、法律の根拠が必要となる。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-3">
+            <h2 class="pattern-title">行3 取消事由たる瑕疵と無効事由たる瑕疵の区別の基準</h2>
+            <p class="pattern-body">いかなる瑕疵が無効事由たる瑕疵といえるか。明文の規定がないため問題となる。
+
+まず、無効確認訴訟は時機に後れた取消訴訟として機能するから、無効確認訴訟は出訴期間を経過してもなお衡平の観点から当事者の救済を認める必要がある場合に限って認めるべきである。そうだとすると、無効原因には当該行政処分に重大な瑕疵があることを要する。
+
+次に、行政法関係の安定性や第三者の信頼保護の観点から原則として瑕疵が明白であることも必要である。しかし、処分の性質上第三者の信頼を保護する必要がない場合には明白性の要件は不要と解する。そこで、その場合は被処分者に不利益を甘受させることが著しく不当といえる事情があるかを検討する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-4">
+            <h2 class="pattern-title">行4 違法性の承継</h2>
+            <p class="pattern-body">違法性の承継が問題となる
+先行処分の取消訴訟の出訴期間経過後に、後行処分の取消訴訟において、先行処分の違法性を主張することは認められるか。
+
+この点について、取消訴訟に出訴期間を定めて行政過程の早期確定を図った趣旨から、原則として違法性の承継は認められない。もっとも、国民の権利保護の観点から、違法性の承継を認めるべき場合もあり得る。
+
+そこで、①先行行為と後行行為が連続して一つの法律効果の発生を目指す場合であって、②先行行為について訴訟での手続保障が十分与えられていなかった場合には、例外的に違法性の承継が認められると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-5">
+            <h2 class="pattern-title">行5 裁量権の逸脱・濫用の判断の基準</h2>
+            <p class="pattern-body">いかなる場合に裁量権の逸脱・濫用(行訴法30条) が認められるか。
+
+行政庁の判断の結果及び過程について、重要な事実の基礎を欠くか又は社会観念上著しく妥当を欠く場合に、裁量権の逸脱・濫用があるとして違法となると解する。具体的には、①行政庁の判断の結果が事実誤認に基づく場合、②処分の目的・動機が法の趣旨に反する場合、③処分が一般原則に反する場合等に、裁量権の逸脱・濫用となる。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-6">
+            <h2 class="pattern-title">行6 理由の提示の程度</h2>
+            <p class="pattern-body">いかなる程度の理由の提示が必要か。
+
+そもそも、理由提示の趣旨は、行政庁の判断の慎重・合理性を担保し恣意を抑制するとともに、処分の理由を被処分者に知らせ不服申立て等で争う場合の便宜を与える点にある。
+
+そこで、理由の提示の程度としては、いかなる事実関係に基づいて、いかなる法規を適用して当該処分を行ったかということが、被処分者において、その記載自体から了知し得る程度に具体的に記載されている必要があると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-7">
+            <h2 class="pattern-title">行7 手続の瑕疵と行政処分の効力</h2>
+            <p class="pattern-body">いかなる手続の瑕疵が行政処分の取消事由となるか。
+
+この点について、行手法の目的 (1条)に照らすと、行手法は同法上の適正な手続によって行政処分を受ける権利を保障していると解されるから、同法の規定する重要な手続を履践しないで行われた処分は、特段の事情のある場合を除き、処分の取消事由となると解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>行手法の重要な手続としては、告知・聴聞、理由の提示、文書閲覧、審査基準の設定・公表(いわゆる適正手続四原則) が挙げられる。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-8">
+            <h2 class="pattern-title">行8 処分性の判断基準</h2>
+            <p class="pattern-body">処分性はいかなる場合に認められるか。
+
+「処分」(行訴法3条2項)とは、公権力の主体たる国又は公共団体の行為のうち、その行為によって、直接国民の権利義務を形成し又はその範囲を確定することが法律上認められているものをいう。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>具体的には、公権力性・法的効果性の点から判断し、その際、実効的な権利救済の観点も加味して検討していくこととなる。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-9">
+            <h2 class="pattern-title">行9 「法律上の利益を有する者」の意義</h2>
+            <p class="pattern-body">「法律上の利益を有する者」とはいかなる者をいうか。
+
+この点について、「法律上の利益を有する者」とは、当該処分により自己の権利若しくは法律上保護された利益を侵害され又は必然的に侵害されるおそれのある者をいう。
+
+そして、当該処分を定めた行政法規が、不特定多数者の具体的利益を専ら一般的公益の中に吸収解消させるにとどめず、それが帰属する個々人の個別的利益としてもこれを保護すべきものとする趣旨を含むと解される場合には、このような利益もここにいう法律上保護された利益に当たる。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-10">
+            <h2 class="pattern-title">行10 訴えの利益の判断基準</h2>
+            <p class="pattern-body">訴えの利益はどのように判断されるべきか。
+
+そもそも、訴えの利益とは、当該処分を取り消す必要性のことである。そこで、処分が取消判決によって除去すべき法的効果を有しているか否か、処分を取り消すことによって回復される権利利益が存在するか否か、という観点から検討される。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-11">
+            <h2 class="pattern-title">行11 理由の差替えの可否</h2>
+            <p class="pattern-body">理由の差替えが認められるかが問題となる。
+
+そもそも、取消訴訟の訴訟物は処分の違法性一般であり、処分理由は攻撃防御方法に位置付けられるから、行政庁は訴訟物の範囲内で客観的に存在する一切の法律上・事実上の根拠を主張できるはずである。
+また、理由付記の趣旨は、①処分庁の判断の慎重、合理性を担保してその恣意を抑制することと、②処分の理由を相手方に知らせて不服申立ての便宜を与えることにある。
+
+そして、処分の際に処分理由が具体的に示されていれば、上記の趣旨は実現されているといえるから、理由の差替えは認められるが、処分の同一性を失わせるような理由の差替えは別個の処分であり、許されない。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-12">
+            <h2 class="pattern-title">行12 理由の追完の可否</h2>
+            <p class="pattern-body">理由の追完がなされた場合、理由付記の不備という瑕疵は治癒されるかが問題となる。
+
+そもそも、理由付記の趣旨は、①処分庁の判断の慎重、合理性を担保してその恣意を抑制することと、②処分の理由を相手方に知らせて不服申立ての便宜を与えることにある。
+
+そして、処分の際に理由が付記されていない以上、処分そのものの慎重、合理性を確保することができない(①)。
+
+また、処分の相手方も処分の段階で十分に理由を知り得ないので、十分な不服理由を主張することができない(②)。
+
+そこで、理由の追完がなされた場合、理由付記の不備という瑕疵は治癒されない。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-13">
+            <h2 class="pattern-title">行13 公務員個人への損害賠償請求の可否</h2>
+            <p class="pattern-body">国又は公共団体に対する国家賠償請求が認められる場合に、公務員個人に対して損害賠償請求をすることはできるか。
+
+この点について、「国又は公共団体が」責任を負うという国賠法1条1項の文言や、公務員個人の責任を認めると公務員を萎縮させ公務の適正な執行を妨げること、国家に責任を負わせることで被害者救済という目的は達成されることからすれば、公務員個人は、その公権力の行使としての行為に関して、被害者に対して直接責任を負わないと考えられる。
+
+したがって、公務員個人に対して損害賠償請求をすることはできない。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-14">
+            <h2 class="pattern-title">行14 国賠法上の違法性の判断基準</h2>
+            <p class="pattern-body">いかなる場合に、国賠法上「違法」となるか。違法性の判断基準が問題となる。
+
+そもそも、違法性の判断基準として、行政活動の法規範適合性が重要であるので、行為に着目すべきである。そして、行政事件訴訟と国家賠償請求訴訟とは制度趣旨を異にしており、それらの訴訟における違法性は別個に判断されると考えられる。そこで、「違法」とは、職務上尽くすべき注意義務を尽くさなかったことをいうと解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>行政事件訴訟の趣旨は行政行為が行政法規に適合しているかを判断するものであるのに対して、国家賠償請求訴訟の趣旨は発生した損害を誰が填補すべきかを判断するものであり、両者は制度趣旨を異にしている。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-15">
+            <h2 class="pattern-title">行15 規制権限不行使の違法性の判断基準</h2>
+            <p class="pattern-body">規制権限の不行使がいかなる場合に「違法」となるか。
+
+そもそも、違法性の判断基準として、行政活動の法規範適合性が重要であるので、行為に着目すべきである。そして、行政事件訴訟と国家賠償請求訴訟とは制度趣旨を異にしており、それらの訴訟における違法性は別個に判断されると考えられる。そこで、「違法」とは、職務上尽くすべき注意義務を尽くさなかったことをいうと解する。
+
+そして、規制権限の不行使は、権限を定めた法令の趣旨・目的や、その権限の性質等に照らし、その不行使が著しく合理性を欠くと認められる場合に、裁量権の逸脱・濫用があるものとして「違法」となると解する。具体的には、被侵害法益、予見可能性、結果回避可能性、期待可能性を考慮して判断する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-16">
+            <h2 class="pattern-title">行16 「瑕疵」の判断基準</h2>
+            <p class="pattern-body">「瑕疵」の判断基準が問題となる。
+
+そもそも、営造物の設置又は管理に「瑕疵」があるとは、当該営造物が通常有すべき安全性を欠いていることをいう。そして、通常有すべき安全性の有無は、①他人に危害を及ぼす危険性、②予見可能性、③回避可能性を基準に判断される。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-17">
+            <h2 class="pattern-title">行17 補償の要否</h2>
+            <p class="pattern-body">「正当な補償」の要否はいかなる基準で判断されるか。
+
+そもそも、憲法29条3項が「正当な補償」を要するとしたのは、特定の個人の犠牲の下に社会全体が利益を得るのは平等原則に反するからである。
+
+そこで、特別の犠牲といえる場合には保障を要すると解する。
+
+具体的には、①侵害行為の対象が広く一般人か特定の個人ないし団体か、②侵害行為が財産権に内在する社会的制約として受忍すべき限度内であるか、それを超えて財産権の本質的内容を侵すほど強度なものであるかを、総合的に考慮して判断すべきと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-18">
+            <h2 class="pattern-title">行18 「正当な補償」の程度</h2>
+            <p class="pattern-body">「正当な補償」とはいかなる程度の補償をいうか。
+
+そもそも、憲法29条3項の趣旨は、財産権保障の帰結として収用前後を通じた財産的価値を保障する点にある。
+
+そこで、「正当な補償」とは、市場価格による完全補償をいうと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-19">
+            <h2 class="pattern-title">行19 予防接種禍の場合の救済方法</h2>
+            <p class="pattern-body">予防接種による健康被害につき、いかなる救済を認めるべきか。損失補償制度は、国の適法行為により財産権が侵害された場合の救済を定めたものであるのに対し、国家賠償制度は国の違法行為により権利・利益が侵害された場合の救済を定めたものであるため、いずれにも該当しないように見えることから問題となる。
+
+この点について、公共のための特別犠牲であると見て、憲法29条3項の類推適用により救済を認める見解がある。
+
+しかし、損失補償の規定を用いることは、生命・身体であっても補償さえすれば適法に侵害できるということを認めることになりかねず、人権保障の見地から妥当でない。
+
+そこで、国家賠償請求により救済すべきと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-20">
+            <h2 class="pattern-title">信義則14頁</h2>
+            <p class="pattern-body">租税法規に適合する課税処分について、信義則の適用により違法となるかが問題となる。そもそも、租税法律関係という公法関係にも、法の一般原理である信義則は適用される。しかしながら、法律による行政の原理、特に租税法律主義の原則が貫かれるべき租税法律関係においては、その適用は慎重になされるべきである。
+
+そこで、租税法の適用における納税者間の平等、公平という要請を犠牲にしてもなお当該納税者の信頼を保護しなければ正義に反するといえるような特別の事情が存する場合に、信義則の適用がある。
+
+具体的には、①税務官庁が公的見解を表示したことにより納税者がそれを信頼して行動したところ、不利益を受けたかどうか、②納税者が表示を信頼しその信頼に基づいて行動したことに帰責性がないかどうかを考慮する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-21">
+            <h2 class="pattern-title">3-32 撤回と取消し②（56頁）</h2>
+            <p class="pattern-body">授益的処分の撤回の可否が問題となる。そもそも、行政行為の合目的性の回復の要請に加え、撤回権が処分権と表裏の関係にあるから、撤回に当たり法的根拠は不要である。もっとも、授益的処分の撤回は相手方に不利益を及ぼす。
+
+そこで、授益的処分の撤回の可否は、相手方の帰責性等も考慮した上で、撤回により得られる公益と相手方の不利益とを考慮して決する。</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
