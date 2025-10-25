@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民法債権総論 論証一覧</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: sans-serif; background-color: #f8f9fa; margin: 0; padding: 40px 20px; box-sizing: border-box; }
+        h1 { text-align: center; color: #444; margin-bottom: 50px; }
+        .pattern-container { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .pattern-card { background-color: #f0f0f0; border-radius: 10px; padding: 25px 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 90%; max-width: 800px; box-sizing: border-box; }
+        .pattern-title { font-family: "Meiryo", sans-serif; color: #0056b3; margin: 0 0 15px 0; font-size: 1.4em; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+        .pattern-body { font-family: "MS Mincho", serif; color: #333333; line-height: 1.9; font-size: 1.1em; white-space: pre-wrap; margin: 0; }
+        
+        /* 補足情報コンテナのスタイル */
+        .supplement-box {
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 5px solid #00acc1;
+        }
+        .supplement-box p {
+            margin: 0;
+            font-family: "MS Mincho", serif;
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .supplement-box strong {
+            color: #007c91;
+        }
+
+        /* --- ナビゲーション関連のスタイル --- */
+        #nav-toggle-checkbox { display: none; }
+        .nav-toggle-label { position: fixed; top: 20px; right: 20px; background-color: #fff; padding: 8px 16px; border: 1px solid #ccc; border-radius: 20px; cursor: pointer; z-index: 1002; user-select: none; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+        .navigation-container { position: fixed; top: 50%; right: 10px; transform: translateY(-50%); z-index: 1001; display: flex; align-items: center; transition: opacity 0.3s, visibility 0.3s; }
+        #nav-toggle-checkbox:checked ~ .navigation-container { opacity: 0; visibility: hidden; }
+
+        /* ラインインジケーター */
+        .line-indicators { display: flex; flex-direction: column; gap: 12px; padding: 10px; }
+        .nav-line { display: block; width: 20px; height: 2px; background-color: #ccc; transition: background-color 0.2s; }
+        .nav-line:hover { background-color: #0056b3; }
+
+        /* タイトルリストパネル (マウスオーバーで表示) */
+        .title-panel {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 15px;
+            width: 250px;
+            max-height: 80vh;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, transform 0.2s ease-in-out;
+            margin-left: 5px;
+            border: 1px solid #eee;
+        }
+        .navigation-container:hover .title-panel {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        .title-panel-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+        .title-panel-list a { text-decoration: none; color: #333; font-family: "Meiryo", sans-serif; font-size: 14px; display: block; padding: 4px 8px; border-radius: 4px; }
+        .title-panel-list a:hover { background-color: #f0f0f0; color: #0056b3; }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            body { padding: 30px 10px; }
+            h1 { font-size: 1.5em; margin-bottom: 30px; }
+            .pattern-card { width: 100%; padding: 20px 15px; }
+            .pattern-title { font-size: 1.2em; }
+            .pattern-body { font-size: 1em; }
+            .supplement-box p { font-size: 0.95em; }
+            .navigation-container { right: 5px; }
+            .nav-line { width: 15px; }
+            .title-panel { width: 200px; }
+            .nav-toggle-label { font-size: 12px; padding: 6px 12px; top: 10px; right: 10px;}
+        }
+    </style>
+</head>
+<body>
+    
+    <input type="checkbox" id="nav-toggle-checkbox">
+    <label for="nav-toggle-checkbox" class="nav-toggle-label">ナビ</label>
+
+    <nav class="navigation-container">
+        <div class="line-indicators">
+            <a href="#pattern-1"><span class="nav-line"></span></a>
+            <a href="#pattern-2"><span class="nav-line"></span></a>
+            <a href="#pattern-3"><span class="nav-line"></span></a>
+            <a href="#pattern-4"><span class="nav-line"></span></a>
+            <a href="#pattern-5"><span class="nav-line"></span></a>
+            <a href="#pattern-6"><span class="nav-line"></span></a>
+            <a href="#pattern-7"><span class="nav-line"></span></a>
+            <a href="#pattern-8"><span class="nav-line"></span></a>
+            <a href="#pattern-9"><span class="nav-line"></span></a>
+            <a href="#pattern-10"><span class="nav-line"></span></a>
+            <a href="#pattern-11"><span class="nav-line"></span></a>
+            <a href="#pattern-12"><span class="nav-line"></span></a>
+            <a href="#pattern-13"><span class="nav-line"></span></a>
+            <a href="#pattern-14"><span class="nav-line"></span></a>
+            <a href="#pattern-15"><span class="nav-line"></span></a>
+            <a href="#pattern-16"><span class="nav-line"></span></a>
+            <a href="#pattern-17"><span class="nav-line"></span></a>
+            <a href="#pattern-18"><span class="nav-line"></span></a>
+            <a href="#pattern-19"><span class="nav-line"></span></a>
+            <a href="#pattern-20"><span class="nav-line"></span></a>
+            <a href="#pattern-21"><span class="nav-line"></span></a>
+            <a href="#pattern-22"><span class="nav-line"></span></a>
+            <a href="#pattern-23"><span class="nav-line"></span></a>
+            <a href="#pattern-24"><span class="nav-line"></span></a>
+            <a href="#pattern-25"><span class="nav-line"></span></a>
+            <a href="#pattern-26"><span class="nav-line"></span></a>
+            <a href="#pattern-27"><span class="nav-line"></span></a>
+            <a href="#pattern-28"><span class="nav-line"></span></a>
+            <a href="#pattern-29"><span class="nav-line"></span></a>
+            <a href="#pattern-30"><span class="nav-line"></span></a>
+            <a href="#pattern-31"><span class="nav-line"></span></a>
+            <a href="#pattern-32"><span class="nav-line"></span></a>
+            <a href="#pattern-33"><span class="nav-line"></span></a>
+            <a href="#pattern-34"><span class="nav-line"></span></a>
+            <a href="#pattern-35"><span class="nav-line"></span></a>
+            <a href="#pattern-36"><span class="nav-line"></span></a>
+            <a href="#pattern-37"><span class="nav-line"></span></a>
+            <a href="#pattern-38"><span class="nav-line"></span></a>
+        </div>
+        <div class="title-panel">
+            <ul class="title-panel-list">
+                <li><a href="#pattern-1">民68 「給付をするのに必要な行為を完了し」たの意義 取立債務の場合</a></li>
+                <li><a href="#pattern-2">民69 債務者の変更権</a></li>
+                <li><a href="#pattern-3">416条の解釈⑤(270頁)</a></li>
+                <li><a href="#pattern-4">民70 損害賠償額算定の基準時後に目的物の価格が騰貴した場合</a></li>
+                <li><a href="#pattern-5">民71 第三者の債権侵害と不法行為 (709条)の成否</a></li>
+                <li><a href="#pattern-6">民72 契約交渉の不当破棄</a></li>
+                <li><a href="#pattern-7">民73 先履行義務者による同時履行の抗弁権の行使の可否</a></li>
+                <li><a href="#pattern-8">民74 再度請求する場合と弁済提供の要否</a></li>
+                <li><a href="#pattern-9">民75 相手方が反対債務を履行しない意思を明確にしている場合と弁済提供の要否</a></li>
+                <li><a href="#pattern-10">民76 解除する場合と弁済提供の要否</a></li>
+                <li><a href="#pattern-11">民77 建物買取請求権と同時履行の抗弁権</a></li>
+                <li><a href="#pattern-12">民78 造作買取請求権と同時履行の抗弁権</a></li>
+                <li><a href="#pattern-13">民79 期間を定めない催告・相当でない期間を定めた催告</a></li>
+                <li><a href="#pattern-14">民80 二重の催告の要否</a></li>
+                <li><a href="#pattern-15">複数契約における1つの契約の債務不履行を理由とする解除④(306頁)</a></li>
+                <li><a href="#pattern-16">解除前の第三者の処理① (310頁)</a></li>
+                <li><a href="#pattern-17">解除後の第三者の処理(310頁)</a></li>
+                <li><a href="#pattern-18">特定物売主の保証人の責任 (312頁)</a></li>
+                <li><a href="#pattern-19">民85 目的物の滅失と原状回復義務</a></li>
+                <li><a href="#pattern-20">民86 土地賃借権付き建物売買における敷地の物理的欠陥</a></li>
+                <li><a href="#pattern-21">民87 担保責任と錯誤の競合(選択可能説)</a></li>
+                <li><a href="#pattern-22">民89 債権の二重譲渡(1) 両譲受人が確定日付ある証書による通知を備えている場合</a></li>
+                <li><a href="#pattern-23">民90 債権の二重譲渡(2) 通知が同時到達した場合の処理</a></li>
+                <li><a href="#pattern-24">民91 債権の二重譲渡(3) 譲受人間の分配請求</a></li>
+                <li><a href="#pattern-25">民92 抗弁の切断と解除の問題③ (346頁)</a></li>
+                <li><a href="#pattern-26">民93 468条1項の抗弁事由と第三者保護規定</a></li>
+                <li><a href="#pattern-27">民94 抗弁放棄の意思表示と抵当権の復活 (1) ① 債務者との関係</a></li>
+                <li><a href="#pattern-28">民95 抗弁放棄の意思表示と抵当権の復活(1) ②後順位抵当権者・第三取得者等との関係</a></li>
+                <li><a href="#pattern-29">民96 抗弁放棄の意思表示と抵当権の復活 (2) 物上保証人との関係</a></li>
+                <li><a href="#pattern-30">民97 債権発生の蓋然性</a></li>
+                <li><a href="#pattern-31">民98 将来債権譲渡の対抗要件①</a></li>
+                <li><a href="#pattern-32">民99 将来債権譲渡の対抗要件②</a></li>
+                <li><a href="#pattern-33">民100 保証人と債務者間の求償権を変更する旨の特約</a></li>
+                <li><a href="#pattern-34">民101 501条3項4号と異なる保証人と物上保証人の特約</a></li>
+                <li><a href="#pattern-35">民102 預金担保貸付け(1) 478条類推適用</a></li>
+                <li><a href="#pattern-36">民103 預金担保貸付け (2) 善意無過失の判断の基準時</a></li>
+                <li><a href="#pattern-37">民94(2) 代位弁済的相殺(383頁)</a></li>
+                <li><a href="#pattern-38">民105 逆相殺</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>民法債権総論 論証一覧</h1>
+
+    <div class="pattern-container">
+        
+        <div class="pattern-card" id="pattern-1">
+            <h2 class="pattern-title">民68 「給付をするのに必要な行為を完了し」たの意義 取立債務の場合</h2>
+            <p class="pattern-body">本件では、給付の目的物は種類物であるが、特約によって取立債務とされている(484条1項前段)。このように、取立債務の目的物が種類物である場合、いかなるときに特定が生じるか。「債務者が物の給付をするのに必要な行為」(401条2項前段)の意義が問題となる。
+
+そもそも、「給付をするのに必要な行為を完了し」たとは、履行の場所で債権者が受け取ろうと思えば受け取れる状態に物を置いた場合をいうものと解される。
+
+そして、履行の場所で債権者が受け取ろうと思えば受け取れる状態に物を置いたといえるか否かは、個々の契約内容から、特定に結び付けられた効果を発生させるに値するような行為が、債務者によって行われたかどうかによって判断すべきである。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>取立債務の目的物が種類物である場合、目的物を分離して初めて履行の対象が客観的に定まり、物権的支配が可能になることから、取立債務における「給付をするのに必要な行為を完了し」たとは、通常、引渡しの準備と通知(493条ただし書)のほか、目的物の分離まで要するものと考えられる。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-2">
+            <h2 class="pattern-title">民69 債務者の変更権</h2>
+            <p class="pattern-body">特定が生じた後に、目的物が債務者の責めに帰すべき事由によって滅失した場合、善管注意義務違反(400条)となり、債務者は債務不履行責任(415条)を負うのが原則である。
+
+そうであるとしても、他に同種同等の物がある場合、債務者は他の物を給付することで債務不履行責任を免れることができないか。いったん特定した種類債権について、債務者にいわゆる変更権が認められるかが問題となる。
+
+そもそも、特定の趣旨は、債務者の調達義務を制限し、もって債務者の保護を図る点にあるところ、債務者が特定の利益を欲しなければ、これを強制する必要はない。また、本来の物を給付する方が、通常、債権者の意思にも合致するといえる。
+
+そこで、債権者の反対の意思が明らかでない場合や債権者に不利益を生じない場合には、信義則(1条2項)上、変更権が認められるものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-3">
+            <h2 class="pattern-title">416条の解釈⑤(270頁)</h2>
+            <p class="pattern-body">「損害」の範囲が問題となる。
+
+そもそも、416条の趣旨が損害の公平な分担であることにかんがみ、同条1項は、相当因果関係の原則を規定し、同条2項は、その基礎とすべき特別の事情の範囲を示したものと解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>この論点は2項使うときだけ展開する(1項のときはわざわざかかなくてよい)。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-4">
+            <h2 class="pattern-title">民70 損害賠償額算定の基準時後に目的物の価格が騰貴した場合</h2>
+            <p class="pattern-body">損害賠償制度は、公平の観点から、債権者に債務の本旨に従った履行がなされていれば有していたであろう利益を与えるものである。
+
+そこで、目的物の価格が騰貴しつつあるという特別の事情があり、かつ債務者が、債務不履行時にその特別の事情を予見すべきであった場合は、債権者はその騰貴した現在の時価による損害賠償を請求し得るものと解する。
+
+ただし、騰貴前に債権者が目的物を他に処分したであろうときには、騰貴した価格のある目的物を現に保有し得たとはいい得ず、騰貴価格での賠償は請求できない。
+
+また、目的物の価格がいったん騰貴し、後に下落した場合には、目的物の価格が騰貴しつつあるという特別の事情があり、かつ債務者が債務不履行時に、その特別の事情を予見すべきであったという事情に加え、債権者が転売等によって騰貴利益を確実に取得することができたであろうことを債務者が予見すべきであったときには、債権者は中間最高価格の損害賠償を請求し得るものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-5">
+            <h2 class="pattern-title">民71 第三者の債権侵害と不法行為 (709条)の成否</h2>
+            <p class="pattern-body">債権侵害を理由に不法行為(709条)に基づく損害賠償を請求できるか。債権侵害が「権利･･････侵害」に含まれるか否かが問題となる。
+
+この点について、債権も財産権の一種として法的保護の対象となる。
+
+そこで、その侵害行為は、違法な「権利･･････侵害」行為となり得る。
+
+ただし、債権関係においては、債権の非公示性及び自由競争原理が働くところ、物権侵害に比して不法行為が成立する範囲は限定されるものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-6">
+            <h2 class="pattern-title">民72 契約交渉の不当破棄</h2>
+            <p class="pattern-body">当事者の一方が契約の成立を前提とした出捐行為をなしたにもかかわらず、相手方が一方的に契約交渉を打ち切った場合、当事者の一方は、相手方に対し、契約責任に基づく損害賠償を請求できないか。
+
+この点について、契約が不成立となった以上、契約責任を追及することはできず、不法行為責任を問い得るのみとも思える。
+
+しかし、不法行為責任では、時効期間や立証責任の点で被害者保護に欠ける場合がある。
+
+そもそも、交渉を開始し、契約準備段階に入った者は、信義則(1条2項)の支配する緊密な関係に立つのであるから、後に契約が締結されたか否かを問わず、相互に相手方の人格、財産を害しない信義則上の義務を負うものと解する。
+
+そこで、先行行為の態様や契約の交渉過程の成熟性、当事者の属性・従前の関係を考慮し、相手方がかかる義務に違反したと認められる場合には、当事者の一方は、善意無過失である限り、信頼利益の賠償を請求することができると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-7">
+            <h2 class="pattern-title">民73 先履行義務者による同時履行の抗弁権の行使の可否</h2>
+            <p class="pattern-body">後履行義務の期限が到来した場合、先履行義務者は同時履行の抗弁権を行使できるか。
+
+この点について、先履行義務者は既に履行遅滞には陥っているが、両債務がともに弁済期にある以上、履行上の牽連性を認めることで、当事者の公平は維持されるべきである。また、履行遅滞に基づく損害については、後履行義務者が損害賠償を請求することで調整が可能である。
+
+そこで、先履行義務者は同時履行の抗弁権を行使できるものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-8">
+            <h2 class="pattern-title">民74 再度請求する場合と弁済提供の要否</h2>
+            <p class="pattern-body">弁済の提供をして履行を請求したにもかかわらず、相手方がそれを受領しなかった場合、以後弁済の提供をすることなく履行を請求できるか。一度弁済の提供がされると、相手方は同時履行の抗弁権を失うのかが問題となる。
+
+この点について、一方の当事者が一度提供すれば、その後財産状態が悪化しようと、目的物を他に転売してしまおうと、他方の当事者は無条件で履行しなければならないというのは不公平である。
+
+そこで、一度弁済の提供がなされても、相手方は同時履行の抗弁権を失わず、再度請求するためには、改めて弁済の提供が必要であると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-9">
+            <h2 class="pattern-title">民75 相手方が反対債務を履行しない意思を明確にしている場合と弁済提供の要否</h2>
+            <p class="pattern-body">債務不履行に基づく損害賠償を請求する場合、又は契約を解除しようとする場合、一方当事者は自己の債務について弁済の提供をして相手方の同時履行の抗弁権を奪う(相手方の反対債務の不履行を違法とする)必要があるのが原則である。
+
+そうであるとしても、相手方が反対債務を履行しない意思を明確にしている場合にも、一方当事者は弁済の提供をしなければ損害賠償又は解除をなし得ないのか。かかる相手方は同時履行の抗弁権を主張できるかが問題となる。
+
+この点について、相手方が履行しない意思を明確にしている場合にまで、一方当事者に弁済の提供をさせることは公平に反する。
+
+そこで、かかる場合には相手方は同時履行の抗弁権を主張できず、一方当事者は弁済の提供をせずに、損害賠償請求(415条2項2号)又は解除(542条1項2号)をすることができると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-10">
+            <h2 class="pattern-title">民76 解除する場合と弁済提供の要否</h2>
+            <p class="pattern-body">弁済の提供をして履行を請求したにもかかわらず、相手方がそれを受領しなかった場合、以後弁済の提供をすることなく契約を解除できるか。解除の場合にも再度の弁済の提供を要するかが問題となる。
+
+この点について、同時履行の抗弁権は履行上の牽連性を認めようとするものであるが、契約解除の場合には、契約関係を解消しようというのであるから、もはや履行上の牽連性は問題とならない。
+
+また、履行を怠っている当事者に、弁済の提供が継続しない限り解除は無効であるとの主張を許すのは公平に反する。
+
+そこで、弁済の提供をした当事者は、再度弁済の提供をすることなく、契約を解除できるものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-11">
+            <h2 class="pattern-title">民77 建物買取請求権と同時履行の抗弁権</h2>
+            <p class="pattern-body">建物買取請求権が行使された場合、敷地の明渡しと建物代金の支払は同時履行の関係に立つか。両者は対価関係にないため問題となる。
+
+この点について、敷地を返還しながら建物の明渡しのみを拒絶するのは不可能に近く、敷地の明渡しを強いれば賃借人の保護に欠ける。
+
+そもそも、建物買取請求権によって対価関係に立つのは建物代金の支払と建物の明渡し・移転登記のみであるが、このことの反射的効果として敷地の明渡しをも拒絶し得るものと解するべきである。
+
+そこで、敷地の明渡しと建物代金の支払とは同時履行の関係に立つものと解する。</p>
+            <div class="supplement-box">
+                <p><strong>判例：</strong>判例(大判昭18.2.18)・通説ともに、同時履行の抗弁権と留置権の併存を認めている。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-12">
+            <h2 class="pattern-title">民78 造作買取請求権と同時履行の抗弁権</h2>
+            <p class="pattern-body">造作買取請求権が行使された場合、建物の明渡しと造作代金の支払は同時履行の関係に立つか。両者は対価関係にないため問題となる。
+
+そもそも、造作買取代金債権は造作について生じた債権であって、建物に関して生じた債権ではない。
+
+また、一般に建物と造作では著しい価値の差があるため、同時履行の抗弁権を認めるとかえって公平の理念に反する。
+
+そこで、建物の明渡しと造作代金の支払は同時履行の関係には立たないものと解する。</p>
+            <div class="supplement-box">
+                <p><strong>判例：</strong>判例(最判昭29.7.22)は同時に留置権も否定している。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-13">
+            <h2 class="pattern-title">民79 期間を定めない催告・相当でない期間を定めた催告</h2>
+            <p class="pattern-body">期間を指定しないで催告した場合や、催告で示した期間が相当でない場合、その催告は無効か。
+
+この点について、猶予期間のない催告を何度繰り返しても常に解除権が発生しないと解することはいかにも不合理であり、信義則(1条2項)に反する。
+
+また、催告に示された期間が相当か否かの判断の危険を、債務を履行期に履行しなかった債務者が負担せず、債権者が負担するのは不公平である。
+
+そこで、期間を指定しないで催告した場合や、催告で示した期間が相当でない場合であっても、催告の後、客観的にみて相当期間が経過した場合には解除権が発生するものと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-14">
+            <h2 class="pattern-title">民80 二重の催告の要否</h2>
+            <p class="pattern-body">期間の定めのない債務について債務者が履行しない場合、債権者は412条3項の「請求」をしてその後に541条本文の「催告」をしなければ、解除できないか。期間の定めのない債務について解除権が発生するためには、二重の催告が必要か否かが問題となる。
+
+この点について、債務者が履行遅滞にあることは、解除権発生の要件であるにとどまり、債権者が「催告」するための要件ではない。
+
+そこで、二重の催告は不要であり、債権者は一度相当の期間を定めて催告をし、債務者を遅滞に陥れれば、重ねて催告する必要はなく、相当期間の経過によって解除権を取得すると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-15">
+            <h2 class="pattern-title">複数契約における1つの契約の債務不履行を理由とする解除④(306頁)</h2>
+            <p class="pattern-body">同一当事者間での2個の契約のうち一方の契約の債務不履行が、他方の契約の解除事由になるかが問題となる。
+
+そもそも、解除制度の趣旨は、契約の拘束力から債権者を解放することにある。
+そこで、2個以上の契約からなる場合であっても、それらの目的とするところが相互に密接に関連付けられていて、社会通念上、両契約のいずれかが履行されるだけでは契約を締結した目的が全体として達成されないと認められる場合には、一方の契約上の債務の不履行を理由に、その債権者が法定解除権の行使として当該契約と併せて他方の契約を解除することができる。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-16">
+            <h2 class="pattern-title">解除前の第三者の処理① (310頁)</h2>
+            <p class="pattern-body">545条1項ただし書の「第三者」の意義が問題となる。
+
+そもそも、債権者を双務契約における拘束から解放するという解除制度の趣旨から、解除によって契約は当初から存在しなかったことになり、契約から生じた効果は遡及的に消滅する(直接効果説)。
+そして、545条1項ただし書は、取引安全のために契約解除の遡及効を制限した規定である。
+
+そこで、同項ただし書の「第三者」とは、解除された契約から生じた法律効果を基礎として解除までに新たな権利を取得した者である。
+
+また、債務不履行があっても解除されるとは限らないので、第三者の主観を問題にする意味がなく、善意・悪意は問わない。
+さらに、何ら帰責性のない債権者の犠牲の下で保護される以上、権利保護要件を具備する必要がある。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-17">
+            <h2 class="pattern-title">解除後の第三者の処理(310頁)</h2>
+            <p class="pattern-body">解除権を行使した者と解除後の第三者との関係が問題となる。
+
+そもそも、解除による遡及効は法的な擬制であり、解除された行為も解除までは有効なものとして、解除時に所有権の復帰があったものと扱う。
+
+そして、解除権を行使した者と解除後の第三者とは、解除権を行使された相手方を基点とした二重譲渡類似の関係に立つ。
+
+そこで、両者の関係は対抗関係として処理する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-18">
+            <h2 class="pattern-title">特定物売主の保証人の責任 (312頁)</h2>
+            <p class="pattern-body">特定物売主の保証人は、売買契約が債務不履行によって解除された場合の原状回復義務についても責任を負うかが問題となる。
+
+そもそも、特定物売主の保証人となる場合、売主の債務不履行によって売主が買主に対して負担する債務について責任を負う趣旨である。
+
+そこで、特定物売主の保証人は、特約がない限り、原状回復義務についても責任を負う。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-19">
+            <h2 class="pattern-title">民85 目的物の滅失と原状回復義務</h2>
+            <p class="pattern-body">給付された目的物が、既に受領者の下で滅失して現物返還が不能であった場合、どのように処理されるか。
+
+そもそも、原状回復義務の目的は有償双務契約関係における等価交換的給付の回復にある。
+
+また、現物返還が不能の場合の価格返還も解除による原状回復の一態様といえる。
+
+そこで、目的物滅失につき受領者に帰責性がない場合でも、原状回復(現物返還に代わる価格の返還)を認めるべきと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-20">
+            <h2 class="pattern-title">民86 土地賃借権付き建物売買における敷地の物理的欠陥</h2>
+            <p class="pattern-body">土地賃借権付き建物売買において、「敷地」に物理的欠陥が認められた場合、売買の目的物たる「賃借権」が「契約の内容に適合しない」(565条)として、売主(元土地賃借人)の担保責任を追及できるか。「敷地」の物理的欠陥が「賃借権」の契約不適合といえるか否かが問題となる。
+
+この点について、建物とともに売買の目的とされたものは、建物の敷地そのものではなく、その賃借権であり、敷地自体の物理的欠陥については修繕義務(606条1項本文)を負う賃貸人にその修繕を請求すべきである。
+
+また、債権の売主が債務者の資力を当然には担保しないとされる(569条)こととの均衡からも、賃貸人の修繕義務について、売主に責任を認めるべきではない。
+
+そこで、敷地の物理的欠陥は売買の目的物たる賃借権の契約不適合には当たらず、建物の買主は、売主の担保責任を追及できないと解する。</p>
+            <div class="supplement-box">
+                <p><strong>補足：</strong>本論点は敷地に物理的欠陥がある場合の処理である。判例は敷地の面積の不足, 敷地に関する法的規制又は賃貸借契約における使用方法の制限等の客観的事由によって賃借権が制約を受けて売買の目的を達することができないときには、建物とともに売買の目的とされた賃借権に契約不適合があると解する余地があるとしている点に注意する必要がある。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-21">
+            <h2 class="pattern-title">民87 担保責任と錯誤の競合(選択可能説)</h2>
+            <p class="pattern-body">担保責任と錯誤が競合した場合、両者はどのような関係に立つか。
+
+この点について、双方の要件を満たす以上、買主に選択させる方が、買主保護に資する。
+
+そこで、買主はいずれかを選択して主張することができると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-22">
+            <h2 class="pattern-title">民89 債権の二重譲渡(1) 両譲受人が確定日付ある証書による通知を備えている場合</h2>
+            <p class="pattern-body">債権が二重に譲渡され、両譲受人が共に確定日付のある証書による通知又は承諾を具備している場合、両者の優劣をいかに決するか。
+
+そもそも、467条1項が通知・承諾を対抗要件とした趣旨は、債権譲渡に関する債務者の認識を通じて、債務者をして公示機能を営ませようとした点にあるが、債務者がかかる公示機能を営むためには、債務者が債権譲渡の事実を知る必要がある。
+
+そこで、両譲受人の優劣は通知の到達した日時又は債務者の承諾の日時の前後によって決まると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-23">
+            <h2 class="pattern-title">民90 債権の二重譲渡(2) 通知が同時到達した場合の処理</h2>
+            <p class="pattern-body">債務者に確定日付のある証書による通知が複数同時に到達した場合、譲受人間の優劣をいかに決するか。
+
+この点について、民法の定める確定日付通知が対抗要件としての機能を果たさない以上、譲受人間の優劣を決することはできないが、両譲受人共に、債務者との関係では完全に有効な対抗要件を具備している。
+
+そうだとすれば、両譲受人共に債務者に対して弁済請求できるはずであるが、債権譲渡にかかわらない債務者に分割弁済の負担を課すのは妥当ではない。
+
+そこで、両譲受人は共に債務者に対して弁済を請求でき、債務者も他に譲受人がいることを理由に弁済を拒むことはできないが、譲受人の一人に全額弁済すれば、債務者は債務を免れると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-24">
+            <h2 class="pattern-title">民91 債権の二重譲渡(3) 譲受人間の分配請求</h2>
+            <p class="pattern-body">確定日付のある証書による通知が複数同時に到達した場合において、債務者が債権譲受人の一人に全額弁済した場合に、他の譲受人は、弁済を受けた譲受人に対して分配請求ができるか。
+
+この点について、債権の譲受人相互間に優劣がない以上、各譲受人の債務者に対する債権は、連帯債権(432条)となると解される。
+
+したがって、各譲受人は債権額に応じて弁済を受けた譲受人に対して分与(433条参照)の請求をすることができると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-25">
+            <h2 class="pattern-title">民92 抗弁の切断と解除の問題③ (346頁)</h2>
+            <p class="pattern-body">「事由」(468Ⅰ)の意義が問題となる。
+
+そもそも、同項の趣旨は、債権譲渡に関与しない債務者の保護にある。
+
+そこで、債権譲渡の対抗要件具備の時点で抗弁権発生の基礎となる事由が存在していれば、対抗要件具備後に生じた事由も、「事由」に含まれる。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-26">
+            <h2 class="pattern-title">民93 468条1項の抗弁事由と第三者保護規定</h2>
+            <p class="pattern-body">債務者は、債権譲渡の目的債権が虚偽表示により無効であること(詐欺取消しにより遡及的に消滅したこと)を468条1項によって債権の譲受人に対抗できるか。同項の定める債務者の抗弁と無効・取消しにおける第三者保護規定との関係をいかに解すべきかが問題となる。
+
+この点について、同項の抗弁「事由」として、虚偽表示による無効(詐欺取消し)を常に第三者に対抗できると解すると、取引の安全を図るために第三者保護規定を設けたという94条2項(96条3項)の趣旨が失われてしまう。
+
+そこで、94条2項(96条3項)の第三者保護規定が優先して適用され、債務者は無効(又は取消し)を債権の譲受人に対抗できないと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-27">
+            <h2 class="pattern-title">民94 抗弁放棄の意思表示と抵当権の復活 (1) ① 債務者との関係</h2>
+            <p class="pattern-body">(弁済等によって債権が消滅し、債務者所有の不動産について設定されていた抵当権も付従性により消滅していることを認定)
+
+抵当権抹消登記がなされる前に、かかる債権が抵当権付債権として譲渡され、債務者も弁済等による債権消滅の抗弁を放棄する旨の意思表示をした場合、債務者は債務の消滅のみならず、抵当権の消滅をも対抗できないのか。
+
+この点について、抵当権付債権であると信頼して譲り受けた者を保護する必要性が高い。
+
+また、債権消滅の抗弁や債権不存在の抗弁を放棄するという意思表示の中には、抵当権の実行を受忍する意思が含まれていると考えることができるから、抵当権の復活という不利益を被ってもやむを得ない。
+
+そこで、抗弁放棄の意思表示によって抵当権は復活し、債務者は債務の消滅のみならず、抵当権の消滅も譲受人に対抗できないと解する。</p>
+            <div class="supplement-box">
+                <p><strong>判例：</strong>判例は、債権が弁済により消滅した場合は、債務者は抵当権の消滅を主張できないとする反面、譲渡債権が当初から存在しなかった場合には、譲受人は債権を取得しても抵当権は取得できないとして、債権の消滅と不存在とを区別する。</p>
+            </div>
+        </div>
+        
+        <div class="pattern-card" id="pattern-28">
+            <h2 class="pattern-title">民95 抗弁放棄の意思表示と抵当権の復活(1) ②後順位抵当権者・第三取得者等との関係</h2>
+            <p class="pattern-body">(弁済等によって債権が消滅し、債務者所有の不動産について設定されていた抵当権も付従性により消滅していることを認定)
+
+抵当権抹消登記がなされる前に、かかる債権が抵当権付債権として譲渡され、債務者が抗弁放棄の意思表示をした場合、債務者のみならず、後順位抵当権者等の第三者も抵当権の消滅を譲受人に対抗できないのか。
+
+この点について、債務者による抗弁放棄の意思表示の前に利害関係に入った第三者が、抗弁放棄の意思表示という自らのあずかり知らない事情によって不利益を被るのは妥当でない。他方で、抗弁放棄の意思表示の後に利害関係に入った第三者は抵当権の存在を覚悟していた以上、これを保護する必要はないといえる。
+
+そこで、抗弁放棄の意思表示の前に利害関係に入った第三者は抵当権の消滅を譲受人に対抗できるが、意思表示後に利害関係に入った第三者は抵当権の消滅を譲受人に対抗できないと解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-29">
+            <h2 class="pattern-title">民96 抗弁放棄の意思表示と抵当権の復活 (2) 物上保証人との関係</h2>
+            <p class="pattern-body">(弁済等によって債権が消滅し、第三者の所有する不動産について設定されていた抵当権も付従性により消滅していることを認定)
+
+抵当権抹消登記がなされる前に、かかる債権が抵当権付債権として譲渡され、債務者が抗弁放棄の意思表示をした場合、物上保証人は債権の譲受人に対して抵当権の消滅を対抗できるか。
+
+この点について、債務者の抗弁放棄の意思表示という事情によって、物上保証人が抵当権消滅の利益を奪われるのは妥当でない。
+
+そこで、債務者の抗弁放棄の意思表示によっても、物上保証人は、抵当権の消滅を譲受人に対抗できると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-30">
+            <h2 class="pattern-title">民97 債権発生の蓋然性</h2>
+            <p class="pattern-body">将来債権譲渡をするには、譲渡の対象となる債権の発生の蓋然性が必要か。
+
+そもそも、契約当事者は債権発生の可能性の程度を考慮した上で、債権が発生しなかった場合は当事者間の問題(債務不履行)として処理することを前提に取引を行うはずである。また、現実に発生した債権について、契約時に発生可能性が低かったという理由で契約を無効にするのは、原始的不能であっても契約は有効である(412条の2第2項)ことと整合しない。
+
+そこで、債権発生の蓋然性は不要であると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-31">
+            <h2 class="pattern-title">民98 将来債権譲渡の対抗要件①</h2>
+            <p class="pattern-body">債権を確定的に譲渡する場合の将来債権譲渡における対抗要件はいつの時点で具備することができるか。
+
+債権はいまだ発生していないとはいえ、譲受人に確定的に移転しているのであるから、この時点での対抗要件具備を認めても支障はない。
+
+そこで、債権譲渡契約締結時に具備することができる(467条1項括弧書)。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-32">
+            <h2 class="pattern-title">民99 将来債権譲渡の対抗要件②</h2>
+            <p class="pattern-body">将来、債権を譲渡するという予約をし、譲受人に予約完結権を与える場合の将来債権譲渡における対抗要件はいつの時点で具備することができるか。
+
+予約につき通知又は承諾がされても、債務者は予約完結権行使により当該債権の帰属が将来変更される可能性を了知するにとどまり、当該債権の帰属に変更が生じた事実を知るものではない。
+
+そこで、予約時ではなく、予約完結権行使時に初めて具備することができると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-33">
+            <h2 class="pattern-title">民100 保証人と債務者間の求償権を変更する旨の特約</h2>
+            <p class="pattern-body">保証人と債務者との間で、保証人の取得する求償権につき、法定利息、(459条2項・442条2項)に代えて、それより高率の約定利率による遅延損害金を支払う特約をした場合に、その特約は有効か。後順位抵当権者を害するとも思えるため問題となる。
+
+そもそも、弁済による代位の制度は、代位弁済者の求償権の実効性を確保するために、原債権及びその担保権を代位弁済者に移転させ、代位弁済者に求償権の範囲で原債権及びその担保権を行使することを認めるものである。
+
+そうだとすれば、代位弁済者に移転する担保権の被担保債権は原債権であって求償権ではないから、求償権の範囲を変更しても、保証人の担保権の行使は原債権の範囲に限定されるため、後順位抵当権者に対して不当な影響を及ぼすとはいえない。
+
+そこで、保証人・債務者間の求償権の範囲を変更する特約は有効と解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-34">
+            <h2 class="pattern-title">民101 501条3項4号と異なる保証人と物上保証人の特約</h2>
+            <p class="pattern-body">保証人と物上保証人との間で、501条3項4号と異なる代位の割合を定める特約が結ばれた場合、かかる特約を後順位抵当権者にも主張できるか。
+
+この点について、もともと後順位抵当権者は、債権者が1番抵当権の被担保債権の全部につき優先弁済を主張した場合には、保証人がいなければ、それを承認せざるを得ない立場にあるのだから、たまたま保証人がいる場合に後順位抵当権者を保護する必要性は低い。
+
+また、同号は補充規定にすぎない。
+
+そこで、保証人は特約の存在を後順位抵当権者に主張できると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-35">
+            <h2 class="pattern-title">民102 預金担保貸付け(1) 478条類推適用</h2>
+            <p class="pattern-body">預金担保貸付けにおいて、貸付金返還債務の不履行を理由に銀行が定期預金と貸付金とを相殺したところ、預金行為者と実際の出捐者が異なっていた場合、銀行による相殺が認められるか。
+
+まず、出捐者保護の観点から、預金者(預金債権者)は実際の出捐者と解する。
+
+そうすると、銀行と預金行為者との間には債権の対立が存在せず、「2人が互いに」という相殺適状の要件(505条1項本文)を欠き、銀行の相殺は無効となるとも思える。
+
+しかし、相殺の担保的機能に対する銀行の信頼は保護されるべきである。
+
+そして、預金担保貸付け・相殺という一連の行為は実質的には定期預金債権の期日前の払戻しと同視でき、払戻しは弁済と同視できる。
+
+そこで、478条を類推適用し、銀行による相殺が認められると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-36">
+            <h2 class="pattern-title">民103 預金担保貸付け (2) 善意無過失の判断の基準時</h2>
+            <p class="pattern-body">預金担保貸付けに478条を類推適用する場合、銀行の善意無過失はいつの時点で判断するのか。すなわち、貸付け時に善意無過失であれば足りるのか、相殺時に善意無過失であることを要するのかが問題となる。
+
+この点について、相殺時に善意無過失であることを要求すれば、銀行はほとんど保護されず妥当でない。
+
+また、預金担保貸付け行為の時点で、その後の相殺は予定されているといえる。
+
+そこで、銀行は貸付け時に善意無過失であれば足りると解する。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-37">
+            <h2 class="pattern-title">民94(2) 代位弁済的相殺(383頁)</h2>
+            <p class="pattern-body">代位弁済的相殺を認めることができるかが問題となる。
+
+そもそも、かかる場面では、債権の対立がない。
+
+また、これを認めると、第三者弁済(474条)を常に認めてしまうことになり、同条の趣旨を没却する。
+
+そこで、代位弁済的相殺は認めることができない。</p>
+        </div>
+        
+        <div class="pattern-card" id="pattern-38">
+            <h2 class="pattern-title">民105 逆相殺</h2>
+            <p class="pattern-body">債権の譲受人が第三債務者に対してする相殺と、第三債務者が債権の譲渡人に対してする相殺とのいずれが優先するか。両者の相殺は両立し得ないため問題となる。
+
+この点について、相殺の遡及効も、相殺がなされる前に法律関係の変更を生じたときは、その状態を覆す効力を有するものではない。
+
+また、相殺適状は、原則として相殺の意思表示がなされたときに現存することを要するところ、いったん相殺適状が生じていたとしても、相殺の意思表示がなされる前に一方の債権が消滅していた場合には、債権の対立を欠き、相殺適状は消滅する。
+
+そこで、相殺の意思表示の前後で優劣を決し、相殺の意思表示を先になした者が優先し、その後の相殺は無効と解する。</p>
+        </div>
+        
+    </div>
+
+</body>
+</html>
