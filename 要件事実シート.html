@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>要件事実シート</title>
+<style>
+:root{--blue0:#4a78b8;--blue1:#5d8ecf;--blue2:#7aaee0;--blue3:#deedf9;--teal:#5aacb8;--teal-l:#d6f0f4;--green:#5a9f5e;--green-l:#d8eedb;--red:#c0392b;--yellow:#fffbe6;--border:#b8d8f0;--bg:#eef3fa;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:#2c3e50;font-size:16px;line-height:1.75}
+header{background:var(--blue0);color:#fff;padding:20px 22px;text-align:center}
+header h1{font-size:1.6em;letter-spacing:.05em}
+header p{font-size:.9em;opacity:.85;margin-top:5px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;padding:12px 18px;background:var(--white);border-bottom:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:.88em}
+.legend-dot{width:13px;height:13px;border-radius:3px;flex-shrink:0}
+.container{max-width:1020px;margin:0 auto;padding:16px 14px}
+.controls{display:flex;gap:10px;margin-bottom:16px}
+.controls button{background:var(--blue0);color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:.92em;font-family:inherit}
+.controls button:hover{background:#3a67a6}
+
+/* ── Main section ── */
+details.sec{margin-bottom:12px;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(90,130,190,.15)}
+details.sec>summary{background:var(--blue1);color:#fff;padding:14px 20px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-weight:bold;font-size:1.02em;user-select:none}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::after{content:'▼';font-size:.78em;transition:transform .2s}
+details.sec[open]>summary::after{transform:rotate(180deg)}
+.sec-body{background:var(--white);padding:16px 18px}
+.cause-box{background:var(--blue3);border-left:5px solid var(--blue1);border-radius:6px;padding:13px 16px;margin-bottom:16px}
+.cause-box h3{color:var(--blue0);font-size:.82em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #a8ccec}
+
+/* ── Defense accordion ── */
+details.def{margin-bottom:8px;border-radius:7px;overflow:hidden;border:1px solid var(--border)}
+details.def>summary{background:#deedf9;color:#3a67a6;padding:11px 16px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-weight:bold;font-size:.95em;user-select:none}
+details.def>summary::-webkit-details-marker{display:none}
+details.def>summary::after{content:'▶';font-size:.76em}
+details.def[open]>summary::after{content:'▼'}
+.def-body{background:#f5f9fe;padding:14px 14px 12px}
+
+/* ── Layer boxes ── */
+.layers{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:8px}
+@media(min-width:560px){.layers.c2{grid-template-columns:1fr 1fr}}
+@media(min-width:560px){.layers.c3{grid-template-columns:1fr 1fr 1fr}}
+@media(min-width:720px){.layers.c4{grid-template-columns:1fr 1fr 1fr 1fr}}
+.box{border-radius:6px;padding:11px 13px;font-size:.93em}
+.box h4{font-size:.83em;font-weight:bold;margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid rgba(0,0,0,.08)}
+.b-ko{background:#deedf9;border-left:4px solid var(--blue2)}.b-ko h4{color:#3a6fa8}
+.b-sai{background:var(--teal-l);border-left:4px solid var(--teal)}.b-sai h4{color:#3a8a94}
+.b-ss{background:var(--green-l);border-left:4px solid var(--green)}.b-ss h4{color:#3d7a42}
+
+/* ── Elements ── */
+.e{margin:5px 0;padding-left:2px}
+.imp{color:var(--red);font-weight:bold}
+.note{font-size:.86em;color:#5a6a7a;font-style:italic;margin:4px 0 4px 4px}
+.ex{background:var(--yellow);border-left:3px solid #f0b429;padding:7px 11px;margin:7px 0;font-size:.88em;border-radius:4px;line-height:1.6}
+.warn{background:#fff4e5;border-left:3px solid #e8932a;padding:8px 12px;margin:8px 0;font-size:.9em;border-radius:4px}
+.stat{display:inline-block;background:#e0e8f8;color:#3a5fa0;border-radius:3px;padding:1px 6px;font-size:.82em;margin-left:3px}
+.sub{margin-top:10px;border-left:3px solid #a8ccec;padding-left:12px;font-size:.92em}
+</style>
+</head>
+<body>
+<header>
+  <h1>要件事実シート</h1>
+  <p>民事訴訟 — 請求原因・抗弁・再抗弁・再々抗弁</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>抗弁</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0097a7"></div>再抗弁</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div>再々抗弁</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c62828"></div><span style="color:#c62828;font-weight:bold">重要事項</span></div>
+</div>
+
+<div class="container">
+<div class="controls">
+  <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">すべて展開</button>
+  <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">すべて折りたたむ</button>
+</div>
+
+<!-- ═══════════════════════════════════ 1. 売買代金 -->
+<details class="sec">
+<summary>① 売買契約に基づく代金支払請求権</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 売買契約の締結</div>
+  <div class="ex">「Xは、Yに対し、令和5年5月3日、甲土地を1000万円で売った」</div>
+</div>
+
+<details class="def"><summary>弁済</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 給付事実（1文）</div>
+      <div class="ex">「Yは、Xに対し、令和5年3月13日、本件売買代金債務につき、1000万円を弁済した。」</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>免除</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4><div class="e">❶ 免除事実</div></div></div>
+</div></details>
+
+<details class="def"><summary>代物弁済 <span class="stat">428条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 代物弁済契約締結の事実</div>
+    <div class="e">❷ 債務者が❶時、その物を所有していた（債務消滅の前提）</div>
+    <div class="e imp">❸ ❶合意に基づき、物を引き渡した</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>期限の合意</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4><div class="e">❶ 期限合意の事実</div></div>
+    <div class="box b-sai"><h4>再抗弁</h4><div class="e">❶ 期限の到来</div></div>
+  </div>
+</div></details>
+
+<details class="def"><summary>停止条件の合意</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4><div class="e">❶ 停止条件の合意</div></div>
+    <div class="box b-sai"><h4>再抗弁</h4><div class="e">❶ 停止条件の成就</div></div>
+  </div>
+</div></details>
+
+<details class="def"><summary>解除条件の成就</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 解除条件の合意</div><div class="e">❷ 成就</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>同時履行の抗弁 <span class="stat">533条</span></summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e imp">❶ 同時履行の抗弁の権利主張</div>
+      <div class="note">本件売買契約に基づき</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁①（先履行の合意）</h4>
+      <div class="e">❶ 先履行の合意</div>
+      <div class="ex">「XとYは、本件売買契約に際し、甲建物の引渡し及び所有権移転登記手続を、売買代金支払の一ヶ月後とすると合意した。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁②（反対給付の履行）</h4>
+      <div class="e">❶ 反対給付の履行</div>
+      <div class="ex">「Xは、Yに対し、M日、本件建物について所有権移転登記をするとともに、これを引渡した。」</div>
+    </div>
+  </div>
+  <div class="warn">売買型→同時履行の存在効果潰す（せりあが）<br>❹催告に先立つ反対給付提供 or 先履行合意</div>
+</div></details>
+
+<details class="def"><summary>消滅時効</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 権利行使可能なことを知ったこと（主観的起算点）</div>
+      <div class="note">客観的起算点は請求原因に現れるので不要</div>
+      <div class="e">❷ 時効期間の経過</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（猶予・更新）</h4>
+      <div class="e">時効の完成猶予: ❶ 完成猶予事由</div>
+      <div class="e">時効の更新: ❶ 時効更新事由</div>
+      <div class="ex">「Xは、Yに対し、M日、本件売買代金債権を承認」—争いなければ「承認した」で足りる</div>
+      <div class="e">時効援用権の喪失: ❶ 完成後の承認</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁</h4>
+      <div class="e imp">❸ 時効援用の意思表示（権利抗弁）</div>
+      <div class="note">別個の抗弁であることに注意。not再再抗弁</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>相殺 <span class="stat">505条</span></summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 自動債権の発生原因事実</div>
+      <div class="e imp">❷ 賃借型→自動債権の弁済期の定め及びその到来</div>
+      <div class="e">❸ 相殺の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（相殺禁止）</h4>
+      <div class="e">債務の性質が相殺を許さない: ❶ 該当事由</div>
+      <div class="e">相殺禁止特約<span class="stat">505条2項</span>:<br>❶ XとA間の債権につき相殺禁止特約<br>❷ Yが悪意or重過失の評価根拠事実</div>
+      <div class="e">不法行為債権等が受働債権<span class="stat">509条</span>: ❶ 該当事由</div>
+      <div class="e">❶ 相殺の意思表示に条件・期限</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁</h4>
+      <div class="e">❶ 譲り受けた→相殺禁止に当たらない</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>催告解除</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 履行の催告</div>
+      <div class="ex">「YはXに対し、M日、甲絵画の明渡を催告した。」</div>
+      <div class="e">❷ 相当の期間の経過</div>
+      <div class="e">❸ 解除の意思表示</div>
+      <div class="ex">「Yは、Xに対し、M+10日、本件売買契約を解除するとの意思表示をした」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 不履行の軽微性<span class="stat">541条但書</span></div>
+      <div class="e">❶ 履行不能（債務が消滅し解除が前提を欠く）</div>
+      <div class="e">❶ 弁済の提供<span class="stat">492条</span>（催告後・解除前）</div>
+      <div class="e">❶ 債権者の帰責性<span class="stat">543条</span></div>
+    </div>
+  </div>
+  <div class="warn"><strong>❹催告に先立つ反対給付提供or先履行合意（せ）</strong>：同時履行の存在効果を消滅させ遅滞を違法にする<br>
+  弁済の提供例:「Yは、M-10日、売買代金200万円を持参して、X方に赴き、Xに対しその受領を求めた。」</div>
+</div></details>
+
+<details class="def"><summary>停止条件付解除</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 催告</div>
+    <div class="e">❷ 催告の際、催告期間「経過により」契約を解除するとの意思表示をした</div>
+    <div class="e">❸ 催告期間＝停止期限の経過</div>
+  </div></div>
+  <div class="note">停止条件付解除特約を「催告期間経過により解除する」特約と合理的解釈し、「履行がないこと」の証明責任を押し付ける</div>
+</div></details>
+
+<details class="def"><summary>無催告解除特約</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 期限合意と期限経過</div>
+    <div class="e">❷ 特約合意</div>
+    <div class="e">❸ 履行期経過後の解除の意思表示</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>当然解除特約</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 期限合意と期限経過</div>
+    <div class="e">❷ 当然解除特約</div>
+    <div class="e">❸ 遅滞の違法性</div>
+  </div></div>
+  <div class="warn imp">権利抗弁的でなくなることに注意</div>
+</div></details>
+
+<details class="def"><summary>目的物の契約不適合解除 <span class="stat">541条</span></summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 目的物引き渡し</div>
+      <div class="e">❷ 渡された目的物の不適合</div>
+      <div class="e">❸ 履行追完催告</div>
+      <div class="e">❹ 客観的相当期間経過</div>
+      <div class="e">❻ 解除の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 不履行の軽微性<span class="stat">541条但書</span></div>
+      <div class="e">❶ 弁済の提供<span class="stat">492条</span></div>
+      <div class="e">❶ 債権者の帰責性<span class="stat">543条</span></div>
+    </div>
+    <div class="box b-ss"><h4>期間制限（再々抗弁）</h4>
+      <div class="e">❶ 買主が種類・品質不適合を知ったこと</div>
+      <div class="e">❷ ❶から1年が経過したこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>危険負担に基づく履行拒絶 <span class="stat">536条1項</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 債務の履行が不能</div>
+      <div class="ex">「本件建物は、M日に火災により滅失した。」</div>
+      <div class="e">❷ 履行を拒絶する旨の権利主張</div>
+      <div class="ex">「Yは、Xに対し、代金支払の履行を拒絶する旨の意思表示をした。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 債権者の帰責性</div>
+      <div class="ex">「建物の消失は、M日にYがガスストーブを消し忘れたために火災が発生したことによるものである。」</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>手付解除 <span class="stat">557条</span></summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 手付として金銭を交付する合意（文面なし）</div>
+      <div class="e">❷ 買主が合意手付を交付した事実</div>
+      <div class="e">❸ 売主：倍額を現実に提供 / 買主：請求権放棄の意思表示</div>
+      <div class="e">❹ 契約解除の意思表示（「できる」）</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（解除権留保特約）</h4><div class="e">❶ 特約</div></div>
+    <div class="box b-ss"><h4>再々抗弁（履行着手）</h4>
+      <div class="e imp">❶「解除の意思表示前」に相手方が履行に着手した</div>
+      <div class="note">客観的に外部から認識しうるような形で履行行為の一部をなし、または履行の提供をするために不可欠な前提行為をすること。</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>錯誤取消し</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 意思表示が1号または2号に基づくこと</div>
+      <div class="e">❷ 錯誤が重要であること</div>
+      <div class="e">（2号の場合）法律行為の基礎となっていること</div>
+      <div class="e imp">❸ 取消の意思表示（「できる」）</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">重過失（3項）: ❶ 重過失の評価根拠事実</div>
+      <div class="e">❶ 相手方の悪意</div>
+      <div class="e">❶ 相手方の重過失の評価根拠事実</div>
+      <div class="e">双方錯誤: ❶ 同一の錯誤に陥っていたこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>詐欺取消し</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 詐欺の事実（a欺罔行為、bそれに基づく錯誤、cそれに基づく意思表示、d故意）</div>
+    <div class="ex">「Xは、本件売買契約に際し、Yに対し、〜〜と告げ、Yをしてそのように信じさせた上で、本件売買契約を締結させた。」</div>
+    <div class="e imp">❷ 取消の意思表示（「できる」）</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>未成年者の行為の取消し <span class="stat">5条1項</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 法律行為の当事者が未成年であったこと</div>
+      <div class="e">❷ 取消権者による取消の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（制限行為能力者の詐術）</h4>
+      <div class="e">❶ 該当事実<span class="stat">21条</span></div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 2. 代理 -->
+<details class="sec">
+<summary>② 売買契約に基づく目的物引渡・所有権移転登記請求権（代理）</summary>
+<div class="sec-body">
+
+<details class="def"><summary>有権代理 <span class="stat">99条</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>請求原因</h4>
+      <div class="e">❶ 法律行為（意思表示）</div>
+      <div class="e">❷ 顕名（本人のためにすることを示して）</div>
+      <div class="note">代理意思の存在＋相手が悪意or有過失 → 100条でも代替可</div>
+      <div class="e imp">❸ 先立つ代理権授与</div>
+      <div class="note">記述でも「先立つ」で足りる。119条により追認で代替可能</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（代理権濫用）<span class="stat">107条</span></h4>
+      <div class="e">❶ 代理人が自己または第三者の利益を図る目的</div>
+      <div class="e">❷ 相手方の悪意or過失を基礎付ける事実</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>109Ⅰ 代理権授与表示の表見代理</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 法律行為 ❷ 顕名</div>
+      <div class="e imp">❸ 先立つ代理権授与「表示」</div>
+      <div class="ex">「Xは、❶の契約に先立ち、Yに対し、Zを介して、XがZに甲土地の売買を委任する旨記載したX作成の委任状を示した。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（悪意・過失）<span class="stat">109条但書</span></h4>
+      <div class="e">❶「代理権が与えられていないこと」を知っていた、または知らないことにつき過失があったことの評価根拠事実</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>109Ⅱ 重畳適用規定</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 法律行為 ❷ 顕名</div>
+      <div class="e">❸ 代理権授与表示</div>
+      <div class="e">❹ 相手方が代理権を信じた（積極信頼）</div>
+      <div class="warn imp">❺がX主張であることに注意！</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（悪意・過失）</h4>
+      <div class="e">❶「代理権が与えられていないこと」を知っていた、または知らないことにつき過失があったことの評価根拠事実</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>110条 権限外の行為の表見代理</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 法律行為 ❷ 顕名</div>
+    <div class="e">❸ 代理権があると信じたこと（積極信頼）</div>
+    <div class="e imp">❹ ❸につき正当な理由の根拠事実</div>
+    <div class="e imp">❺ 基本代理権の発生原因事実</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>112Ⅰ 代理権消滅後の表見代理</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁（再抗弁説）</h4>
+      <div class="e">❶ 代理権の消滅原因事実の存在を知らなかったこと</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（過失）</h4>
+      <div class="e">❶ 知らなかったことに過失があったことを基礎付ける評価根拠事実</div>
+    </div>
+  </div>
+  <div class="warn"><strong>再抗弁説</strong>：有権代理に対して代理権消滅が立証された場合に善意の第三者を保護する再抗弁。<strong>予備的請求原因説</strong>：有権代理が否定された場合の予備的抗弁。</div>
+</div></details>
+
+<details class="def"><summary>無権代理人に対する請求 <span class="stat">117条</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>請求原因</h4>
+      <div class="e">❶ XとYが契約を締結したこと</div>
+      <div class="e">❷ Yが、❶の際、Z顕名をしたこと</div>
+    </div>
+    <div class="box b-sai"><h4>117条の各種抗弁</h4>
+      <div class="e">先立つ代理権授与、追認、X悪意、X有過失事実、Y行為能力制限</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 3. 消費貸借 -->
+<details class="sec">
+<summary>③ 消費貸借契約に基づく貸金返還請求権</summary>
+<div class="sec-body">
+
+<details class="def"><summary>要物的消費貸借</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 合意 ❷ 交付（契約成立要件）</div>
+    <div class="ex">「Xは、Yに対し、M日、200万円を貸し付けた」</div>
+    <div class="e">❸ 交付（返還請求権の前提）</div>
+    <div class="e">❹ 返還時期合意 ❺ 時期到来（終了）</div>
+    <div class="note">または ❹催告 ❺催告後相当期間末日到来</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>諾成的消費貸借契約</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 合意 ❷ 書面性</div>
+    <div class="e">❹ 返還時期合意 ❺ 時期到来（終了）</div>
+    <div class="note">または ❹催告 ❺催告後相当期間末日到来</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>準消費貸借契約</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>請求原因</h4>
+      <div class="e imp">❶ 準消費貸借の合意</div>
+      <div class="ex">「XとYは、M日、XがYにL日に甲自動車を売ったことによる売買代金債務2000万円を消費貸借の目的とし、弁済期をG日とすることを合意した。」</div>
+      <div class="note">合意で足りる。旧債務については債権を特定できる程度で足り、存在の立証は不要。</div>
+      <div class="e">❷ 返還時期合意（❶で現れ） ❸ 到来</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（旧債務の不存在）</h4>
+      <div class="e">❶ 旧債務の不存在（被告説）</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 4. 保証 -->
+<details class="sec">
+<summary>④ 保証契約に基づく保証債務履行請求権 <span class="stat">446条</span></summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="note">※447条より利息等含んでも訴訟物1つ</div>
+  <div class="e">❶ 主たる債務の存在</div>
+  <div class="e">❷ 保証契約締結の事実</div>
+  <div class="e imp">❸ 保証意思が書面によること</div>
+  <div class="e">（❹複数保証人に同時請求→連帯特約）</div>
+</div>
+
+<details class="def"><summary>消滅時効（主債務）</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 主債務の時効期間の経過</div>
+      <div class="e">❷ 援用の意思表示</div>
+      <div class="note">145条で援用権あり、付従性で消滅</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（時効援用権の喪失）</h4>
+      <div class="e">時効援用権の喪失</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>催告・検索の抗弁 <span class="stat">452条・453条</span></summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁（催告）</h4>
+      <div class="e">❶ まず主債務者に催告しろと拒否</div>
+    </div>
+    <div class="box b-ko"><h4>抗弁（検索）</h4>
+      <div class="e">❶ 主債務者に弁済資力ありかつ執行容易</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（連帯特約）</h4>
+      <div class="e">❶ 連帯の特約</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>弁済拒絶（相殺・取消し・解除）</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 自動債権の発生原因事実</div>
+    <div class="e">❷ 保証債務支払い拒絶の権利主張</div>
+    <div class="e imp">❸ 売買型→同時履行の存在効果潰す（せりあが）</div>
+    <div class="e">賃借型→自動債権の弁済期の定め及びその到来</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>保証委託契約に基づく事後求償権 <span class="stat">459条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 主債務者の発生原因事実</div>
+    <div class="e">❷ 保証人への❶保証の委託</div>
+    <div class="e imp">❸ 保証委託契約の書面性</div>
+    <div class="e">❹ 保証人が❸債務の消滅行為をしたこと</div>
+  </div></div>
+  <div class="warn imp">委託を受けていない保証における求償権の訴訟物が上になることに注意！！</div>
+</div></details>
+
+<details class="def"><summary>事務管理に基づく費用償還請求権</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 本人のためにする意思を持って本人の事務をした</div>
+    <div class="e">❷ ❶のため本人のために有益な費用を支出したこと及びその額</div>
+  </div></div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 5. 賃料 -->
+<details class="sec">
+<summary>⑤ 賃貸借契約に基づく賃料請求権 <span class="stat">601条</span></summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 賃貸借（目的物・賃料を特定）契約</div>
+  <div class="ex">「Xは、Yに対し、M日、本件建物を賃料月額20万円の約定で、賃貸した。」</div>
+  <div class="e">❷ ❶に基づく引き渡し</div>
+  <div class="e">❸ 賃料債務を発生させる一定期間経過</div>
+  <div class="e">❹ 支払時期到来<span class="stat">614条等</span></div>
+  <div class="ex">「令和5年1月31日が到来した。」</div>
+</div>
+</div></details>
+
+<!-- ═══════════════════════════════════ 6. 建物明渡 -->
+<details class="sec">
+<summary>⑥ 賃貸借契約の終了に基づく建物明渡請求権</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 賃貸借契約の締結</div>
+  <div class="e">❷ ❶に基づく引き渡し</div>
+  <div class="e imp">❸ ❶の終了原因（A〜D参照）</div>
+</div>
+
+<details class="def"><summary>A. 期間満了（借地借家法26条）</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>終了原因（請求原因❸）</h4>
+      <div class="e">❶ 契約期間終了</div>
+      <div class="e imp">❷ ❶満了1年〜6ヶ月前に「更新拒絶の通知」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">更新合意</div>
+      <div class="e">法定更新: ❶ 期間満了後も賃借人が使用を継続した（26条2項）</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁</h4>
+      <div class="e">遅滞なき異議: ❶ 遅滞なく異議を述べたこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>B. 解約申入れ（借地借家法27条）</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>終了原因（請求原因❸）</h4>
+      <div class="e">❶ XのYに対する解約の申し入れ</div>
+      <div class="e">❷ ❶から6ヶ月の経過</div>
+      <div class="e imp">❸ ❶からずっと「正当な事由」存在</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">法定更新</div>
+      <div class="e">遅滞なき異議</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>C. 賃料不払いによる債務不履行解除</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁（催告解除）</h4>
+      <div class="e">❶ 賃料債務を発生させる期間の経過</div>
+      <div class="e">❷ 履行期の経過</div>
+      <div class="e">❸ 催告 ❹ 催告後相当期間の経過</div>
+      <div class="e">❺ 解除の意思表示</div>
+    </div>
+    <div class="box b-ko"><h4>抗弁（無催告解除）</h4>
+      <div class="e imp">❸ 賃借人の背信性の評価根拠事実</div>
+      <div class="e">❹ 解除の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">弁済の提供: ❶ 解除の意思表示前に賃料及び遅延損害金の弁済を提供したこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>D. 無断転貸 <span class="stat">612条2項</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 賃借人と第三者の転貸借契約</div>
+      <div class="e">❷ 第三者が引渡し受け、使用収益した</div>
+      <div class="e">❸ 解除の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">承諾: ❶ 解除に先立つ承諾（転貸人・第三者どちらにしてもOK）</div>
+      <div class="e">非背信性: ❶ 評価根拠事実</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 7. 建物収去土地明渡 -->
+<details class="sec">
+<summary>⑦ 賃貸借契約の終了に基づく建物収去土地明渡請求権</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 賃貸借契約の締結</div>
+  <div class="e">❷ ❶に基づく引き渡し</div>
+  <div class="e">❸ ❶の終了原因</div>
+  <div class="e imp">❹ ❷後、❸終了時まで土地上に建物が付属し、❸終了時に存在すること</div>
+</div>
+
+<details class="def"><summary>A. 期間満了（民法）</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>終了原因</h4>
+      <div class="e">❶ 設定期間の経過（50年以下の時）</div>
+      <div class="e">❶ 50年の経過（50年以上設定の時）</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">一時使用: ❶ 短期間に限って存続させる合意 ❷ 評価根拠事実</div>
+      <div class="e">黙示の更新<span class="stat">619条1項</span>: ❶ 終了後も継続使用 ❷ 賃貸人が❶を知った ❸ 相当期間の経過 ❹ 賃貸人が異議を述べなかった</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁</h4>
+      <div class="e">更新合意の不成立（→黙示の更新の推定が覆る）</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>B. 期間満了（借地借家法）</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>終了原因</h4>
+      <div class="e">❶ 賃貸借契約につき、建物所有目的の合意</div>
+      <div class="e">❷ 借地借家法上の存続期間経過</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">法定更新: ❶ 土地使用継続</div>
+      <div class="e">遅滞なき異議 + 更新拒絶に正当な事由<span class="stat">借借6条</span></div>
+      <div class="e imp">同時履行（建物買取請求権）: ❺ 支払いまで引き渡しを拒絶する旨主張</div>
+    </div>
+  </div>
+  <div class="warn imp">「建物収去」部分に理由がなくなる（建物買取請求権行使後）</div>
+</div></details>
+
+<details class="def"><summary>敷金返還請求権</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 賃貸借契約の締結（敷金契約の前提）</div>
+    <div class="e">❷ ❶に基づく引渡し（「返還」の前提）</div>
+    <div class="e imp">❸ 敷金契約と敷金の授受（要物契約）</div>
+    <div class="ex">「Xは、Yとの間で、❶の賃貸借契約に際し、敷金として50万円を交付する旨を合意し、Yに対し、敷金として50万円を交付した。」</div>
+    <div class="e">❹ 賃貸借契約の終了原因（「終了」）</div>
+    <div class="e">❺ 目的物の明渡（「返還」）</div>
+    <div class="e">❻ 賃料全額の弁済</div>
+  </div></div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 8. 請負 -->
+<details class="sec">
+<summary>⑧ 請負契約に基づく報酬支払請求権 <span class="stat">632条</span></summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 請負契約の締結（「仕事の内容」「報酬金額」を特定。期限等は本質的要素でないため不要）</div>
+  <div class="e">❷ 仕事の完成</div>
+  <div class="note">請負契約では報酬支払いが仕事目的物の引渡しと同時履行。完成は先履行。</div>
+  <div class="note">報酬の前払い特約がある場合は、❷に代えて、特約存在と事実発生が要件事実</div>
+</div>
+
+<details class="def"><summary>同時履行（引渡し）</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 請負契約が目的物引き渡しを要するものである（→請求原因で現れていれば不要）</div>
+    <div class="e">❷ 引渡しまで拒む権利主張</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>目的物の契約不適合（同時履行・相殺・解除）</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁（修補請求との同時履行）</h4>
+      <div class="e">❷ 引渡し当時❶目的物が契約不適合</div>
+      <div class="e">❸ 契約不適合修補まで報酬支払い拒絶の権利主張</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（担保責任制限）<span class="stat">636条本文</span></h4>
+      <div class="e">❶ 契約不適合が注文者の材料or指示で生じた</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁</h4>
+      <div class="e">❶ 請負人の悪意<span class="stat">636条但書</span></div>
+    </div>
+  </div>
+  <div class="sub">
+    <strong>期間制限</strong>: ❶ 契約不適合知った ❷ ❶から1年が経過した<br>
+    <strong>再々抗弁</strong>: ❶ 注文者の1年以内通知 / ❶ 請負人の悪意・重過失<span class="stat">637条2項</span>
+  </div>
+</div></details>
+
+<details class="def"><summary>可分請求（完成前解除or履行不能）</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 請負契約の締結</div>
+    <div class="e">❷ 完成前の解除or履行不能</div>
+    <div class="e imp">❸ 仕事の一部が完成（可分であること、では不足）</div>
+    <div class="e">❹ 注文者が利益を受けること</div>
+    <div class="e">❺ 完成部分の報酬額</div>
+    <div class="ex">「Xは、M日、"甲"建物を完成させ、Yに引き渡した。」<br>「甲と乙は、独立した建物であり、甲建物の請負代金としては1000万円が相当である。」</div>
+    <div class="note">※履行不能が「注文者に帰責できない事由」によることは不要（注文者のせいなら問答無用で全額請求できる）</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>536条2項前段（危険負担）に基づく請求</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>請求原因</h4>
+      <div class="e">❶ 請負契約締結</div>
+      <div class="e">❷ 仕事が完成不能</div>
+      <div class="e imp">❸ ❷が注文者の責め</div>
+    </div>
+    <div class="box b-sai"><h4>相殺の抗弁（536条2項後段）</h4>
+      <div class="e">❶ 仕事完成義務を免れたことによる利益と額</div>
+      <div class="e">❷ 注文者が一定額について相殺の意思表示</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 9. 所有権 -->
+<details class="sec">
+<summary>⑨ 所有権に基づく返還請求権（土地明渡・登記抹消）</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因（土地明渡）</h3>
+  <div class="e">❶ 原告現所有（権利自白に応じてA〜C）</div>
+  <div class="note">A 原告現所有→占有権原抗弁 / B 原告もと所有→所有権喪失抗弁 / C 前主もと所有→対抗要件抗弁</div>
+  <div class="e">❷ 被告現占有（自己占有→「所持」180条の事実、代理占有→181条該当事実）</div>
+</div>
+
+<details class="def"><summary>占有権原（留置権・賃貸借等）</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 占有権限の取得原因事実</div>
+    <div class="e">❶ 留置権者が当該物について債権を有すること<span class="stat">295条</span></div>
+    <div class="e">❷ 権利主張</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>売買契約による所有権喪失</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 所有権移転原因事実（売買・贈与・代物弁済・時効取得等）</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>所有権留保特約（停止条件付き所有権留保）</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶「所有権移転時期を代金完済時とする合意」をした</div>
+      <div class="note">契約形式を重視して所有権的構成を取ること</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e imp">❶ 代金完済（条件成就）</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>通謀虚偽表示 <span class="stat">94条</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 意思表示が真意でないこと「虚偽の意思表示」</div>
+      <div class="e">❷ ❶につき相手方との間での通謀「通じて」</div>
+      <div class="ex">「XとAは、売買契約の際、いずれも甲土地を売買するつもりがないにも関わらず、その意思があるように仮装することを合意した。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（94条2項「第三者」）</h4>
+      <div class="e">❷ 虚偽表示につき善意であること</div>
+      <div class="warn">法定承継説→予備的抗弁：❶ 第三者であることを基礎付ける事実<br>「請求原因から生じる法効果」を障害する予備的抗弁となる。</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>対抗要件の抗弁 <span class="stat">177条</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶「第三者」(177条)該当性</div>
+      <div class="e">❷ 対抗要件の具備を争う主張</div>
+      <div class="ex">「Xが対抗要件を具備するまで、Xの所有権取得を認めない。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（背信的悪意者）</h4>
+      <div class="e imp">❶ 悪意性（前主からYへの所有権移転事実発生の時点において、YがXへの所有権移転原因事実を知っていたこと）</div>
+      <div class="e">❷ 背信性の評価根拠事実</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>対抗要件具備による所有権喪失</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 第三者該当性</div>
+      <div class="e">❷ 登記</div>
+      <div class="ex">「Aは、M日、❶贈与に基づき、本件土地につき所有権移転登記手続をした。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（先立つ対抗要件具備）</h4>
+      <div class="e">❶ Xへの目的動産の所有権移転（請求原因既出）</div>
+      <div class="e">❷ 基づく引き渡し</div>
+      <div class="e imp">❸ ❷引渡しがYへの引き渡しに先立つこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>解除の「第三者」</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁（権利保護要件説）解除前</h4>
+      <div class="e">❶ 解除前の第三者であること</div>
+      <div class="e imp">❷ 解除に先立つ権利保護要件としての登記</div>
+      <div class="ex">「Aは、Yに対し、M日、甲土地を代金1000万円で売った。」<br>「Aは、Yに対し、同日、❶の売買契約に基づき、甲土地の所有権移転登記をした。」</div>
+    </div>
+    <div class="box b-ko"><h4>予備的抗弁（対抗要件説）解除後</h4>
+      <div class="e">❶ 解除後の第三者であること</div>
+      <div class="e">❷ 対抗要件の具備or対抗要件具備まで認めない</div>
+      <div class="note">解除前→権利保護要件、解除後→対抗要件として処理</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>取得時効 <span class="stat">162条</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ ある時点での占有</div>
+      <div class="e">❷ ❶から10年経過時点での占有</div>
+      <div class="e">❸ 占有開始時に善意であることについて無過失</div>
+      <div class="e imp">❹ 時効援用の意思表示</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 他主占有権原・他主占有事情の抗弁</div>
+      <div class="e">❷ 悪意・過失</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>即時取得による所有権喪失 <span class="stat">192条</span>（動産）</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 前主とYの取引行為</div>
+      <div class="e">❷ ❶に基づく引渡し（占有取得）</div>
+      <div class="note">188条により前主が所有者であることにつき過失がないものと推定される→無過失立証は不要</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 悪意 / ❶ 過失</div>
+      <div class="note">即時取得「善意」とは、①占有取得時に、②前主が権利者であることを、③積極的に信頼していた（信じていた）こと。半信半疑も悪意に含む。</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 10. 債権譲渡 -->
+<details class="sec">
+<summary>⑩ 譲受債権の請求（債権譲渡）</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="note">※A譲渡人、X譲受人、Y債務者、B第三者</div>
+  <div class="e">❶ 譲受債権の発生原因事実</div>
+  <div class="ex">「Aは、Yに対し、M日、本件木材を代金380万円で売った。」</div>
+  <div class="e">❷ ❶の債権の取得原因事実</div>
+  <div class="ex">「Aは、Xに対し、M+a日、❶の売買代金債権を代金200万円で売った。」</div>
+</div>
+
+<details class="def"><summary>債務者対抗要件 <span class="stat">467条1項</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="ex">「請求原因❷の債権譲渡につき、AがYに通知またはYが承諾するまで、Xを債権者と認めない。」</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（対抗要件具備）</h4>
+      <div class="e">❶ AがYに通知したこと</div>
+      <div class="e">❷ YがXorAに承諾したこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>第三者対抗要件（二重譲渡）</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ AからBへの債権移転事実</div>
+      <div class="e">❷ ❶譲渡につき、債務者対抗要件が具備</div>
+      <div class="e">❸ Xが第三者対抗要件を具備するまで、Xを債権者と認めない</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（第三者対抗要件具備）</h4>
+      <div class="e imp">❶ AがYに確定日付ある証書で通知したこと</div>
+      <div class="e imp">❷ YがXorAに確定日付ある証書で承諾したこと</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>譲渡制限特約 <span class="stat">466条2・3項</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁（履行拒絶）</h4>
+      <div class="e">❶ 譲渡制限特約の合意</div>
+      <div class="e">❷ Xが譲渡制限につき悪意重過失</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（催告）<span class="stat">466条4項</span></h4>
+      <div class="e">❶ XのYに対する相当期間を定めたAへの履行の催告</div>
+      <div class="e">❷ 相当期間の経過</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>譲渡人（A）に生じた事由</summary><div class="def-body">
+  <div class="layers c3">
+    <div class="box b-ko"><h4>抗弁</h4>
+      <div class="e">❶ 生じた事由</div>
+      <div class="note">債権は同一性を保って帰属主体が変わるので、債権に付着していた抗弁事由は承継される</div>
+    </div>
+    <div class="box b-sai"><h4>再抗弁（先立つ通知）</h4>
+      <div class="e">❶ 生じた事由に先立つ通知（債務者対抗要件具備）</div>
+    </div>
+    <div class="box b-ss"><h4>再々抗弁（抗弁の放棄）</h4>
+      <div class="e">❶ Yが債権譲渡の承諾し、抗弁の放棄したこと</div>
+      <div class="note">＝抗弁による異議をとどめない承諾をしたこと</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 11. 債権者代位 -->
+<details class="sec">
+<summary>⑪ 債権者代位訴訟 <span class="stat">423条</span></summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="note">※423条3前段により、金銭債権・動産引渡の場合は、自己に対して求めることも可</div>
+  <div class="e">❶ 被保全債権の発生原因事実</div>
+  <div class="e">❷ 保全の必要性を基礎付ける事実</div>
+  <div class="e">❸ 訴訟物たる権利の発生原因事実</div>
+  <div class="e">❹ 被保全債権の期限到来<span class="stat">423条2項</span></div>
+</div>
+
+<details class="def"><summary>被保全債権の期限未到来</summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>抗弁</h4><div class="e">❶ 被保全債権の期限の合意</div></div>
+    <div class="box b-sai"><h4>再抗弁</h4>
+      <div class="e">❶ 履行期限の到来</div>
+      <div class="e">❶ 保存行為（→期限未到来でも代位可能<span class="stat">423条2項</span>）</div>
+    </div>
+  </div>
+</div></details>
+
+<details class="def"><summary>その他の抗弁</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 被保全債権の消滅・障害</div>
+    <div class="note">被保全債権は当事者適格であるから、口頭弁論終結時に有効に存在していなくてはならない</div>
+    <div class="e">❶ 被保全債権が強制執行により実現不可</div>
+    <div class="e imp">❶ 債務者による被代位権利の行使</div>
+    <div class="note">債務者が自ら行使していないことは実体法上の要件であり当事者適格を基礎付ける</div>
+    <div class="e">❶ 被代位権利が債務者の一身に専属する権利</div>
+    <div class="e">❶ 差押えを禁じられた権利<span class="stat">423条1項但書</span></div>
+  </div></div>
+  <div class="warn">相手方が債務者に対して有する抗弁<span class="stat">423条の4</span>：❶ 被代位権利の発生を障害阻止消滅する事由（例：Aへの弁済）<br>弁済に先立つ被代位権利の行使は再抗弁にならない（423条の5より、代位後もAへの弁済は有効）</div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 12. 詐害行為取消権 -->
+<details class="sec">
+<summary>⑫ 詐害行為取消権 <span class="stat">424条</span></summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求の趣旨例</h3>
+  <div class="ex">「AとYがM日に甲土地についてした売買契約を取り消す」<br>「Yは、甲土地について、所有権移転登記の抹消登記手続をせよ」</div>
+</div>
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 被保全債権の発生原因事実<span class="stat">424条1項</span></div>
+  <div class="e">❷ 債務者が財産権を目的とする行為をしたこと</div>
+  <div class="e">❸ ❶債権が❷行為の前の原因に基づき生じたこと<span class="stat">424条3項</span></div>
+  <div class="e imp">❹ ❷が債権者を害する（＝無資力）</div>
+  <div class="e">❺ 債務者Aの詐害意思</div>
+</div>
+
+<details class="def"><summary>受益者の善意</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e">❶ 受益者の善意<span class="stat">424条1項</span></div>
+    <div class="note">詐害行為により利益を受けるのは受益者であり、債権者が悪意を立証するのは困難であるから、Y立証責任に回された</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>相当な対価を得てした財産の処分行為 <span class="stat">424条の2</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>加重要件</h4>
+    <div class="e">❶ 相当の対価を得て行為をしたこと</div>
+    <div class="e">❷ 行為が、債務者において隠匿等の処分をするおそれを生じさせるものであること</div>
+    <div class="e">❸ 行為当時、隠匿等の意思を有していたこと</div>
+    <div class="e">❹ 受益者が、無資力を知っていたこと</div>
+    <div class="e">❺ 受益者が、❸を知っていたこと</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>既存債務の消滅行為 <span class="stat">424条の3</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>加重要件</h4>
+    <div class="e">❶ 既存債務発生原因</div>
+    <div class="e">❷ 債務者の債務の本旨に従った給付</div>
+    <div class="e">❸ ❷が❶についてなされたこと</div>
+    <div class="e imp">❹ ❷当時、債務者が支払不能</div>
+    <div class="e">❺ 債務者と受益者の通謀詐害意思</div>
+    <div class="note">支払不能＝支払能力を欠くために、一般的かつ継続的に弁済ができない状態</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>期間制限・その他抗弁</summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>抗弁</h4>
+    <div class="e imp">❶ 期間制限（2年＆10年）<span class="stat">426条後段</span></div>
+    <div class="e">❶ 口頭弁論終結前までの債務者資力回復</div>
+    <div class="note">一回復活してまた無資力になっても詐害行為取消権は復活しない（判例）</div>
+    <div class="e">❶ 債権が強制執行により実現できないもの<span class="stat">424条4項</span></div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>転得者がいる場合 <span class="stat">424条の5</span></summary><div class="def-body">
+  <div class="layers c2">
+    <div class="box b-ko"><h4>転得者への取消</h4>
+      <div class="e">❶ 転得者が転得したこと</div>
+      <div class="e">❷ ❶の際、転得者が債権者を害することを知っていた</div>
+    </div>
+    <div class="box b-ko"><h4>価額償還</h4>
+      <div class="e">❶ 受益者がその財産を返還するのが困難</div>
+      <div class="e">❷ 取消対象たる財産の弁論終結時価額</div>
+    </div>
+  </div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 13. 損害賠償 -->
+<details class="sec">
+<summary>⑬ 債務不履行・不法行為・使用者責任・工作物責任</summary>
+<div class="sec-body">
+
+<details class="def"><summary>債務不履行に基づく損害賠償請求権 <span class="stat">415条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因（手段債務・曖昧債務）</h4>
+    <div class="e">❶ 債務の発生原因たる契約</div>
+    <div class="e">❷ 債務内容を根拠づける具体的事実（規範要件）</div>
+    <div class="e imp">❸ 債務内容に相当する履行がないこと</div>
+    <div class="e">❹ 損害発生及び数額</div>
+    <div class="e">❺ ❸と❹の因果関係</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>不法行為に基づく損害賠償請求権 <span class="stat">709条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ Yが、Xに対し、加害行為をしたこと</div>
+    <div class="e">❷ ❶につきYに故意または重過失がある</div>
+    <div class="e">❸ Xの損害及び数額</div>
+    <div class="e">❹ ❶と❸に因果関係があること<span class="stat">416条</span></div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>使用者責任に基づく損害賠償請求権 <span class="stat">715条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e">❶ 一般不法行為の要件事実</div>
+    <div class="e imp">❷ 実質的指揮監督関係</div>
+    <div class="e imp">❸ 事業の執行につき加害行為が行われた</div>
+  </div></div>
+</div></details>
+
+<details class="def"><summary>工作物責任に基づく損害賠償請求権 <span class="stat">717条</span></summary><div class="def-body">
+  <div class="layers c2"><div class="box b-ko"><h4>請求原因</h4>
+    <div class="e imp">❶ 工作物に瑕疵があったこと</div>
+    <div class="e">❷ ❶により、Xの利益が侵害された</div>
+    <div class="e">❸ Xの損害及び数額（❶❷と❸の因果も）</div>
+    <div class="e">❹ Yが、❷の時に占有/所有していたこと</div>
+  </div></div>
+</div></details>
+
+</div></details>
+
+<!-- ═══════════════════════════════════ 14. 不当利得 -->
+<details class="sec">
+<summary>⑭ 不当利得に基づく返還請求権</summary>
+<div class="sec-body">
+<div class="cause-box">
+  <h3>請求原因</h3>
+  <div class="e">❶ 被告の利得</div>
+  <div class="e">❷ 原告の損失</div>
+  <div class="e">❸ ❶と❷の因果関係</div>
+  <div class="e imp">❹（給付型）法律上の原因がないこと</div>
+  <div class="note">給付型では原告が自ら行った給付についてであるから、法律上の原因がないことはX自身で立証。侵害型では被告が抗弁において主張すべき。</div>
+</div>
+</div></details>
+
+<!-- ═══════════════════════════════════ 15. 附帯請求 -->
+<details class="sec">
+<summary>⑮ 附帯請求まとめ（遅延損害金・利息）</summary>
+<div class="sec-body">
+
+<div class="cause-box">
+  <h3>履行遅滞に基づく遅延損害金</h3>
+  <div class="ex">「被告は、原告に対し、2000万円及びM日から支払済みまで年三分の割合による金員を支払え」（年3分は404条）</div>
+  <div class="e">❶ 元本債権の発生原因事実</div>
+  <div class="e">❷ 債務の履行期の経過<span class="stat">412条1〜3項</span></div>
+  <div class="e">❸ 損害発生とその額</div>
+  <div class="note">a. 当事者が法定利率を超える約定をした / b. 遅延損害金の利率の合意をした</div>
+  <div class="warn">575条2項について：引渡し後は「遅延損害金」が生じ、それを2項は「利息」と呼ぶ（遅延損害金説）</div>
+</div>
+
+<div class="cause-box">
+  <h3>利息契約に基づく利息請求権</h3>
+  <div class="e">❶ 元本債権の発生原因事実</div>
+  <div class="e">❷ 利息の約定</div>
+  <div class="e">❸ 利息発生する一定期間の経過</div>
+</div>
+
+<div class="cause-box">
+  <h3>同時履行の存在効果を潰すタイミング（重要）</h3>
+  <div class="warn imp">
+    遅滞の違法性を顕現させるには同時履行の存在効果を消滅させる必要がある。<br>
+    催告に先立つ反対給付の提供 or 先履行合意（せりあがり）で処理する。<br>
+    ❺目的物の引渡の提供（売買の場合）
+  </div>
+</div>
+
+</div></details>
+
+</div><!-- /container -->
+
+<script>
+function expandAll(){document.querySelectorAll('details').forEach(d=>d.open=true)}
+function collapseAll(){document.querySelectorAll('details').forEach(d=>d.open=false)}
+</script>
+</body>
+</html>
