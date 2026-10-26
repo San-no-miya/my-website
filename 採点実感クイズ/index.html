@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>採点実感クイズ</title>
+<style>
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --text: #1d1d1b;
+  --muted: #6b6a64;
+  --border: #dcdad2;
+  --accent: #1f4e79;
+  --accent-soft: #e6eef6;
+  --ok: #1e7a46;
+  --ok-soft: #e3f3e9;
+  --ng: #b3261e;
+  --ng-soft: #fbe7e5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17181a;
+    --surface: #212226;
+    --text: #ecebe6;
+    --muted: #a3a29b;
+    --border: #3a3b40;
+    --accent: #8db8e8;
+    --accent-soft: #24303d;
+    --ok: #6fcf97;
+    --ok-soft: #1d3326;
+    --ng: #f28b82;
+    --ng-soft: #3b2220;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  line-height: 1.75;
+  font-size: 16px;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+header.top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+header.top h1 { font-size: 20px; margin: 0; letter-spacing: .02em; }
+header.top .sub { color: var(--muted); font-size: 13px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.link { background: none; border: none; color: var(--accent); padding: 0; font-size: 14px; }
+.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab { border: 1px solid var(--border); background: var(--surface); padding: 6px 14px; border-radius: 999px; font-size: 14px; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.group-title { font-size: 14px; color: var(--muted); margin: 20px 0 8px; font-weight: 600; }
+.card {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  width: 100%; text-align: left;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; margin-bottom: 8px;
+}
+.card:hover { border-color: var(--accent); }
+.card .name { font-weight: 600; }
+.card .meta { color: var(--muted); font-size: 13px; }
+.badge { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 8px 0 16px; }
+.progress > div { height: 100%; background: var(--accent); transition: width .2s; }
+.qhead { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; gap: 8px; flex-wrap: wrap; }
+.section { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 12px; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+.facts {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 14px; margin: 4px 0 12px; font-size: 15px; white-space: pre-wrap;
+}
+.facts::before { content: "事例"; display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 2px; }
+.stem { font-size: 17px; margin: 4px 0 16px; }
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice {
+  text-align: left; background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+}
+.choice:hover:not(:disabled) { border-color: var(--accent); }
+.choice:disabled { cursor: default; }
+.choice .key { font-weight: 700; color: var(--muted); min-width: 1.2em; }
+.choice.correct { background: var(--ok-soft); border-color: var(--ok); }
+.choice.wrong { background: var(--ng-soft); border-color: var(--ng); }
+.choice .note { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
+.verdict { font-size: 18px; font-weight: 700; margin: 18px 0 6px; }
+.verdict.ok { color: var(--ok); }
+.verdict.ng { color: var(--ng); }
+.expl { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin: 8px 0 0; }
+.ref { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--bg); padding: 10px 18px; border-radius: 8px; font-weight: 600; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.score { font-size: 40px; font-weight: 700; margin: 0; }
+.score small { font-size: 16px; color: var(--muted); font-weight: 400; }
+.review-item { border-top: 1px solid var(--border); padding: 16px 0; }
+.review-item:first-of-type { border-top: none; }
+.mark { font-weight: 700; margin-right: 6px; }
+.mark.ok { color: var(--ok); }
+.mark.ng { color: var(--ng); }
+.ans-line { font-size: 14px; margin: 6px 0; }
+.ans-line b { color: var(--muted); font-weight: 600; margin-right: 4px; }
+.filter { display: flex; gap: 8px; margin: 12px 0 4px; flex-wrap: wrap; }
+.empty { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>採点実感クイズ</h1>
+      <div class="sub">司法試験委員会の「採点実感」から作った一問一答</div>
+    </div>
+    <button class="link" id="homeBtn" hidden>← 一覧へ</button>
+  </header>
+  <main id="app"></main>
+</div>
+
+<!-- 問題データ:年度×科目ごとに1ファイル。存在しないファイルは読み飛ばされる -->
+<script>
+(function () {
+  const YEARS = [1, 2, 3, 4, 5, 6, 7];
+  const SUBJECTS = ["憲法", "行政法", "民法", "商法", "民事訴訟法", "刑法", "刑事訴訟法", "労働法"];
+  YEARS.forEach(y => SUBJECTS.forEach(s => document.write('<script src="data/R' + y + '_' + s + '.js"><\/script>')));
+  window.SUBJECT_ORDER = SUBJECTS;
+})();
+</script>
+
+<script>
+(function () {
+  const ORDER = window.SUBJECT_ORDER;
+  const sets = (window.QUIZ_DATA || []).slice().sort((a, b) => a.yearOrder - b.yearOrder || ORDER.indexOf(a.subject) - ORDER.indexOf(b.subject));
+  const tag = s => s.questions.map(q => ({ ...q, setLabel: s.year + " " + s.subject }));
+  const app = document.getElementById("app");
+  const homeBtn = document.getElementById("homeBtn");
+  const KEY = "saiten-quiz-history-v1";
+  const LABELS = ["A", "B", "C", "D", "E", "F"];
+
+  // ---- 成績の保存(ブラウザ内のみ。使えない環境でも動くように) ----
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveHistory(h) {
+    try { localStorage.setItem(KEY, JSON.stringify(h)); } catch (e) {}
+  }
+  let history = loadHistory();
+
+  let homeTab = "year";
+  let session = null;
+
+  function el(tag, attrs, children) {
+    const n = document.createElement(tag);
+    if (attrs) for (const k in attrs) {
+      if (k === "class") n.className = attrs[k];
+      else if (k === "text") n.textContent = attrs[k];
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), attrs[k]);
+      else n.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(c => c && n.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
+    return n;
+  }
+  function shuffle(a) {
+    a = a.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+
+  // ---- 一覧画面 ----
+  function renderHome() {
+    session = null;
+    homeBtn.hidden = true;
+    app.innerHTML = "";
+    if (!sets.length) { app.appendChild(el("p", { class: "empty", text: "問題データが読み込まれていません。" })); return; }
+
+    const tabs = el("div", { class: "tabs", role: "tablist" }, [
+      el("button", { class: "tab", role: "tab", "aria-selected": homeTab === "year", text: "年度別", onclick: () => { homeTab = "year"; renderHome(); } }),
+      el("button", { class: "tab", role: "tab", "aria-selected": homeTab === "subject", text: "科目別", onclick: () => { homeTab = "subject"; renderHome(); } })
+    ]);
+    app.appendChild(tabs);
+
+    const wrong = history.wrong || {};
+    const wrongQs = sets.flatMap(tag).filter(q => wrong[q.id]);
+    if (wrongQs.length) {
+      app.appendChild(el("div", { class: "group-title", text: "復習" }));
+      app.appendChild(setCard("前回間違えた問題(全科目)", wrongQs.length + "問", null, () => startSession("復習:前回間違えた問題", null, wrongQs)));
+    }
+
+    // 年度別:年度ごとに科目カードを並べる / 科目別:科目ごとに年度カードを並べる
+    const groupKey = homeTab === "year" ? "year" : "subject";
+    const itemKey = homeTab === "year" ? "subject" : "year";
+    const groups = [...new Set(sets.map(s => s[groupKey]))];
+    groups.forEach(g => {
+      const ss = sets.filter(s => s[groupKey] === g);
+      app.appendChild(el("div", { class: "group-title", text: g }));
+      if (ss.length > 1) {
+        const qs = ss.flatMap(tag), key = groupKey + ":" + g;
+        app.appendChild(setCard(g + " をまとめて解く", ss.map(s => s[itemKey]).join("・") + " / " + qs.length + "問", key, () => startSession(g + "(まとめ)", key, qs)));
+      }
+      ss.forEach(s => {
+        app.appendChild(setCard(s[itemKey], s.questions.length + "問", s.id, () => startSession(s.year + " " + s.subject, s.id, tag(s))));
+      });
+    });
+  }
+  function setCard(name, meta, key, onclick) {
+    const last = key && history.last && history.last[key];
+    return el("button", { class: "card", onclick }, [
+      el("div", null, [el("div", { class: "name", text: name }), el("div", { class: "meta", text: meta })]),
+      el("div", { class: "badge", text: last ? "前回 " + last.correct + "/" + last.total : "未挑戦" })
+    ]);
+  }
+
+  // ---- 演習 ----
+  function startSession(title, key, questions) {
+    session = {
+      title, key,
+      questions: questions.map(q => ({ ...q, order: shuffle(q.choices.map((_, i) => i)) })),
+      index: 0,
+      answers: []
+    };
+    homeBtn.hidden = false;
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const s = session, q = s.questions[s.index];
+    app.innerHTML = "";
+    const panel = el("div", { class: "panel" });
+    panel.appendChild(el("div", { class: "qhead" }, [
+      el("span", { text: s.title }),
+      el("span", { text: "第" + (s.index + 1) + "問 / 全" + s.questions.length + "問" })
+    ]));
+    const bar = el("div", { class: "progress" }, [el("div")]);
+    bar.firstChild.style.width = (s.index / s.questions.length * 100) + "%";
+    panel.appendChild(bar);
+    panel.appendChild(el("span", { class: "section", text: q.setLabel + " / " + q.section }));
+    if (q.facts) panel.appendChild(el("div", { class: "facts", text: q.facts }));
+    panel.appendChild(el("p", { class: "stem", text: q.stem }));
+
+    const list = el("div", { class: "choices" });
+    const buttons = q.order.map((ci, pos) => {
+      const c = q.choices[ci];
+      const b = el("button", { class: "choice", onclick: () => answer(ci) }, [
+        el("span", { class: "key", text: LABELS[pos] }),
+        el("span", null, [c.text])
+      ]);
+      list.appendChild(b);
+      return b;
+    });
+    panel.appendChild(list);
+    const after = el("div");
+    panel.appendChild(after);
+    app.appendChild(panel);
+    window.scrollTo(0, 0);
+
+    function answer(ci) {
+      const correctIdx = q.choices.findIndex(c => c.correct);
+      const ok = ci === correctIdx;
+      s.answers[s.index] = { chosen: ci, ok };
+      q.order.forEach((cj, pos) => {
+        const b = buttons[pos], c = q.choices[cj];
+        b.disabled = true;
+        if (cj === correctIdx) b.classList.add("correct");
+        else if (cj === ci) b.classList.add("wrong");
+        if (c.note && (cj === ci || cj === correctIdx || !ok)) b.lastChild.appendChild(el("span", { class: "note", text: c.note }));
+      });
+      after.appendChild(el("div", { class: "verdict " + (ok ? "ok" : "ng"), text: ok ? "○ 正解" : "× 不正解" }));
+      after.appendChild(el("p", { class: "expl", text: q.explanation }));
+      after.appendChild(el("div", { class: "ref", text: "出典:" + q.setLabel + " 採点実感 " + q.ref }));
+      const last = s.index === s.questions.length - 1;
+      const next = el("button", { class: "btn", text: last ? "結果を見る" : "次の問題へ", onclick: () => { if (last) finish(); else { s.index++; renderQuestion(); } } });
+      after.appendChild(el("div", { class: "actions" }, [next]));
+      next.focus();
+    }
+  }
+
+  // ---- 結果画面 ----
+  function finish() {
+    const s = session;
+    const correct = s.answers.filter(a => a.ok).length;
+    history.last = history.last || {};
+    history.wrong = history.wrong || {};
+    if (s.key) history.last[s.key] = { correct, total: s.questions.length, at: new Date().toISOString() };
+    s.questions.forEach((q, i) => { if (s.answers[i].ok) delete history.wrong[q.id]; else history.wrong[q.id] = true; });
+    saveHistory(history);
+    renderResult("all");
+  }
+
+  function renderResult(filter) {
+    const s = session;
+    const correct = s.answers.filter(a => a.ok).length;
+    app.innerHTML = "";
+    const panel = el("div", { class: "panel" });
+    panel.appendChild(el("div", { class: "qhead" }, [el("span", { text: s.title + " の結果" })]));
+    const score = el("p", { class: "score" }, [String(correct), el("small", { text: " / " + s.questions.length + " 問正解(" + Math.round(correct / s.questions.length * 100) + "%)" })]);
+    panel.appendChild(score);
+
+    const wrongQs = s.questions.filter((q, i) => !s.answers[i].ok);
+    const acts = [el("button", { class: "btn ghost", text: "もう一度全問", onclick: () => startSession(s.title, s.key, s.questions) })];
+    if (wrongQs.length) acts.unshift(el("button", { class: "btn", text: "間違えた" + wrongQs.length + "問を解き直す", onclick: () => startSession(s.title + "(解き直し)", null, wrongQs) }));
+    panel.appendChild(el("div", { class: "actions" }, acts));
+
+    panel.appendChild(el("div", { class: "filter" }, [
+      el("button", { class: "tab", "aria-selected": filter === "all", text: "全問", onclick: () => renderResult("all") }),
+      el("button", { class: "tab", "aria-selected": filter === "ng", text: "不正解のみ", onclick: () => renderResult("ng") })
+    ]));
+
+    const list = el("div");
+    s.questions.forEach((q, i) => {
+      const a = s.answers[i];
+      if (filter === "ng" && a.ok) return;
+      const correctC = q.choices.find(c => c.correct);
+      const chosenC = q.choices[a.chosen];
+      const item = el("div", { class: "review-item" }, [
+        el("div", null, [el("span", { class: "mark " + (a.ok ? "ok" : "ng"), text: a.ok ? "○" : "×" }), el("span", { class: "section", text: "第" + (i + 1) + "問 " + q.section })]),
+        q.facts ? el("div", { class: "facts", text: q.facts }) : null,
+        el("p", { class: "stem", text: q.stem })
+      ]);
+      if (!a.ok) item.appendChild(el("p", { class: "ans-line" }, [el("b", { text: "あなたの解答:" }), chosenC.text + (chosenC.note ? "(" + chosenC.note + ")" : "")]));
+      item.appendChild(el("p", { class: "ans-line" }, [el("b", { text: "正解:" }), correctC.text]));
+      item.appendChild(el("p", { class: "expl", text: q.explanation }));
+      item.appendChild(el("div", { class: "ref", text: "出典:" + q.setLabel + " 採点実感 " + q.ref }));
+      list.appendChild(item);
+    });
+    if (!list.childNodes.length) list.appendChild(el("p", { class: "empty", text: "全問正解です。" }));
+    panel.appendChild(list);
+    app.appendChild(panel);
+    window.scrollTo(0, 0);
+  }
+
+  homeBtn.addEventListener("click", () => {
+    if (session && session.answers.length < session.questions.length && session.answers.length > 0 && !confirm("演習を中断して一覧に戻りますか?")) return;
+    renderHome();
+  });
+
+  renderHome();
+})();
+</script>
+</body>
+</html>
