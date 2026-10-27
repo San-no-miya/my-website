@@ -89,6 +89,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .verdict.ng { color: var(--ng); }
 .expl { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin: 8px 0 0; }
 .ref { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.statutes { margin-top: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); }
+.statutes > summary { cursor: pointer; padding: 8px 12px; font-size: 14px; font-weight: 600; color: var(--accent); }
+.statutes-body { padding: 0 12px 10px; display: flex; flex-direction: column; gap: 12px; }
+.statute h4 { margin: 0 0 4px; font-size: 14px; }
+.statute h4 .cap { font-weight: 400; color: var(--muted); }
+.statute .badge { display: inline-block; font-size: 11px; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: 1px; }
+.statute-text { margin: 0; font-size: 14px; line-height: 1.8; white-space: pre-wrap; }
+.statute .amend { font-size: 12px; color: var(--ng); margin-top: 4px; }
+.statutes .src { font-size: 12px; color: var(--muted); }
 .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
 .btn { border: 1px solid var(--accent); background: var(--accent); color: var(--bg); padding: 10px 18px; border-radius: 8px; font-weight: 600; }
 .btn.ghost { background: transparent; color: var(--accent); }
@@ -159,6 +168,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
     }
     (children || []).forEach(c => c && n.appendChild(typeof c === "string" ? document.createTextNode(c) : c));
     return n;
+  }
+  function statutesBlock(q, open) {
+    if (!q.statutes || !q.statutes.length) return null;
+    const names = q.statutes.map(s => s.label);
+    const d = el("details", { class: "statutes" }, [
+      el("summary", { text: "条文を確認(" + (names.length > 2 ? names.slice(0, 2).join("・") + " ほか" : names.join("・")) + ")" }),
+      el("div", { class: "statutes-body" }, q.statutes.map(s => el("div", { class: "statute" }, [
+        el("h4", null, [s.label, s.caption ? el("span", { class: "cap", text: s.caption }) : null, s.excerpt ? el("span", { class: "badge", text: "抜粋" }) : null]),
+        el("p", { class: "statute-text", text: s.text }),
+        s.amended ? el("div", { class: "amend", text: "※" + s.amended }) : null
+      ])).concat([el("div", { class: "src", text: "試験の基準日(" + q.setLabel.split(" ")[0] + "1月1日)時点の条文。出典:e-Gov法令検索" })]))
+    ]);
+    if (open) d.open = true;
+    return d;
   }
   function shuffle(a) {
     a = a.slice();
@@ -267,6 +290,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
       after.appendChild(el("div", { class: "verdict " + (ok ? "ok" : "ng"), text: ok ? "○ 正解" : "× 不正解" }));
       after.appendChild(el("p", { class: "expl", text: q.explanation }));
       after.appendChild(el("div", { class: "ref", text: "出典:" + q.setLabel + " 採点実感 " + q.ref }));
+      const st = statutesBlock(q, false);
+      if (st) after.appendChild(st);
       const last = s.index === s.questions.length - 1;
       const next = el("button", { class: "btn", text: last ? "結果を見る" : "次の問題へ", onclick: () => { if (last) finish(); else { s.index++; renderQuestion(); } } });
       after.appendChild(el("div", { class: "actions" }, [next]));
@@ -320,6 +345,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
       item.appendChild(el("p", { class: "ans-line" }, [el("b", { text: "正解:" }), correctC.text]));
       item.appendChild(el("p", { class: "expl", text: q.explanation }));
       item.appendChild(el("div", { class: "ref", text: "出典:" + q.setLabel + " 採点実感 " + q.ref }));
+      const st = statutesBlock(q, false);
+      if (st) item.appendChild(st);
       list.appendChild(item);
     });
     if (!list.childNodes.length) list.appendChild(el("p", { class: "empty", text: "全問正解です。" }));
